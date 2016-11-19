@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Card, Button } from 'semantic-ui-react';
+import UsernamePassword from './UsernamePassword';
 
 class IdentityAuthenticator extends Component {
   constructor(props) {
@@ -78,6 +79,7 @@ class IdentityAuthenticator extends Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
+          { this.props.urn === 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest' ? (<UsernamePassword data={this.props.data} setUsernamePassword={this.props.setUsernamePassword}/>) : '' }
           <div className="ui buttons">
             <Button
                 negative

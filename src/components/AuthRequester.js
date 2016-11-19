@@ -24,6 +24,7 @@ class AuthRequester extends Component {
     this.updateBody = this.updateBody.bind(this);
     this.parseBody = this.parseBody.bind(this);
     this.removeIdentityAuthenticator = this.removeIdentityAuthenticator.bind(this);
+    this.setUsernamePassword = this.setUsernamePassword.bind(this);
   }
 
   updateUrl(event) {
@@ -85,6 +86,16 @@ class AuthRequester extends Component {
     this.setBodyFromObject(body);
   }
 
+  setUsernamePassword(username, password) {
+    let body = JSON.parse(this.state.body);
+    const urn = 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest';
+    if (body[urn]) {
+      body[urn]['username'] = username;
+      body[urn]['password'] = password;
+      this.setBodyFromObject(body);
+    }
+  }
+
   static doSubmit(event) {
     event.preventDefault();
   }
@@ -139,6 +150,9 @@ class AuthRequester extends Component {
 
   render() {
     const { active } = this.state.loading;
+    const authenticatorData = {
+      username: this.state.username
+    };
     return (
         <div>
           <div className="AuthRequest">
@@ -186,6 +200,8 @@ class AuthRequester extends Component {
             <IdentityAuthenticatorList
                 authenticators={this.state.authenticators}
                 removeAuthenticator={this.removeIdentityAuthenticator}
+                data={authenticatorData}
+                setUsernamePassword={this.setUsernamePassword}
             />
           </div>
         </div>

@@ -25,7 +25,9 @@ class IdentityAuthenticatorList extends Component {
                   <IdentityAuthenticator
                       key={urn}
                       urn={urn}
+                      data={this.props.data}
                       removeAuthenticator={this.removeAuthenticator}
+                      setUsernamePassword={this.props.setUsernamePassword}
                   />
               );
             })}
