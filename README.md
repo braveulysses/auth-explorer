@@ -11,7 +11,7 @@ dsconfig create-http-servlet-cross-origin-policy \
   --policy-name "Auth Explorer CORS Policy" \
   --set cors-allowed-methods:GET \
   --set cors-allowed-methods:PUT \
-  --set 'cors-allowed-origins:*' \
+  --set 'cors-allowed-origins:http://localhost:3000' \
   --set cors-allowed-headers:Accept \
   --set cors-allowed-headers:Access-Control-Request-Headers \
   --set cors-allowed-headers:Access-Control-Request-Method \
@@ -23,11 +23,14 @@ dsconfig create-http-servlet-cross-origin-policy \
   --set cors-allow-credentials:true
 ```
 
-Assign the CORS policy to the Authentication Servlet.
+Assign the CORS policy to the Authentication Servlet and the OAuth2 Servlet.
 
 ```
 dsconfig set-http-servlet-extension-prop \
   --extension-name "Authentication Servlet" \
+  --set "cross-origin-policy:Auth Explorer CORS Policy"
+dsconfig set-http-servlet-extension-prop \
+  --extension-name "OAuth2 Servlet" \
   --set "cross-origin-policy:Auth Explorer CORS Policy"
 ```
 
