@@ -12,7 +12,7 @@ class Dispatcher extends Component {
       return (
         <div className="ui">
           <Top step="Log in"/>
-          <AuthRequester flowUrl={url.search(true)['flow']}/>
+          <AuthRequester url={url.search(true)['flow']}/>
         </div>
       );
     } else {
