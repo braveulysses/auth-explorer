@@ -14,7 +14,7 @@ class OAuthRequester extends Component {
     const redirectUri = 'http://localhost:3000';
     let url = URI('https://example.com/oauth/authorize')
         .addQuery('client_id', 'test1')
-        .addQuery('response_type', 'token')
+        .addQuery('response_type', 'token id_token')
         .addQuery('scope', scopes.join(' '))
         .addQuery('redirect_uri', redirectUri)
         .addQuery('state', state)
