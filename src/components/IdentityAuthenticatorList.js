@@ -17,12 +17,12 @@ class IdentityAuthenticatorList extends Component {
     return (
         <div className="IdentityAuthenticatorList">
           <Header as="h2">
-            { this.props.authenticators != '' ? 'Identity Authenticators' : '' }
+            { this.props.authenticators.length > 0 ? 'Identity Authenticators' : '' }
           </Header>
           <List>
             {this.props.authenticators.map(urn => {
               return (
-                  <List.Item>
+                  <List.Item key={urn}>
                     <IdentityAuthenticator
                         key={urn}
                         urn={urn}
