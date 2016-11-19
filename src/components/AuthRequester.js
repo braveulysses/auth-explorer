@@ -14,7 +14,6 @@ class AuthRequester extends Component {
     this.state = {
       url: this.props.url,
       body: '',
-      headers: [],
       loading: false,
       authenticators: []
     };
@@ -62,13 +61,18 @@ class AuthRequester extends Component {
         username = body.sessionIdentityResource.userName;
         formattedName = body.sessionIdentityResource['name.formatted'];
       }
+      let continueRedirectUri = '';
+      if (body.continue_redirect_uri) {
+        continueRedirectUri = body.continue_redirect_uri;
+      }
       this.setState({
         meta: meta,
         followUp: followUp,
         authenticators: authenticators,
         username: username,
         formattedName: formattedName,
-        client: client
+        client: client,
+        continueRedirectUri: continueRedirectUri
       });
     }
   }
@@ -88,6 +92,13 @@ class AuthRequester extends Component {
   doGet() {
     console.log("GET");
     this.setState({ loading: true });
+    // Don't use fetch if we're doing a GET on the continue_redirect_uri.
+    console.log("continue_redirect_uri:" + this.state.continueRedirectUri);
+    if (this.state.continueRedirectUri && this.state.url === this.state.continueRedirectUri) {
+      console.log("requesting continue_redirect_uri; redirecting");
+      window.location = this.state.continueRedirectUri;
+      return;
+    }
     fetch(this.state.url, {
         credentials: 'include',
         headers: {

@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import URI from 'urijs';
-import GUID from '../GUID';
+import Helpers from '../Helpers';
 import { Button, Input, Form } from 'semantic-ui-react';
 import './OAuthRequest.css';
 
 class OAuthRequester extends Component {
   constructor(props) {
     super(props);
-    const state = GUID.randomGUID();
-    const nonce = GUID.randomGUID();
+    const state = Helpers.randomGUID();
+    const nonce = Helpers.randomGUID();
     const scopes = [ 'openid', 'email' ];
     const prompt = [ 'login' ];
     const redirectUri = 'http://localhost:3000';

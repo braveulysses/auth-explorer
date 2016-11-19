@@ -1,26 +1,35 @@
 import React, {Component} from 'react';
 import { Container } from 'semantic-ui-react';
-import URI from 'urijs';
 import Top from './Top';
 import AuthRequester from './AuthRequester';
 import OAuthRequester from './OAuthRequester';
+import Done from './Done';
+import Helpers from '../Helpers';
 
 class Dispatcher extends Component {
   render() {
-    let url = new URI(window.location.href);
-    if (url.query().startsWith('flow')) {
+    const url = window.location.href;
+    let params = Helpers.parseParamsFromUrl(url);
+    if (params.flow) {
       return (
-        <div className="ui">
-          <Top step="Log in"/>
-          <AuthRequester url={url.search(true)['flow']}/>
-        </div>
+          <Container>
+            <Top step="Log in"/>
+            <AuthRequester url={params.flow}/>
+          </Container>
+      );
+    } else if (params.code || params.error || params.access_token || params.id_token) {
+      return (
+          <Container>
+            <Top step="Done"/>
+            <Done url={url}/>
+          </Container>
       );
     } else {
       return (
-        <Container>
-          <Top step="OAuth"/>
-          <OAuthRequester/>
-        </Container>
+          <Container>
+            <Top step="OAuth"/>
+            <OAuthRequester/>
+          </Container>
       );
     }
   }

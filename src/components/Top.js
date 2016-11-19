@@ -20,6 +20,11 @@ class Top extends Component {
         icon: 'thumbs outline up',
         title: 'Consent',
         description: 'Authorize an access request'
+      },
+      {
+        icon: 'protect',
+        title: 'Done',
+        description: 'Authentication complete'
       }
     ];
     this.state = { steps: this.activeSteps(steps, this.props.step) };
@@ -37,7 +42,7 @@ class Top extends Component {
     return (
       <div className="ui">
         <Header as='h1'>Broker Auth Explorer</Header>
-        <Group items={this.state.steps} size="large"/>
+        <Group items={this.state.steps} size="small"/>
       </div>
     );
   }
