@@ -22,17 +22,14 @@ class Top extends Component {
         description: 'Authorize an access request'
       }
     ];
-    this.state = { steps: steps };
-    this.setActive = this.setActive.bind(this);
-    this.setActive(this.props.step);
+    this.state = { steps: this.activeSteps(steps, this.props.step) };
   }
 
-  setActive(activeStep) {
-    const steps = this.state.steps.map(step => {
+  activeSteps(steps, activeStep) {
+    return steps.map(step => {
       step.active = step.title === activeStep;
       return step;
     });
-    this.setState({ steps: steps });
   }
 
   render() {
