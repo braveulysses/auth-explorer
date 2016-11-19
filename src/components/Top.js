@@ -6,12 +6,12 @@ class Top extends Component {
     super(props);
     const steps = [
       {
-        icon: 'protect',
+        icon: 'key',
         title: 'OAuth',
         description: 'Make an OAuth 2 request'
       },
       {
-        icon: 'key',
+        icon: 'user',
         title: 'Auth API',
         description: 'Authenticate a user'
       }
@@ -23,11 +23,8 @@ class Top extends Component {
 
   setActive(activeStep) {
     const steps = this.state.steps.map(step => {
-      if (step.title === activeStep) {
-        step.active = true;
-      } else {
-        step.active = false;
-      }
+      step.active = step.title === activeStep;
+      return step;
     });
     this.setState({ steps: steps });
   }
