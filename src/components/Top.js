@@ -6,14 +6,20 @@ class Top extends Component {
     super(props);
     const steps = [
       {
-        icon: 'key',
+        icon: 'openid',
         title: 'OAuth',
-        description: 'Make an OAuth 2 request'
+        description: 'Make an OAuth 2 request',
+        href: '/'
       },
       {
-        icon: 'user',
-        title: 'Auth API',
+        icon: 'sign in',
+        title: 'Log in',
         description: 'Authenticate a user'
+      },
+      {
+        icon: 'thumbs outline up',
+        title: 'Consent',
+        description: 'Authorize an access request'
       }
     ];
     this.state = { steps: steps };
@@ -34,7 +40,7 @@ class Top extends Component {
     return (
       <div className="ui">
         <Header as='h1'>Broker Auth Explorer</Header>
-        <Group items={this.state.steps}/>
+        <Group items={this.state.steps} size="large"/>
       </div>
     );
   }

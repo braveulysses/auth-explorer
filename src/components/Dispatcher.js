@@ -11,7 +11,7 @@ class Dispatcher extends Component {
     if (url.query().startsWith('flow')) {
       return (
         <div className="ui">
-          <Top step="Auth API"/>
+          <Top step="Log in"/>
           <AuthRequester flowUrl={url.search(true)['flow']}/>
         </div>
       );
