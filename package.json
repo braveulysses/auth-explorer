@@ -1,0 +1,24 @@
+{
+  "name": "auth-explorer",
+  "version": "0.1.0",
+  "description": "A tool for exploring and learning the Data Governance Broker authentication API",
+  "author": "Jacob Childress <jacobchildress@pingidentity.com>",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.7.0"
+  },
+  "dependencies": {
+    "react": "^15.3.2",
+    "react-ace": "^4.0.0",
+    "react-dom": "^15.3.2",
+    "semantic-ui-react": "^0.61.1",
+    "urijs": "^1.18.3",
+    "whatwg-fetch": "^2.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
