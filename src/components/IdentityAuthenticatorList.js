@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import IdentityAuthenticator from './IdentityAuthenticator';
-import { Header, List } from 'semantic-ui-react';
+import { Header, Card } from 'semantic-ui-react';
 import './IdentityAuthenticatorList.css';
 
 class IdentityAuthenticatorList extends Component {
@@ -19,19 +19,17 @@ class IdentityAuthenticatorList extends Component {
           <Header as="h2">
             { this.props.authenticators.length > 0 ? 'Identity Authenticators' : '' }
           </Header>
-          <List>
+          <Card.Group>
             {this.props.authenticators.map(urn => {
               return (
-                  <List.Item key={urn}>
-                    <IdentityAuthenticator
-                        key={urn}
-                        urn={urn}
-                        removeAuthenticator={this.removeAuthenticator}
-                    />
-                  </List.Item>
+                  <IdentityAuthenticator
+                      key={urn}
+                      urn={urn}
+                      removeAuthenticator={this.removeAuthenticator}
+                  />
               );
             })}
-          </List>
+          </Card.Group>
         </div>
     );
   }
