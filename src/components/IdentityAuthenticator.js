@@ -28,7 +28,7 @@ class IdentityAuthenticator extends Component {
       case 'urn:pingidentity:scim:api:messages:2.0:RegistrationAuthenticationRequest':
         return {
           name: 'Registration',
-          description: 'The Registration Identity Authenticator may be used create and authenticate a new account from data entered by the end-user.'
+          description: 'The Registration Identity Authenticator may be used to create and authenticate a new account from data entered by the end-user.'
         };
       case 'urn:pingidentity:scim:api:messages:2.0:TOTPAuthenticationRequest':
         return {
