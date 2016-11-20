@@ -4,6 +4,7 @@ import AceEditor from 'react-ace';
 import { Dimmer, Loader, Button, Input, Form, Container, Divider } from 'semantic-ui-react';
 import AuthUrlList from './AuthUrlList';
 import IdentityAuthenticatorList from './IdentityAuthenticatorList';
+import ScopeList from './ScopeList';
 import './AuthRequest.css';
 
 import 'brace/mode/json';
@@ -17,7 +18,9 @@ class AuthRequester extends Component {
       body: '',
       loading: false,
       authUrls: [],
-      authenticators: []
+      authenticators: [],
+      scopes: [],
+      approved: false
     };
     this.setAuthUrl = this.setAuthUrl.bind(this);
     this.updateUrl = this.updateUrl.bind(this);
@@ -28,6 +31,8 @@ class AuthRequester extends Component {
     this.doPut = this.doPut.bind(this);
     this.removeIdentityAuthenticator = this.removeIdentityAuthenticator.bind(this);
     this.setUsernamePassword = this.setUsernamePassword.bind(this);
+    this.setScopesApproved = this.setScopesApproved.bind(this);
+    this.setOptionalScope = this.setOptionalScope.bind(this);
   }
 
   setAuthUrl(url) {
@@ -115,8 +120,16 @@ class AuthRequester extends Component {
   parseBody(json) {
     if (json) {
       let body = JSON.parse(json);
+
+      // Common fields
       const meta = body.meta;
       const followUp = body.followUp;
+      let continueRedirectUri = '';
+      if (body['continue_redirect_uri']) {
+        continueRedirectUri = body['continue_redirect_uri'];
+      }
+
+      // Login fields
       const authenticators = Object.keys(body).filter(key => {
         return key.startsWith('urn');
       });
@@ -127,15 +140,21 @@ class AuthRequester extends Component {
         username = body['sessionIdentityResource']['userName'];
         formattedName = body['sessionIdentityResource']['name.formatted'];
       }
-      let continueRedirectUri = '';
-      if (body['continue_redirect_uri']) {
-        continueRedirectUri = body['continue_redirect_uri'];
-      }
+      let authUrls = AuthRequester.extractUrls(body);
+
+      // Consent fields
+      let scopes = [];
+      let approved = false;
       const consentUrn = 'urn:pingidentity:scim:api:messages:2.0:ConsentApprovalResponse';
       if (body['schemas'] && body['schemas'].includes(consentUrn)) {
         this.props.setActiveStep('Consent');
+        scopes = body['scopes'];
+        console.log('parsing consent response');
+        console.log(scopes);
+        approved = body['approved'];
+        console.log(approved);
       }
-      let authUrls = AuthRequester.extractUrls(body);
+
       this.setState({
         meta: meta,
         followUp: followUp,
@@ -144,7 +163,9 @@ class AuthRequester extends Component {
         formattedName: formattedName,
         client: client,
         continueRedirectUri: continueRedirectUri,
-        authUrls: authUrls
+        authUrls: authUrls,
+        scopes: scopes,
+        approved: approved
       });
     }
   }
@@ -163,6 +184,29 @@ class AuthRequester extends Component {
       body[urn]['password'] = password;
       this.setBodyFromObject(body);
     }
+  }
+
+  setScopesApproved(approved) {
+    let body = JSON.parse(this.state.body);
+    body['approved'] = approved;
+    this.setBodyFromObject(body);
+  }
+
+  setOptionalScope(optionalScopeName, approve) {
+    let body = JSON.parse(this.state.body);
+    const optionalScopes = body['optionalScopes'] || [];
+    let optionalScopesSet = new Set(optionalScopes);
+    if (approve) {
+      optionalScopesSet.add(optionalScopeName);
+    } else {
+      optionalScopesSet.delete(optionalScopeName);
+    }
+    if (optionalScopesSet.size > 0) {
+      body['optionalScopes'] = [...optionalScopesSet];
+    } else {
+      delete body['optionalScopes'];
+    }
+    this.setBodyFromObject(body);
   }
 
   static doSubmit(event) {
@@ -265,15 +309,21 @@ class AuthRequester extends Component {
             </Dimmer.Dimmable>
           </Container>
           <Divider section/>
-          <AuthUrlList
-              authUrls={this.state.authUrls}
-              setAuthUrl={this.setAuthUrl}
+          <ScopeList
+              scopes={this.state.scopes}
+              approved={this.state.approved}
+              setScopesApproved={this.setScopesApproved}
+              setOptionalScope={this.setOptionalScope}
           />
           <IdentityAuthenticatorList
               authenticators={this.state.authenticators}
               removeAuthenticator={this.removeIdentityAuthenticator}
               data={authenticatorData}
               setUsernamePassword={this.setUsernamePassword}
+          />
+          <AuthUrlList
+              authUrls={this.state.authUrls}
+              setAuthUrl={this.setAuthUrl}
           />
         </div>
     );

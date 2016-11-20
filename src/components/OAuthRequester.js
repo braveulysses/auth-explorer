@@ -10,8 +10,8 @@ class OAuthRequester extends Component {
     const clientId = 'auth-explorer-client';
     const state = Helpers.randomGUID();
     const nonce = Helpers.randomGUID();
-    const scopes = [ 'openid', 'email' ];
-    const prompt = [ 'login' ];
+    const scopes = [ 'openid', 'email', 'phone' ];
+    const prompt = [ 'login', 'consent' ];
     const redirectUri = 'http://localhost:3000';
     let url = URI('https://example.com/oauth/authorize')
         .addQuery('client_id', clientId)
