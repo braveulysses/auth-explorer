@@ -23,12 +23,13 @@ class Helpers {
 
   static parseParams(raw_params) {
     // See: https://developers.google.com/accounts/docs/OAuth2UserAgent
-    var params = {};
-    var rx = /([^&=]+)=([^&]*)/g;
-    var match;
-    var query_string = raw_params.substring(1);
-    while (match = rx.exec(query_string)) {
+    let params = {};
+    const rx = /([^&=]+)=([^&]*)/g;
+    const query_string = raw_params.substring(1);
+    let match = rx.exec(query_string);
+    while (match) {
       params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+      match = rx.exec(query_string);
     }
     return params;
   }
