@@ -72,7 +72,7 @@ class AuthRequester extends Component {
       if (body['followUp']['$ref']) {
         urls.push({
           url: body['followUp']['$ref'],
-          name: 'Followup URI',
+          name: 'Followup',
           description: 'The URL that will continue the authentication API flow.'
         });
       }
