@@ -59,34 +59,40 @@ class AuthRequester extends Component {
 
   static extractUrls(body) {
     let urls = [];
-    if (body['meta']['location']) {
-      urls.push({
-        url: body['meta']['location'],
-        name: 'meta.location',
-        description: 'The current Auth API resource URL.'
-      });
+    if (body['meta']) {
+      if (body['meta']['location']) {
+        urls.push({
+          url: body['meta']['location'],
+          name: 'meta.location',
+          description: 'The current Auth API resource URL.'
+        });
+      }
     }
-    if (body['followUp']['$ref']) {
-      urls.push({
-        url: body['followUp']['$ref'],
-        name: 'Followup URI',
-        description: 'The URL that will continue the authentication API flow.'
-      });
+    if (body['followUp']) {
+      if (body['followUp']['$ref']) {
+        urls.push({
+          url: body['followUp']['$ref'],
+          name: 'Followup URI',
+          description: 'The URL that will continue the authentication API flow.'
+        });
+      }
     }
     const urn = 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest';
-    if (body[urn]['usernameRecovery']['$ref']) {
-      urls.push({
-        url: body[urn]['usernameRecovery']['$ref'],
-        name: 'Username Recovery',
-        description: 'The username recovery account handler URL.'
-      });
-    }
-    if (body[urn]['passwordRecovery']['$ref']) {
-      urls.push({
-        url: body[urn]['passwordRecovery']['$ref'],
-        name: 'Password Recovery',
-        description: 'The password recovery account handler URL.'
-      });
+    if (body[urn]) {
+      if (body[urn]['usernameRecovery']['$ref']) {
+        urls.push({
+          url: body[urn]['usernameRecovery']['$ref'],
+          name: 'Username Recovery',
+          description: 'The username recovery account handler URL.'
+        });
+      }
+      if (body[urn]['passwordRecovery']['$ref']) {
+        urls.push({
+          url: body[urn]['passwordRecovery']['$ref'],
+          name: 'Password Recovery',
+          description: 'The password recovery account handler URL.'
+        });
+      }
     }
     if (body['continue_redirect_uri']) {
       urls.push({
