@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Header, Table} from 'semantic-ui-react';
+import { Header, Table, Input } from 'semantic-ui-react';
 import Helpers from '../Helpers';
 import './Done.css';
 
@@ -27,7 +27,21 @@ class Done extends Component {
                 return (
                     <Table.Row key={key}>
                       <Table.Cell>{key}</Table.Cell>
-                      <Table.Cell>{this.state.params[key]}</Table.Cell>
+                      {
+                        key === 'access_token'
+                        || key === 'id_token'
+                        || key === 'refresh_token'
+                            ? (
+                                <Table.Cell>
+                                  <Input
+                                      transparent
+                                      fluid
+                                      defaultValue={this.state.params[key]}
+                                  />
+                                </Table.Cell>
+                        )
+                            : (<Table.Cell>{this.state.params[key]}</Table.Cell>)
+                      }
                     </Table.Row>
                 )
               })}

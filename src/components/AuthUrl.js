@@ -21,7 +21,6 @@ class AuthUrl extends Component {
             </Card.Header>
             <Card.Meta>
               <Input
-                  disabled
                   transparent
                   fluid
                   defaultValue={this.props.url.url}
