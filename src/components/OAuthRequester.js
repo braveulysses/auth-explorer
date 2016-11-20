@@ -7,13 +7,14 @@ import './OAuthRequest.css';
 class OAuthRequester extends Component {
   constructor(props) {
     super(props);
+    const clientId = 'auth-explorer-client';
     const state = Helpers.randomGUID();
     const nonce = Helpers.randomGUID();
     const scopes = [ 'openid', 'email' ];
     const prompt = [ 'login' ];
     const redirectUri = 'http://localhost:3000';
     let url = URI('https://example.com/oauth/authorize')
-        .addQuery('client_id', 'test1')
+        .addQuery('client_id', clientId)
         .addQuery('response_type', 'token id_token')
         .addQuery('scope', scopes.join(' '))
         .addQuery('redirect_uri', redirectUri)
