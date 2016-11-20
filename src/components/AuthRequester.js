@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import 'whatwg-fetch';
 import AceEditor from 'react-ace';
-import { Dimmer, Loader, Button, Input, Form } from 'semantic-ui-react';
+import { Dimmer, Loader, Button, Input, Form, Container, Divider } from 'semantic-ui-react';
+import AuthUrlList from './AuthUrlList';
 import IdentityAuthenticatorList from './IdentityAuthenticatorList';
 import './AuthRequest.css';
 
@@ -15,20 +16,27 @@ class AuthRequester extends Component {
       url: this.props.url,
       body: '',
       loading: false,
+      authUrls: [],
       authenticators: []
     };
-    this.doGet = this.doGet.bind(this);
-    this.doPut = this.doPut.bind(this);
-    this.setBodyFromObject = this.setBodyFromObject.bind(this);
+    this.setAuthUrl = this.setAuthUrl.bind(this);
     this.updateUrl = this.updateUrl.bind(this);
+    this.setBodyFromObject = this.setBodyFromObject.bind(this);
     this.updateBody = this.updateBody.bind(this);
     this.parseBody = this.parseBody.bind(this);
+    this.doGet = this.doGet.bind(this);
+    this.doPut = this.doPut.bind(this);
     this.removeIdentityAuthenticator = this.removeIdentityAuthenticator.bind(this);
     this.setUsernamePassword = this.setUsernamePassword.bind(this);
   }
 
+  setAuthUrl(url) {
+    this.setState({ url: url });
+  }
+
+  // This is called when the user updates the URL directly.
   updateUrl(event) {
-    this.setState({ url: event.target.value });
+    this.setAuthUrl(event.target.value);
   }
 
   setBodyFromObject(body) {
@@ -37,6 +45,8 @@ class AuthRequester extends Component {
     this.parseBody(json);
   }
 
+  // This is called when the user updates the request body directly
+  // using the ACE editor.
   updateBody(body) {
     this.setState({ body: body });
     try {
@@ -45,6 +55,47 @@ class AuthRequester extends Component {
       // Do nothing, because the body might fail to parse while the
       // user is making edits.
     }
+  }
+
+  static extractUrls(body) {
+    let urls = [];
+    if (body['meta']['location']) {
+      urls.push({
+        url: body['meta']['location'],
+        name: 'meta.location',
+        description: 'The current Auth API resource URL.'
+      });
+    }
+    if (body['followUp']['$ref']) {
+      urls.push({
+        url: body['followUp']['$ref'],
+        name: 'Followup URI',
+        description: 'The URL that will continue the authentication API flow.'
+      });
+    }
+    const urn = 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest';
+    if (body[urn]['usernameRecovery']['$ref']) {
+      urls.push({
+        url: body[urn]['usernameRecovery']['$ref'],
+        name: 'Username Recovery',
+        description: 'The username recovery account handler URL.'
+      });
+    }
+    if (body[urn]['passwordRecovery']['$ref']) {
+      urls.push({
+        url: body[urn]['passwordRecovery']['$ref'],
+        name: 'Password Recovery',
+        description: 'The password recovery account handler URL.'
+      });
+    }
+    if (body['continue_redirect_uri']) {
+      urls.push({
+        url: body['continue_redirect_uri'],
+        name: 'Continue Redirect URI',
+        description: 'A redirect URL that will end the authentication API flow.'
+      });
+    }
+    return urls;
   }
 
   parseBody(json) {
@@ -58,14 +109,15 @@ class AuthRequester extends Component {
       const client = body.client;
       let username = '';
       let formattedName = '';
-      if (body.sessionIdentityResource) {
-        username = body.sessionIdentityResource.userName;
-        formattedName = body.sessionIdentityResource['name.formatted'];
+      if (body['sessionIdentityResource']) {
+        username = body['sessionIdentityResource']['userName'];
+        formattedName = body['sessionIdentityResource']['name.formatted'];
       }
       let continueRedirectUri = '';
-      if (body.continue_redirect_uri) {
-        continueRedirectUri = body.continue_redirect_uri;
+      if (body['continue_redirect_uri']) {
+        continueRedirectUri = body['continue_redirect_uri'];
       }
+      let authUrls = AuthRequester.extractUrls(body);
       this.setState({
         meta: meta,
         followUp: followUp,
@@ -73,7 +125,8 @@ class AuthRequester extends Component {
         username: username,
         formattedName: formattedName,
         client: client,
-        continueRedirectUri: continueRedirectUri
+        continueRedirectUri: continueRedirectUri,
+        authUrls: authUrls
       });
     }
   }
@@ -155,7 +208,7 @@ class AuthRequester extends Component {
     };
     return (
         <div>
-          <div className="AuthRequest">
+          <Container className="AuthRequest">
             <Dimmer.Dimmable dimmed={active}>
               <Dimmer active={active}/>
               <Loader active={active}/>
@@ -195,15 +248,18 @@ class AuthRequester extends Component {
                 </Form.Group>
               </Form>
             </Dimmer.Dimmable>
-          </div>
-          <div className="AuthInfo">
-            <IdentityAuthenticatorList
-                authenticators={this.state.authenticators}
-                removeAuthenticator={this.removeIdentityAuthenticator}
-                data={authenticatorData}
-                setUsernamePassword={this.setUsernamePassword}
-            />
-          </div>
+          </Container>
+          <Divider section/>
+          <AuthUrlList
+              authUrls={this.state.authUrls}
+              setAuthUrl={this.setAuthUrl}
+          />
+          <IdentityAuthenticatorList
+              authenticators={this.state.authenticators}
+              removeAuthenticator={this.removeIdentityAuthenticator}
+              data={authenticatorData}
+              setUsernamePassword={this.setUsernamePassword}
+          />
         </div>
     );
   }

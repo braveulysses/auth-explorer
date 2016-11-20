@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import IdentityAuthenticator from './IdentityAuthenticator';
-import { Header, Card } from 'semantic-ui-react';
+import { Container, Header, Card } from 'semantic-ui-react';
 import './IdentityAuthenticatorList.css';
 
 class IdentityAuthenticatorList extends Component {
@@ -15,7 +15,7 @@ class IdentityAuthenticatorList extends Component {
 
   render() {
     return (
-        <div className="IdentityAuthenticatorList">
+        <Container className="IdentityAuthenticatorList">
           <Header as="h2">
             { this.props.authenticators.length > 0 ? 'Identity Authenticators' : '' }
           </Header>
@@ -32,7 +32,7 @@ class IdentityAuthenticatorList extends Component {
               );
             })}
           </Card.Group>
-        </div>
+        </Container>
     );
   }
 }

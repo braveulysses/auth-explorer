@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import UsernamePassword from './UsernamePassword';
+import './IdentityAuthenticator.css';
 
 class IdentityAuthenticator extends Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class IdentityAuthenticator extends Component {
 
   render() {
     return (
-      <Card key={this.props.urn} fluid>
+      <Card key={this.props.urn} fluid className="IdentityAuthenticator">
         <Card.Content>
           <Card.Header>
             {this.state.name}
@@ -84,7 +85,7 @@ class IdentityAuthenticator extends Component {
             <Button
                 negative
                 content="Remove"
-                size="mini"
+                size="small"
                 icon="remove"
                 labelPosition="left"
                 onClick={this.remove}
