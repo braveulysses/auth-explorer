@@ -7,30 +7,81 @@ import Done from './Done';
 import Helpers from '../Helpers';
 
 class Dispatcher extends Component {
-  render() {
-    const url = window.location.href;
-    let params = Helpers.parseParamsFromUrl(url);
+  constructor(props) {
+    super(props);
+    this.state = {
+      step: '',
+      url: window.location.href,
+      flowUrl: ''
+    };
+    this.setActiveStep = this.setActiveStep.bind(this);
+    this.setUrl = this.setUrl.bind(this);
+  }
+
+  componentWillMount() {
+    // Set the 'step' based on the current URL. The consent step is
+    // detected in AuthRequester, because that's not based on the
+    // current URL.
+    let params = Helpers.parseParamsFromUrl(this.state.url);
     if (params.flow) {
-      return (
-          <Container>
-            <Top step="Log in"/>
-            <AuthRequester url={params.flow}/>
-          </Container>
-      );
-    } else if (params.code || params.error || params.access_token || params.id_token) {
-      return (
-          <Container>
-            <Top step="Done"/>
-            <Done url={url}/>
-          </Container>
-      );
+      this.setState({
+        step: 'Log in',
+        flowUrl: params.flow
+      });
+    } else if (params.code || params.error
+        || params.access_token || params.id_token) {
+      this.setState({ step: 'Done' });
     } else {
-      return (
-          <Container>
-            <Top step="OAuth"/>
-            <OAuthRequester/>
-          </Container>
-      );
+      this.setState({ step: 'OAuth' });
+    }
+  }
+
+  setActiveStep(activeStep) {
+    this.setState({ step: activeStep });
+  }
+
+  setUrl(url) {
+    this.setState({ url: url });
+  }
+
+  render() {
+    switch (this.state.step) {
+      case 'Log in':
+        return (
+            <Container>
+              <Top step={this.state.step}/>
+              <AuthRequester
+                  url={this.state.flowUrl}
+                  setDispatcherUrl={this.setUrl}
+                  setActiveStep={this.setActiveStep}
+              />
+            </Container>
+        );
+      case 'Consent':
+        return (
+            <Container>
+              <Top step={this.state.step}/>
+              <AuthRequester
+                  url={this.state.flowUrl}
+                  setDispatcherUrl={this.setUrl}
+                  setActiveStep={this.setActiveStep}
+              />
+            </Container>
+        );
+      case 'Done':
+        return (
+            <Container>
+              <Top step={this.state.step}/>
+              <Done url={window.location.href}/>
+            </Container>
+        );
+      default:
+        return (
+            <Container>
+              <Top step={this.state.step}/>
+              <OAuthRequester/>
+            </Container>
+        );
     }
   }
 }

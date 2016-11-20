@@ -32,6 +32,7 @@ class AuthRequester extends Component {
 
   setAuthUrl(url) {
     this.setState({ url: url });
+    this.props.setDispatcherUrl(url);
   }
 
   // This is called when the user updates the URL directly.
@@ -130,6 +131,10 @@ class AuthRequester extends Component {
       if (body['continue_redirect_uri']) {
         continueRedirectUri = body['continue_redirect_uri'];
       }
+      const consentUrn = 'urn:pingidentity:scim:api:messages:2.0:ConsentApprovalResponse';
+      if (body['schemas'] && body['schemas'].includes(consentUrn)) {
+        this.props.setActiveStep('Consent');
+      }
       let authUrls = AuthRequester.extractUrls(body);
       this.setState({
         meta: meta,
@@ -145,10 +150,8 @@ class AuthRequester extends Component {
   }
 
   removeIdentityAuthenticator(urn) {
-    console.log("requested remove of " + urn);
     let body = JSON.parse(this.state.body);
     delete body[urn];
-    console.log(body);
     this.setBodyFromObject(body);
   }
 
@@ -170,7 +173,6 @@ class AuthRequester extends Component {
     console.log("GET");
     this.setState({ loading: true });
     // Don't use fetch if we're doing a GET on the continue_redirect_uri.
-    console.log("continue_redirect_uri:" + this.state.continueRedirectUri);
     if (this.state.continueRedirectUri && this.state.url === this.state.continueRedirectUri) {
       console.log("requesting continue_redirect_uri; redirecting");
       window.location = this.state.continueRedirectUri;

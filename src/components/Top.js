@@ -27,7 +27,10 @@ class Top extends Component {
         description: 'Authentication complete'
       }
     ];
-    this.state = { steps: this.activeSteps(steps, this.props.step) };
+    this.state = {
+      steps: this.activeSteps(steps, this.props.step)
+    };
+    this.setActiveStep = this.setActiveStep.bind(this);
   }
 
   activeSteps(steps, activeStep) {
@@ -37,12 +40,17 @@ class Top extends Component {
     });
   }
 
+  setActiveStep(activeStep) {
+    this.setState({ steps: this.activeSteps(this.state.steps, activeStep )});
+  }
+
   render() {
+    const steps = this.activeSteps(this.state.steps, this.props.step);
     const { Group } = Step;
     return (
       <div className="ui">
         <Header as='h1'>Broker Auth Explorer</Header>
-        <Group items={this.state.steps} size="small"/>
+        <Group items={steps} size="small"/>
       </div>
     );
   }
