@@ -94,6 +94,13 @@ class AuthRequester extends Component {
         });
       }
     }
+    if (body['flow_uri']) {
+      urls.push({
+        url: body['flow_uri'],
+        name: 'Flow URI',
+        description: 'A URL that leads to a different flow.'
+      });
+    }
     if (body['continue_redirect_uri']) {
       urls.push({
         url: body['continue_redirect_uri'],
