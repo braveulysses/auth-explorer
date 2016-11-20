@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { Header, Table, Input } from 'semantic-ui-react';
+import { Header, Table } from 'semantic-ui-react';
+import CopyableTableCell from './CopyableTableCell';
 import Helpers from '../Helpers';
 import './Done.css';
 
@@ -32,13 +33,7 @@ class Done extends Component {
                         || key === 'id_token'
                         || key === 'refresh_token'
                             ? (
-                                <Table.Cell>
-                                  <Input
-                                      transparent
-                                      fluid
-                                      defaultValue={this.state.params[key]}
-                                  />
-                                </Table.Cell>
+                              <CopyableTableCell value={this.state.params[key]}/>
                         )
                             : (<Table.Cell>{this.state.params[key]}</Table.Cell>)
                       }
