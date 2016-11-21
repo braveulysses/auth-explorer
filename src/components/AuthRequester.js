@@ -144,6 +144,7 @@ class AuthRequester extends Component {
   }
 
   parseBody(json) {
+    let requestUrl = this.state.url;
     let description = '';
     if (json) {
       let body = JSON.parse(json);
@@ -164,6 +165,9 @@ class AuthRequester extends Component {
             description = LOGIN_STEP_DESCRIPTION;
             this.props.setActiveStep('Log in');
         }
+        // Set the current URL — this ensures that a PUT results in
+        // an updated request URL
+        requestUrl = body['meta']['location'];
       }
       // Special cases for OAuth servlet responses
       if (body['flow_uri']) {
@@ -203,6 +207,7 @@ class AuthRequester extends Component {
       }
 
       this.setState({
+        url: requestUrl,
         meta: meta,
         followUp: followUp,
         authenticators: authenticators,
