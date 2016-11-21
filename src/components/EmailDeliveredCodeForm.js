@@ -5,7 +5,6 @@ class EmailDeliveredCodeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      attributeValue: '', // E.g., email address
       messageSubject: 'Your one-time password code',
       messageText: 'Your one-time code is: %code%',
       verifyCode: ''
@@ -22,8 +21,8 @@ class EmailDeliveredCodeForm extends Component {
   }
 
   setSendEmailRequest(event) {
-    this.props.setSendEmailRequest(this.state.attributeValue,
-        this.state.messageSubject, this.state.messageText);
+    this.props.setSendEmailRequest(this.state.messageSubject,
+        this.state.messageText);
     event.preventDefault();
   }
 
@@ -53,16 +52,6 @@ class EmailDeliveredCodeForm extends Component {
                     label="Text"
                     name="messageText"
                     defaultValue={this.state.messageText}
-                    onChange={this.handleInputChange}
-                />
-              </Form.Field>
-            </Form.Group>
-            <Form.Group>
-              <Form.Field width="six">
-                <Input
-                    size="mini"
-                    label="Email address"
-                    name="attributeValue"
                     onChange={this.handleInputChange}
                 />
               </Form.Field>

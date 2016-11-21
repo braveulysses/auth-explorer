@@ -5,7 +5,6 @@ class TelephonyDeliveredCodeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      attributeValue: '', // E.g., phone number
       message: 'Your one-time password code is: %code%',
       language: 'en-US',
       verifyCode: ''
@@ -22,8 +21,8 @@ class TelephonyDeliveredCodeForm extends Component {
   }
 
   setSendTelephonyRequest(event) {
-    this.props.setSendTelephonyRequest(this.state.attributeValue,
-        this.state.message, this.state.language);
+    this.props.setSendTelephonyRequest(this.state.message,
+        this.state.language);
     event.preventDefault();
   }
 

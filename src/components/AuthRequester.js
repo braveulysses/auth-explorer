@@ -246,7 +246,7 @@ class AuthRequester extends Component {
     }
   }
 
-  setSendEmailRequest(emailAddress, messageSubject, messageText) {
+  setSendEmailRequest(messageSubject, messageText) {
     let body = JSON.parse(this.state.body);
     if (body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]) {
       body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN] = {
@@ -267,7 +267,7 @@ class AuthRequester extends Component {
     }
   }
 
-  setSendTelephonyRequest(phoneNumber, message, language) {
+  setSendTelephonyRequest(message, language) {
     let body = JSON.parse(this.state.body);
     if (body[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]) {
       const deliverCode = {
