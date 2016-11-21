@@ -186,8 +186,14 @@ class AuthRequester extends Component {
       }
 
       // Login and 2FA fields
-      const authenticators = Object.keys(body).filter(key => {
+      const authenticatorUrns = Object.keys(body).filter(key => {
         return key.startsWith('urn:');
+      });
+      let authenticators = [];
+      authenticatorUrns.forEach(urn => {
+        let authenticator = body[urn];
+        authenticator['urn'] = urn;
+        authenticators.push(authenticator);
       });
       const client = body.client;
       let username = '';

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Card, Button } from 'semantic-ui-react';
+import IdentityAuthenticatorStatus from './IdentityAuthenticatorStatus';
 import UsernamePasswordForm from './UsernamePasswordForm';
 import TotpForm from './TotpForm';
 import EmailDeliveredCodeForm from './EmailDeliveredCodeForm';
@@ -29,7 +30,7 @@ import {
 class IdentityAuthenticator extends Component {
   constructor(props) {
     super(props);
-    this.state = IdentityAuthenticator.attrsFromUrn(this.props.urn);
+    this.state = IdentityAuthenticator.attrsFromUrn(this.props.authenticator.urn);
     this.remove = this.remove.bind(this);
   }
 
@@ -84,11 +85,11 @@ class IdentityAuthenticator extends Component {
   }
 
   remove() {
-    this.props.removeAuthenticator(this.props.urn);
+    this.props.removeAuthenticator(this.props.authenticator.urn);
   }
 
   renderForm() {
-    switch(this.props.urn) {
+    switch(this.props.authenticator.urn) {
       case USERNAME_PASSWORD_AUTHENTICATOR_URN:
         return (
             <UsernamePasswordForm
@@ -123,10 +124,15 @@ class IdentityAuthenticator extends Component {
 
   render() {
     return (
-      <Card key={this.props.urn} fluid className="IdentityAuthenticator">
+      <Card
+          key={this.props.authenticator.urn}
+          fluid
+          className="IdentityAuthenticator"
+      >
         <Card.Content>
           <Card.Header>
-            {this.state.name}
+            {this.state.name} &nbsp;
+            <IdentityAuthenticatorStatus status={this.props.authenticator.status}/>
           </Card.Header>
           <Card.Meta>
             {this.props.urn}

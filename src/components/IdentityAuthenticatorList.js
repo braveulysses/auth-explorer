@@ -20,11 +20,11 @@ class IdentityAuthenticatorList extends Component {
             { this.props.authenticators.length > 0 ? 'Identity Authenticators' : '' }
           </Header>
           <Card.Group>
-            {this.props.authenticators.map(urn => {
+            {this.props.authenticators.map(authenticator => {
               return (
                   <IdentityAuthenticator
-                      key={urn}
-                      urn={urn}
+                      key={authenticator.urn}
+                      authenticator={authenticator}
                       data={this.props.data}
                       removeAuthenticator={this.removeAuthenticator}
                       setUsernamePassword={this.props.setUsernamePassword}
