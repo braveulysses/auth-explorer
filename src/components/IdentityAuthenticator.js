@@ -6,6 +6,26 @@ import EmailDeliveredCodeForm from './EmailDeliveredCodeForm';
 import TelephonyDeliveredCodeForm from './TelephonyDeliveredCodeForm';
 import './IdentityAuthenticator.css';
 
+import {
+    USERNAME_PASSWORD_AUTHENTICATOR_URN,
+    USERNAME_PASSWORD_AUTHENTICATOR_DESCRIPTION,
+    TOTP_AUTHENTICATOR_URN,
+    TOTP_AUTHENTICATOR_DESCRIPTION,
+    EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN,
+    EMAIL_DELIVERED_CODE_AUTHENTICATOR_DESCRIPTION,
+    TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN,
+    TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_DESCRIPTION,
+    ACCOUNT_LOOKUP_AUTHENTICATOR_URN,
+    ACCOUNT_LOOKUP_AUTHENTICATOR_DESCRIPTION,
+    EXTERNAL_IDENTITY_AUTHENTICATOR_URN,
+    EXTERNAL_IDENTITY_AUTHENTICATOR_DESCRIPTION,
+    RECAPTCHA_AUTHENTICATOR_URN,
+    RECAPTCHA_AUTHENTICATOR_DESCRIPTION,
+    REGISTRATION_AUTHENTICATOR_URN,
+    REGISTRATION_AUTHENTICATOR_DESCRIPTION,
+    THIRD_PARTY_AUTHENTICATOR_DESCRIPTION
+} from '../Constants';
+
 class IdentityAuthenticator extends Component {
   constructor(props) {
     super(props);
@@ -15,50 +35,50 @@ class IdentityAuthenticator extends Component {
 
   static attrsFromUrn(urn) {
     switch(urn) {
-      case 'urn:pingidentity:scim:api:messages:2.0:AccountLookupRequest':
+      case ACCOUNT_LOOKUP_AUTHENTICATOR_URN:
         return {
           name: 'Account Lookup',
-          description: 'The Account Lookup Identity Authenticator may be used to look up an end-user account from one or more request parameter values.'
+          description: ACCOUNT_LOOKUP_AUTHENTICATOR_DESCRIPTION
         };
-      case 'urn:pingidentity:scim:api:messages:2.0:ExternalIdentityAuthenticationRequest':
+      case EXTERNAL_IDENTITY_AUTHENTICATOR_URN:
         return {
           name: 'External Identity',
-          description: 'The External Identity Authenticator may be used to authenticate an end-user with an external identity provider.'
+          description: EXTERNAL_IDENTITY_AUTHENTICATOR_DESCRIPTION
         };
-      case 'urn:pingidentity:scim:api:messages:2.0:RecaptchaAuthenticationRequest':
+      case RECAPTCHA_AUTHENTICATOR_URN:
         return {
           name: 'reCAPTCHA',
-          description: "The reCAPTCHA Identity Authenticator may be used to verify a user's response to a Google reCAPTCHA challenge."
+          description: RECAPTCHA_AUTHENTICATOR_DESCRIPTION
         };
-      case 'urn:pingidentity:scim:api:messages:2.0:RegistrationAuthenticationRequest':
+      case REGISTRATION_AUTHENTICATOR_URN:
         return {
           name: 'Registration',
-          description: 'The Registration Identity Authenticator may be used to create and authenticate a new account from data entered by the end-user.'
+          description: REGISTRATION_AUTHENTICATOR_DESCRIPTION
         };
-      case 'urn:pingidentity:scim:api:messages:2.0:TOTPAuthenticationRequest':
+      case TOTP_AUTHENTICATOR_URN:
         return {
           name: 'TOTP',
-          description: 'The TOTP Identity Authenticator may be used to authenticate an end-user with a time-based one-time password based on RFC 6238 by using the UnboundID Validate TOTP Password Extended LDAP operation.'
+          description: TOTP_AUTHENTICATOR_DESCRIPTION
         };
-      case 'urn:pingidentity:scim:api:messages:2.0:EmailDeliveredCodeAuthenticationRequest':
+      case EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN:
         return {
           name: 'Email Delivered Code',
-          description: "The Email Delivered Code Identity Authenticator may be used to deliver a verification code to an email address stored in a specified attribute from a user's SCIM resource and then verify the code subsequently entered by the user."
+          description: EMAIL_DELIVERED_CODE_AUTHENTICATOR_DESCRIPTION
         };
-      case 'urn:pingidentity:scim:api:messages:2.0:TelephonyDeliveredCodeAuthenticationRequest':
+      case TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN:
         return {
           name: 'Telephony Delivered Code',
-          description: "The Telephony Delivered Code Identity Authenticator may be used to deliver a verification code to a telephone number (e.g. by SMS or voice message) stored in a specified attribute of a user's SCIM resource, and then verify the code subsequently entered by the user."
+          description: TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_DESCRIPTION
         };
-      case 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest':
+      case USERNAME_PASSWORD_AUTHENTICATOR_URN:
         return {
           name: 'Username Password',
-          description: 'The Username Password Identity Authenticator may be used to authenticate an end-user with a username and password using an LDAP BIND operation.'
+          description: USERNAME_PASSWORD_AUTHENTICATOR_DESCRIPTION
         };
       default:
         return {
-          name: 'Unrecognized authenticator',
-          description: ''
+          name: 'Third-party authenticator',
+          description: THIRD_PARTY_AUTHENTICATOR_DESCRIPTION
         }
     }
   }
@@ -69,27 +89,27 @@ class IdentityAuthenticator extends Component {
 
   renderForm() {
     switch(this.props.urn) {
-      case 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest':
+      case USERNAME_PASSWORD_AUTHENTICATOR_URN:
         return (
             <UsernamePasswordForm
                 data={this.props.data}
                 setUsernamePassword={this.props.setUsernamePassword}
             />
         );
-      case 'urn:pingidentity:scim:api:messages:2.0:TOTPAuthenticationRequest':
+      case TOTP_AUTHENTICATOR_URN:
         return (
             <TotpForm
                 setTotp={this.props.setTotp}
             />
         );
-      case 'urn:pingidentity:scim:api:messages:2.0:EmailDeliveredCodeAuthenticationRequest':
+      case EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN:
         return (
             <EmailDeliveredCodeForm
                 setSendEmailRequest={this.props.setSendEmailRequest}
                 setEmailVerifyCode={this.props.setEmailVerifyCode}
             />
         );
-      case 'urn:pingidentity:scim:api:messages:2.0:TelephonyDeliveredCodeAuthenticationRequest':
+      case TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN:
         return (
             <TelephonyDeliveredCodeForm
                 setSendTelephonyRequest={this.props.setSendTelephonyRequest}

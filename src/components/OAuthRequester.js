@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import URI from 'urijs';
 import {guid} from '../Helpers';
-import { Button, Input, Form, Header, Divider } from 'semantic-ui-react';
+import { Container, Button, Input, Form, Header, Message, Divider } from 'semantic-ui-react';
 import './OAuthRequest.css';
+
+import { OAUTH_STEP_DESCRIPTION } from '../Constants';
 
 class OAuthRequester extends Component {
   constructor(props) {
@@ -30,9 +32,9 @@ class OAuthRequester extends Component {
       clientId: clientId,
       responseType: responseType,
       redirectUri: redirectUri,
-      scopes: scope,
+      scope: scope,
       prompt: prompt,
-      acrValues: [],
+      acrValues: '',
       maxAge: '',
       state: state,
       nonce: nonce,
@@ -54,6 +56,9 @@ class OAuthRequester extends Component {
   }
 
   handleOAuthParamUpdate(event) {
+    let state = {};
+    state[event.target.name] = event.target.value;
+    this.setState(state);
     this.setAuthUrlParam(event.target.name, event.target.value);
   }
 
@@ -74,6 +79,7 @@ class OAuthRequester extends Component {
     return (
       <div className="ui OAuthRequester">
         <Form onSubmit={OAuthRequester.cancelSubmit}>
+          <Header>OAuth 2 request parameters</Header>
           <Header sub>Client authorization</Header>
           <Form.Group>
             <Form.Field width="six">
@@ -111,7 +117,7 @@ class OAuthRequester extends Component {
             <Input
                 type="text"
                 name="scope"
-                defaultValue={this.state.scopes}
+                defaultValue={this.state.scope}
                 onChange={this.handleOAuthParamUpdate}
             />
           </Form.Field>
@@ -149,7 +155,7 @@ class OAuthRequester extends Component {
 
           <Header sub>Client state</Header>
           <Form.Group>
-            <Form.Field width="four">
+            <Form.Field width="five">
               <label>state</label>
               <Input
                   type="text"
@@ -158,7 +164,7 @@ class OAuthRequester extends Component {
                   onChange={this.handleOAuthParamUpdate}
               />
             </Form.Field>
-            <Form.Field width="four">
+            <Form.Field width="five">
               <label>nonce</label>
               <Input
                   type="text"
@@ -172,10 +178,10 @@ class OAuthRequester extends Component {
 
         <Divider section/>
 
-        <Header>OAuth 2 Authorization URL</Header>
+        <Header>OAuth 2 request URL</Header>
         <Form onSubmit={this.requestAuthorization}>
           <Form.Field>
-            <Form.TextArea width="twelve" rows="4"
+            <Form.TextArea width="twelve" rows="6"
                 type="text"
                 className="AuthorizeUrl"
                 onChange={this.handleAuthUrlUpdate}
@@ -190,6 +196,8 @@ class OAuthRequester extends Component {
             />
           </Form.Field>
         </Form>
+        <Divider hidden/>
+        <Message><p>{OAUTH_STEP_DESCRIPTION}</p></Message>
       </div>
     );
   }

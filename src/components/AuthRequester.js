@@ -1,14 +1,34 @@
 import React, {Component} from 'react';
 import 'whatwg-fetch';
 import AceEditor from 'react-ace';
-import { Dimmer, Loader, Button, Input, Form, Container, Divider } from 'semantic-ui-react';
+import { Dimmer, Loader, Button, Input, Form, Container, Message, Divider } from 'semantic-ui-react';
 import AuthUrlList from './AuthUrlList';
 import IdentityAuthenticatorList from './IdentityAuthenticatorList';
 import ScopeList from './ScopeList';
-import './AuthRequest.css';
+import './AuthRequester.css';
 
 import 'brace/mode/json';
 import 'brace/theme/github';
+
+import {
+    USERNAME_PASSWORD_AUTHENTICATOR_URN,
+    TOTP_AUTHENTICATOR_URN,
+    EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN,
+    TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN,
+    CONSENT_HANDLER_URN,
+    INITIAL_REDIRECT_DESCRIPTION,
+    LOGIN_STEP_DESCRIPTION,
+    SECOND_FACTOR_STEP_DESCRIPTION,
+    CONSENT_STEP_DESCRIPTION,
+    FLOW_URI_STEP_DESCRIPTION,
+    CONTINUE_REDIRECT_URI_STEP_DESCRIPTION,
+    META_LOCATION_URI_DESCRIPTION,
+    FOLLOWUP_URI_DESCRIPTION,
+    USERNAME_RECOVERY_URI_DESCRIPTION,
+    PASSWORD_RECOVERY_URI_DESCRIPTION,
+    CONTINUE_REDIRECT_URI_DESCRIPTION,
+    FLOW_URI_DESCRIPTION
+} from '../Constants';
 
 class AuthRequester extends Component {
   constructor(props) {
@@ -20,7 +40,8 @@ class AuthRequester extends Component {
       authUrls: [],
       authenticators: [],
       scopes: [],
-      approved: false
+      approved: false,
+      description: INITIAL_REDIRECT_DESCRIPTION
     };
     this.setAuthUrl = this.setAuthUrl.bind(this);
     this.updateUrl = this.updateUrl.bind(this);
@@ -75,7 +96,7 @@ class AuthRequester extends Component {
         urls.push({
           url: body['meta']['location'],
           name: 'meta.location',
-          description: 'The current Auth API resource URL.'
+          description: META_LOCATION_URI_DESCRIPTION
         });
       }
     }
@@ -84,24 +105,24 @@ class AuthRequester extends Component {
         urls.push({
           url: body['followUp']['$ref'],
           name: 'Followup',
-          description: 'The URL that will continue the authentication API flow.'
+          description: FOLLOWUP_URI_DESCRIPTION
         });
       }
     }
-    const urn = 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest';
+    const urn = USERNAME_PASSWORD_AUTHENTICATOR_URN;
     if (body[urn]) {
       if (body[urn]['usernameRecovery']['$ref']) {
         urls.push({
           url: body[urn]['usernameRecovery']['$ref'],
           name: 'Username Recovery',
-          description: 'The username recovery account handler URL.'
+          description: USERNAME_RECOVERY_URI_DESCRIPTION
         });
       }
       if (body[urn]['passwordRecovery']['$ref']) {
         urls.push({
           url: body[urn]['passwordRecovery']['$ref'],
           name: 'Password Recovery',
-          description: 'The password recovery account handler URL.'
+          description: PASSWORD_RECOVERY_URI_DESCRIPTION
         });
       }
     }
@@ -109,22 +130,48 @@ class AuthRequester extends Component {
       urls.push({
         url: body['flow_uri'],
         name: 'Flow URI',
-        description: 'A URL that leads to a different flow.'
+        description: FLOW_URI_DESCRIPTION
       });
     }
     if (body['continue_redirect_uri']) {
       urls.push({
         url: body['continue_redirect_uri'],
         name: 'Continue Redirect URI',
-        description: 'A redirect URL that will end the authentication API flow.'
+        description: CONTINUE_REDIRECT_URI_DESCRIPTION
       });
     }
     return urls;
   }
 
   parseBody(json) {
+    let description = '';
     if (json) {
       let body = JSON.parse(json);
+
+      // Set the current step and description
+      if (body['meta']) {
+        const resourceType = body['meta']['resourceType'];
+        switch(resourceType) {
+          case 'secondFactor':
+            description = SECOND_FACTOR_STEP_DESCRIPTION;
+            this.props.setActiveStep('Second factor');
+            break;
+          case 'approve':
+            description = CONSENT_STEP_DESCRIPTION;
+            this.props.setActiveStep('Consent');
+            break;
+          default:
+            description = LOGIN_STEP_DESCRIPTION;
+            this.props.setActiveStep('Log in');
+        }
+      }
+      // Special cases for OAuth servlet responses
+      if (body['flow_uri']) {
+        description = FLOW_URI_STEP_DESCRIPTION;
+      }
+      if (body['continue_redirect_uri']) {
+        description = CONTINUE_REDIRECT_URI_STEP_DESCRIPTION;
+      }
 
       // Common fields
       const meta = body.meta;
@@ -134,9 +181,9 @@ class AuthRequester extends Component {
         continueRedirectUri = body['continue_redirect_uri'];
       }
 
-      // Login fields
+      // Login and 2FA fields
       const authenticators = Object.keys(body).filter(key => {
-        return key.startsWith('urn');
+        return key.startsWith('urn:');
       });
       const client = body.client;
       let username = '';
@@ -150,9 +197,7 @@ class AuthRequester extends Component {
       // Consent fields
       let scopes = [];
       let approved = false;
-      const consentUrn = 'urn:pingidentity:scim:api:messages:2.0:ConsentApprovalResponse';
-      if (body['schemas'] && body['schemas'].includes(consentUrn)) {
-        this.props.setActiveStep('Consent');
+      if (body['schemas'] && body['schemas'].includes(CONSENT_HANDLER_URN)) {
         scopes = body['scopes'];
         approved = body['approved'];
       }
@@ -167,7 +212,8 @@ class AuthRequester extends Component {
         continueRedirectUri: continueRedirectUri,
         authUrls: authUrls,
         scopes: scopes,
-        approved: approved
+        approved: approved,
+        description: description
       });
     }
   }
@@ -180,28 +226,25 @@ class AuthRequester extends Component {
 
   setUsernamePassword(username, password) {
     let body = JSON.parse(this.state.body);
-    const urn = 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest';
-    if (body[urn]) {
-      body[urn]['username'] = username;
-      body[urn]['password'] = password;
+    if (body[USERNAME_PASSWORD_AUTHENTICATOR_URN]) {
+      body[USERNAME_PASSWORD_AUTHENTICATOR_URN]['username'] = username;
+      body[USERNAME_PASSWORD_AUTHENTICATOR_URN]['password'] = password;
       this.setBodyFromObject(body);
     }
   }
 
   setTotp(password) {
     let body = JSON.parse(this.state.body);
-    const urn = 'urn:pingidentity:scim:api:messages:2.0:TOTPAuthenticationRequest';
-    if (body[urn]) {
-      body[urn]['password'] = password;
+    if (body[TOTP_AUTHENTICATOR_URN]) {
+      body[TOTP_AUTHENTICATOR_URN]['password'] = password;
       this.setBodyFromObject(body);
     }
   }
 
   setSendEmailRequest(emailAddress, messageSubject, messageText) {
     let body = JSON.parse(this.state.body);
-    const urn = 'urn:pingidentity:scim:api:messages:2.0:EmailDeliveredCodeAuthenticationRequest';
-    if (body[urn]) {
-      body[urn] = {
+    if (body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]) {
+      body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN] = {
         messageSubject: messageSubject,
         messageText: messageText
       };
@@ -211,9 +254,8 @@ class AuthRequester extends Component {
 
   setEmailVerifyCode(verifyCode) {
     let body = JSON.parse(this.state.body);
-    const urn = 'urn:pingidentity:scim:api:messages:2.0:EmailDeliveredCodeAuthenticationRequest';
-    if (body[urn]) {
-      body[urn] = {
+    if (body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]) {
+      body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN] = {
         verifyCode: verifyCode
       };
       this.setBodyFromObject(body);
@@ -222,13 +264,12 @@ class AuthRequester extends Component {
 
   setSendTelephonyRequest(phoneNumber, message, language) {
     let body = JSON.parse(this.state.body);
-    const urn = 'urn:pingidentity:scim:api:messages:2.0:TelephonyDeliveredCodeAuthenticationRequest';
-    if (body[urn]) {
+    if (body[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]) {
       const deliverCode = {
         message: message,
         language: language
       };
-      body[urn] = {
+      body[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN] = {
         deliverCode: deliverCode
       };
       this.setBodyFromObject(body);
@@ -237,9 +278,8 @@ class AuthRequester extends Component {
 
   setTelephonyVerifyCode(verifyCode) {
     let body = JSON.parse(this.state.body);
-    const urn = 'urn:pingidentity:scim:api:messages:2.0:TelephonyDeliveredCodeAuthenticationRequest';
-    if (body[urn]) {
-      body[urn] = {
+    if (body[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]) {
+      body[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN] = {
         verifyCode: verifyCode
       };
       this.setBodyFromObject(body);
@@ -327,8 +367,8 @@ class AuthRequester extends Component {
       username: this.state.username
     };
     return (
-        <div>
-          <Container className="AuthRequest">
+        <div className="ui AuthRequester">
+          <Container>
             <Dimmer.Dimmable dimmed={active}>
               <Dimmer active={active}/>
               <Loader active={active}/>
@@ -371,6 +411,11 @@ class AuthRequester extends Component {
                   }
                 </Form.Group>
               </Form>
+              <Divider hidden/>
+              <Message>
+                <p>{this.state.description}</p>
+              </Message>
+              <Divider hidden/>
             </Dimmer.Dimmable>
           </Container>
           <Divider section/>

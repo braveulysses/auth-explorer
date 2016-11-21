@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Header, Step } from 'semantic-ui-react';
+import { Step } from 'semantic-ui-react';
 
 class Top extends Component {
   constructor(props) {
@@ -15,6 +15,11 @@ class Top extends Component {
         icon: 'sign in',
         title: 'Log in',
         description: 'Authenticate a user'
+      },
+      {
+        icon: 'key',
+        title: 'Second factor',
+        description: 'Provide a second credential'
       },
       {
         icon: 'thumbs outline up',
@@ -48,10 +53,7 @@ class Top extends Component {
     const steps = this.activeSteps(this.state.steps, this.props.step);
     const { Group } = Step;
     return (
-      <div className="ui">
-        <Header as='h1'>Broker Auth Explorer</Header>
-        <Group items={steps} size="small"/>
-      </div>
+        <Group items={steps} size="small" vertical/>
     );
   }
 }
