@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import URI from 'urijs';
-import Helpers from '../Helpers';
+import {guid} from '../Helpers';
 import { Button, Input, Form, Header, Divider } from 'semantic-ui-react';
 import './OAuthRequest.css';
 
@@ -10,8 +10,8 @@ class OAuthRequester extends Component {
 
     const clientId = 'auth-explorer-client';
     const responseType = 'token id_token';
-    const state = Helpers.randomGUID();
-    const nonce = Helpers.randomGUID();
+    const state = guid();
+    const nonce = guid();
     const scope = 'openid email phone';
     const prompt = 'login consent';
     const redirectUri = 'http://localhost:3000';

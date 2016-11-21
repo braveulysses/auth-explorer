@@ -4,7 +4,7 @@ import Top from './Top';
 import AuthRequester from './AuthRequester';
 import OAuthRequester from './OAuthRequester';
 import Done from './Done';
-import Helpers from '../Helpers';
+import {parseParamsFromUrl} from '../Helpers';
 
 class Dispatcher extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Dispatcher extends Component {
     // Set the 'step' based on the current URL. The consent step is
     // detected in AuthRequester, because that's not based on the
     // current URL.
-    let params = Helpers.parseParamsFromUrl(this.state.url);
+    let params = parseParamsFromUrl(this.state.url);
     if (params.flow) {
       this.setState({
         step: 'Log in',

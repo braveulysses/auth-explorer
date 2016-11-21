@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import { Header, Table } from 'semantic-ui-react';
 import CopyableTableCell from './CopyableTableCell';
-import Helpers from '../Helpers';
+import {parseParamsFromUrl} from '../Helpers';
 import './Done.css';
 
 class Done extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      params: Helpers.parseParamsFromUrl(this.props.url)
+      params: parseParamsFromUrl(this.props.url)
     };
   }
 
