@@ -22,6 +22,11 @@ class Top extends Component {
         description: 'Provide a second credential'
       },
       {
+        icon: 'key',
+        title: 'Account flow',
+        description: 'Other account-related tasks',
+      },
+      {
         icon: 'thumbs outline up',
         title: 'Consent',
         description: 'Authorize an access request'

@@ -82,6 +82,24 @@ class Dispatcher extends Component {
               </Grid.Row>
             </Grid>
         );
+      case 'Account flow':
+        return (
+            <Grid divided="vertically">
+              <Grid.Row columns={2}>
+                <Grid.Column width={5}>
+                  <Header as='h1'>Broker Auth Explorer</Header>
+                  <Top step={this.state.step}/>
+                </Grid.Column>
+                <Grid.Column width={11}>
+                  <AuthRequester
+                      url={this.state.flowUrl}
+                      setDispatcherUrl={this.setUrl}
+                      setActiveStep={this.setActiveStep}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+        );
       case 'Consent':
         return (
             <Grid divided="vertically">

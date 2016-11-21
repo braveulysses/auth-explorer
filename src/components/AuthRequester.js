@@ -22,6 +22,8 @@ import {
     CONSENT_STEP_DESCRIPTION,
     FLOW_URI_STEP_DESCRIPTION,
     CONTINUE_REDIRECT_URI_STEP_DESCRIPTION,
+    USERNAME_RECOVERY_STEP_DESCRIPTION,
+    PASSWORD_RECOVERY_STEP_DESCRIPTION,
     META_LOCATION_URI_DESCRIPTION,
     FOLLOWUP_URI_DESCRIPTION,
     USERNAME_RECOVERY_URI_DESCRIPTION,
@@ -160,6 +162,14 @@ class AuthRequester extends Component {
           case 'approve':
             description = CONSENT_STEP_DESCRIPTION;
             this.props.setActiveStep('Consent');
+            break;
+          case 'Username Recovery':
+            description = USERNAME_RECOVERY_STEP_DESCRIPTION;
+            this.props.setActiveStep('Account flow');
+            break;
+          case 'Password Recovery':
+            description = PASSWORD_RECOVERY_STEP_DESCRIPTION;
+            this.props.setActiveStep('Account flow');
             break;
           default:
             description = LOGIN_STEP_DESCRIPTION;

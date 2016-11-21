@@ -75,3 +75,7 @@ export const FLOW_URI_STEP_DESCRIPTION =
     "The authorization endpoint presents the auth UI with a flow URI to indicate a transition to a different authentication flow. The auth UI is expected to perform a GET of this URI.";
 export const CONTINUE_REDIRECT_URI_STEP_DESCRIPTION =
     "The authorization endpoint presents the auth UI with the continue_redirect_uri to force a redirect of the user's browser. The auth UI is expected to perform a GET of this URI. Typically, this ends the authentication process and returns an OAuth 2 response to the client.";
+export const USERNAME_RECOVERY_STEP_DESCRIPTION =
+    "The username recovery account flow may be used to look up an end user's username.";
+export const PASSWORD_RECOVERY_STEP_DESCRIPTION =
+    "The password recovery account flow may be used to reset an end user's password.";
