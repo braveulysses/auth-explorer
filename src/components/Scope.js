@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Card, Checkbox } from 'semantic-ui-react';
+import ScopeStatus from './ScopeStatus';
 
 class Scope extends Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class Scope extends Component {
         <Card key={this.props.urn} fluid className="Scope">
           <Card.Content>
             <Card.Header>
-              {this.props.name}
+              {this.props.name} &nbsp;
+              <ScopeStatus granted={this.props.granted}/>
             </Card.Header>
             <Card.Meta>
               {this.props.consentPromptText}

@@ -46,7 +46,7 @@ class ScopeList extends Component {
                         name={scope.name}
                         consentPromptText={scope.consentPromptText}
                         description={scope.description}
-                        granted={scope.approveOptionalScope}
+                        granted={scope.granted}
                         optional={scope.optional}
                         setOptionalScope={this.props.setOptionalScope}
                     />
