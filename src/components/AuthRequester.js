@@ -32,6 +32,10 @@ class AuthRequester extends Component {
     this.removeIdentityAuthenticator = this.removeIdentityAuthenticator.bind(this);
     this.setUsernamePassword = this.setUsernamePassword.bind(this);
     this.setTotp = this.setTotp.bind(this);
+    this.setSendEmailRequest = this.setSendEmailRequest.bind(this);
+    this.setEmailVerifyCode = this.setEmailVerifyCode.bind(this);
+    this.setSendTelephonyRequest = this.setSendTelephonyRequest.bind(this);
+    this.setTelephonyVerifyCode = this.setTelephonyVerifyCode.bind(this);
     this.setScopesApproved = this.setScopesApproved.bind(this);
     this.setOptionalScope = this.setOptionalScope.bind(this);
   }
@@ -193,6 +197,55 @@ class AuthRequester extends Component {
     }
   }
 
+  setSendEmailRequest(emailAddress, messageSubject, messageText) {
+    let body = JSON.parse(this.state.body);
+    const urn = 'urn:pingidentity:scim:api:messages:2.0:EmailDeliveredCodeAuthenticationRequest';
+    if (body[urn]) {
+      body[urn] = {
+        messageSubject: messageSubject,
+        messageText: messageText
+      };
+      this.setBodyFromObject(body);
+    }
+  }
+
+  setEmailVerifyCode(verifyCode) {
+    let body = JSON.parse(this.state.body);
+    const urn = 'urn:pingidentity:scim:api:messages:2.0:EmailDeliveredCodeAuthenticationRequest';
+    if (body[urn]) {
+      body[urn] = {
+        verifyCode: verifyCode
+      };
+      this.setBodyFromObject(body);
+    }
+  }
+
+  setSendTelephonyRequest(phoneNumber, message, language) {
+    let body = JSON.parse(this.state.body);
+    const urn = 'urn:pingidentity:scim:api:messages:2.0:TelephonyDeliveredCodeAuthenticationRequest';
+    if (body[urn]) {
+      const deliverCode = {
+        message: message,
+        language: language
+      };
+      body[urn] = {
+        deliverCode: deliverCode
+      };
+      this.setBodyFromObject(body);
+    }
+  }
+
+  setTelephonyVerifyCode(verifyCode) {
+    let body = JSON.parse(this.state.body);
+    const urn = 'urn:pingidentity:scim:api:messages:2.0:TelephonyDeliveredCodeAuthenticationRequest';
+    if (body[urn]) {
+      body[urn] = {
+        verifyCode: verifyCode
+      };
+      this.setBodyFromObject(body);
+    }
+  }
+
   setScopesApproved(approved) {
     let body = JSON.parse(this.state.body);
     body['approved'] = approved;
@@ -333,6 +386,10 @@ class AuthRequester extends Component {
               data={authenticatorData}
               setUsernamePassword={this.setUsernamePassword}
               setTotp={this.setTotp}
+              setSendEmailRequest={this.setSendEmailRequest}
+              setEmailVerifyCode={this.setEmailVerifyCode}
+              setSendTelephonyRequest={this.setSendTelephonyRequest}
+              setTelephonyVerifyCode={this.setTelephonyVerifyCode}
           />
           <AuthUrlList
               authUrls={this.state.authUrls}

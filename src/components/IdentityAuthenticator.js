@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import UsernamePasswordForm from './UsernamePasswordForm';
 import TotpForm from './TotpForm';
+import EmailDeliveredCodeForm from './EmailDeliveredCodeForm';
+import TelephonyDeliveredCodeForm from './TelephonyDeliveredCodeForm';
 import './IdentityAuthenticator.css';
 
 class IdentityAuthenticator extends Component {
@@ -78,6 +80,20 @@ class IdentityAuthenticator extends Component {
         return (
             <TotpForm
                 setTotp={this.props.setTotp}
+            />
+        );
+      case 'urn:pingidentity:scim:api:messages:2.0:EmailDeliveredCodeAuthenticationRequest':
+        return (
+            <EmailDeliveredCodeForm
+                setSendEmailRequest={this.props.setSendEmailRequest}
+                setEmailVerifyCode={this.props.setEmailVerifyCode}
+            />
+        );
+      case 'urn:pingidentity:scim:api:messages:2.0:TelephonyDeliveredCodeAuthenticationRequest':
+        return (
+            <TelephonyDeliveredCodeForm
+                setSendTelephonyRequest={this.props.setSendTelephonyRequest}
+                setTelephonyVerifyCode={this.props.setTelephonyVerifyCode}
             />
         );
       default:

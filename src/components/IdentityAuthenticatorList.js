@@ -29,6 +29,10 @@ class IdentityAuthenticatorList extends Component {
                       removeAuthenticator={this.removeAuthenticator}
                       setUsernamePassword={this.props.setUsernamePassword}
                       setTotp={this.props.setTotp}
+                      setSendEmailRequest={this.props.setSendEmailRequest}
+                      setEmailVerifyCode={this.props.setEmailVerifyCode}
+                      setSendTelephonyRequest={this.props.setSendTelephonyRequest}
+                      setTelephonyVerifyCode={this.props.setTelephonyVerifyCode}
                   />
               );
             })}
