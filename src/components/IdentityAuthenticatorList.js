@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import IdentityAuthenticator from './IdentityAuthenticator';
-import { Container, Header, Card } from 'semantic-ui-react';
+import { Container, Divider, Header, Card } from 'semantic-ui-react';
 import './IdentityAuthenticatorList.css';
+import { AUTHENTICATORS_UI_DESCRIPTION } from '../Constants';
 
 class IdentityAuthenticatorList extends Component {
   constructor(props) {
@@ -14,31 +15,41 @@ class IdentityAuthenticatorList extends Component {
   }
 
   render() {
-    return (
-        <Container className="IdentityAuthenticatorList">
-          <Header as="h2">
-            { this.props.authenticators.length > 0 ? 'Identity Authenticators' : '' }
-          </Header>
-          <Card.Group>
-            {this.props.authenticators.map(authenticator => {
-              return (
-                  <IdentityAuthenticator
-                      key={authenticator.urn}
-                      authenticator={authenticator}
-                      data={this.props.data}
-                      removeAuthenticator={this.removeAuthenticator}
-                      setUsernamePassword={this.props.setUsernamePassword}
-                      setTotp={this.props.setTotp}
-                      setSendEmailRequest={this.props.setSendEmailRequest}
-                      setEmailVerifyCode={this.props.setEmailVerifyCode}
-                      setSendTelephonyRequest={this.props.setSendTelephonyRequest}
-                      setTelephonyVerifyCode={this.props.setTelephonyVerifyCode}
-                  />
-              );
-            })}
-          </Card.Group>
-        </Container>
-    );
+    if (this.props.authenticators.length > 0) {
+      return (
+          <Container className="IdentityAuthenticatorList">
+            <Header as="h2">
+              Identity Authenticators
+            </Header>
+            <Container>
+              { AUTHENTICATORS_UI_DESCRIPTION }
+            </Container>
+            <Divider hidden/>
+            <Card.Group>
+              {this.props.authenticators.map(authenticator => {
+                return (
+                    <IdentityAuthenticator
+                        key={authenticator.urn}
+                        authenticator={authenticator}
+                        data={this.props.data}
+                        removeAuthenticator={this.removeAuthenticator}
+                        setUsernamePassword={this.props.setUsernamePassword}
+                        setTotp={this.props.setTotp}
+                        setSendEmailRequest={this.props.setSendEmailRequest}
+                        setEmailVerifyCode={this.props.setEmailVerifyCode}
+                        setSendTelephonyRequest={this.props.setSendTelephonyRequest}
+                        setTelephonyVerifyCode={this.props.setTelephonyVerifyCode}
+                    />
+                );
+              })}
+            </Card.Group>
+          </Container>
+      );
+    } else {
+      return (
+          <div/>
+      );
+    }
   }
 }
 

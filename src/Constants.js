@@ -52,6 +52,14 @@ export const FLOW_URI_DESCRIPTION =
 export const CONTINUE_REDIRECT_URI_DESCRIPTION =
     'A redirect URL that will redirect the client. Typically, this ends the authentication API flow.';
 
+// UI sections
+export const URLS_UI_DESCRIPTION =
+    'Choose one of the URLs below to modify the authentication API request.';
+export const AUTHENTICATORS_UI_DESCRIPTION =
+    'An identity authenticator is a scheme for verifying the identity of an end user. At least one identity authenticator must be satisfied to successfully authenticate an end user.';
+export const SCOPES_UI_DESCRIPTION =
+    "A scope represents access to particular user data. The end user may choose to approve or deny an application's access request based on a scope consent prompt presented by the auth UI.";
+
 // Descriptions of authentication flow stages
 export const OAUTH_STEP_DESCRIPTION =
     "Authentication is initiated by making an OAuth 2 or OpenID Connect request for an access token or ID token. Before the token is returned to the client, the end user will be expected to authenticate and approve the request.";
