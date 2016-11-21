@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Form, Button, Input } from 'semantic-ui-react';
 
-class UsernamePassword extends Component {
+class UsernamePasswordForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,4 +58,4 @@ class UsernamePassword extends Component {
   }
 }
 
-export default UsernamePassword;
+export default UsernamePasswordForm;

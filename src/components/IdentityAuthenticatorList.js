@@ -28,6 +28,7 @@ class IdentityAuthenticatorList extends Component {
                       data={this.props.data}
                       removeAuthenticator={this.removeAuthenticator}
                       setUsernamePassword={this.props.setUsernamePassword}
+                      setTotp={this.props.setTotp}
                   />
               );
             })}

@@ -31,6 +31,7 @@ class AuthRequester extends Component {
     this.doPut = this.doPut.bind(this);
     this.removeIdentityAuthenticator = this.removeIdentityAuthenticator.bind(this);
     this.setUsernamePassword = this.setUsernamePassword.bind(this);
+    this.setTotp = this.setTotp.bind(this);
     this.setScopesApproved = this.setScopesApproved.bind(this);
     this.setOptionalScope = this.setOptionalScope.bind(this);
   }
@@ -149,10 +150,7 @@ class AuthRequester extends Component {
       if (body['schemas'] && body['schemas'].includes(consentUrn)) {
         this.props.setActiveStep('Consent');
         scopes = body['scopes'];
-        console.log('parsing consent response');
-        console.log(scopes);
         approved = body['approved'];
-        console.log(approved);
       }
 
       this.setState({
@@ -181,6 +179,15 @@ class AuthRequester extends Component {
     const urn = 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest';
     if (body[urn]) {
       body[urn]['username'] = username;
+      body[urn]['password'] = password;
+      this.setBodyFromObject(body);
+    }
+  }
+
+  setTotp(password) {
+    let body = JSON.parse(this.state.body);
+    const urn = 'urn:pingidentity:scim:api:messages:2.0:TOTPAuthenticationRequest';
+    if (body[urn]) {
       body[urn]['password'] = password;
       this.setBodyFromObject(body);
     }
@@ -325,6 +332,7 @@ class AuthRequester extends Component {
               removeAuthenticator={this.removeIdentityAuthenticator}
               data={authenticatorData}
               setUsernamePassword={this.setUsernamePassword}
+              setTotp={this.setTotp}
           />
           <AuthUrlList
               authUrls={this.state.authUrls}

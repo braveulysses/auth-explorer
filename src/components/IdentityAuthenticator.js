@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Card, Button } from 'semantic-ui-react';
-import UsernamePassword from './UsernamePassword';
+import UsernamePasswordForm from './UsernamePasswordForm';
+import TotpForm from './TotpForm';
 import './IdentityAuthenticator.css';
 
 class IdentityAuthenticator extends Component {
@@ -61,8 +62,27 @@ class IdentityAuthenticator extends Component {
   }
 
   remove() {
-    console.log("remove " + this.state.name);
     this.props.removeAuthenticator(this.props.urn);
+  }
+
+  renderForm() {
+    switch(this.props.urn) {
+      case 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest':
+        return (
+            <UsernamePasswordForm
+                data={this.props.data}
+                setUsernamePassword={this.props.setUsernamePassword}
+            />
+        );
+      case 'urn:pingidentity:scim:api:messages:2.0:TOTPAuthenticationRequest':
+        return (
+            <TotpForm
+                setTotp={this.props.setTotp}
+            />
+        );
+      default:
+        return '';
+    }
   }
 
   render() {
@@ -80,7 +100,7 @@ class IdentityAuthenticator extends Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          { this.props.urn === 'urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest' ? (<UsernamePassword data={this.props.data} setUsernamePassword={this.props.setUsernamePassword}/>) : '' }
+          { this.renderForm() }
           <div className="ui buttons">
             <Button
                 negative
