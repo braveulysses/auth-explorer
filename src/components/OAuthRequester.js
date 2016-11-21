@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import URI from 'urijs';
 import {guid} from '../Helpers';
-import { Container, Button, Input, Form, Header, Message, Divider } from 'semantic-ui-react';
+import { Button, Input, Form, Header, Message, Divider } from 'semantic-ui-react';
 import './OAuthRequest.css';
 
 import { OAUTH_STEP_DESCRIPTION } from '../Constants';
