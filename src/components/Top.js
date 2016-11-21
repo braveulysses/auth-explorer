@@ -22,7 +22,7 @@ class Top extends Component {
         description: 'Provide a second credential'
       },
       {
-        icon: 'key',
+        icon: 'user',
         title: 'Account flow',
         description: 'Other account-related tasks',
       },
