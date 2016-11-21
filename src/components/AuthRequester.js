@@ -262,6 +262,7 @@ class AuthRequester extends Component {
 
   render() {
     const { active } = this.state.loading;
+    const bodyIsPresent = !!this.state.body;
     const authenticatorData = {
       username: this.state.username
     };
@@ -284,26 +285,30 @@ class AuthRequester extends Component {
                     />
                   </Form.Field>
                 </Form.Group>
-                <Form.Group inline>
-                  <Form.Field width="sixteen">
-                    <AceEditor
-                        mode="json"
-                        theme="github"
-                        showPrintMargin={false}
-                        onChange={this.updateBody}
-                        value={this.state.body}
-                        name="AuthExplorerEditor"
-                        width="100%"
-                    />
-                  </Form.Field>
-                </Form.Group>
+                { bodyIsPresent &&
+                  <Form.Group>
+                    <Form.Field width="sixteen">
+                      <AceEditor
+                          mode="json"
+                          theme="github"
+                          showPrintMargin={false}
+                          onChange={this.updateBody}
+                          value={this.state.body}
+                          name="AuthExplorerEditor"
+                          width="100%"
+                      />
+                    </Form.Field>
+                  </Form.Group>
+                }
                 <Form.Group inline>
                   <Form.Field>
                     <Button primary onClick={this.doGet}>GET</Button>
                   </Form.Field>
-                  <Form.Field>
-                    <Button secondary onClick={this.doPut}>PUT</Button>
-                  </Form.Field>
+                  {bodyIsPresent &&
+                    <Form.Field>
+                      <Button secondary onClick={this.doPut}>PUT</Button>
+                    </Form.Field>
+                  }
                 </Form.Group>
               </Form>
             </Dimmer.Dimmable>
