@@ -14,7 +14,7 @@ class Done extends Component {
 
   render() {
     return (
-        <div className="Done">
+        <div className="ui Done">
           <Header as="h2">OAuth 2 response</Header>
           <Table celled>
             <Table.Header>
