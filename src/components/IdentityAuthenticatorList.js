@@ -33,16 +33,6 @@ class IdentityAuthenticatorList extends Component {
                         authenticator={authenticator}
                         data={this.props.data}
                         removeAuthenticator={this.removeAuthenticator}
-                        setUsernamePassword={this.props.setUsernamePassword}
-                        setTotp={this.props.setTotp}
-                        setSendEmailRequest={this.props.setSendEmailRequest}
-                        setEmailVerifyCode={this.props.setEmailVerifyCode}
-                        setSendTelephonyRequest={this.props.setSendTelephonyRequest}
-                        setTelephonyVerifyCode={this.props.setTelephonyVerifyCode}
-                        lookupParameters={this.props.lookupParameters}
-                        setLookupParameters={this.props.setLookupParameters}
-                        recaptchaKey={this.props.recaptchaKey}
-                        setRecaptchaResponse={this.props.setRecaptchaResponse}
                     />
                 );
               })}

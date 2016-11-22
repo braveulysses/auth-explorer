@@ -95,42 +95,42 @@ class IdentityAuthenticator extends Component {
       case USERNAME_PASSWORD_AUTHENTICATOR_URN:
         return (
             <UsernamePasswordForm
-                data={this.props.data}
-                setUsernamePassword={this.props.setUsernamePassword}
+                username={this.props.data[USERNAME_PASSWORD_AUTHENTICATOR_URN].username}
+                setUsernamePassword={this.props.data[USERNAME_PASSWORD_AUTHENTICATOR_URN].setUsernamePassword}
             />
         );
       case TOTP_AUTHENTICATOR_URN:
         return (
             <TotpForm
-                setTotp={this.props.setTotp}
+                setTotp={this.props.data[TOTP_AUTHENTICATOR_URN].setTotp}
             />
         );
       case EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN:
         return (
             <EmailDeliveredCodeForm
-                setSendEmailRequest={this.props.setSendEmailRequest}
-                setEmailVerifyCode={this.props.setEmailVerifyCode}
+                setSendEmailRequest={this.props.data[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN].setSendEmailRequest}
+                setEmailVerifyCode={this.props.data[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN].setEmailVerifyCode}
             />
         );
       case TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN:
         return (
             <TelephonyDeliveredCodeForm
-                setSendTelephonyRequest={this.props.setSendTelephonyRequest}
-                setTelephonyVerifyCode={this.props.setTelephonyVerifyCode}
+                setSendTelephonyRequest={this.props.data[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN].setSendTelephonyRequest}
+                setTelephonyVerifyCode={this.props.data[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN].setTelephonyVerifyCode}
             />
         );
       case ACCOUNT_LOOKUP_AUTHENTICATOR_URN:
         return (
             <AccountLookupForm
-                lookupParameters={this.props.lookupParameters}
-                setLookupParameters={this.props.setLookupParameters}
+                lookupParameters={this.props.data[ACCOUNT_LOOKUP_AUTHENTICATOR_URN].lookupParameters}
+                setLookupParameters={this.props.data[ACCOUNT_LOOKUP_AUTHENTICATOR_URN].setLookupParameters}
             />
         );
       case RECAPTCHA_AUTHENTICATOR_URN:
         return (
             <RecaptchaForm
-                recaptchaKey={this.props.recaptchaKey}
-                setRecaptchaResponse={this.props.setRecaptchaResponse}
+                recaptchaKey={this.props.data[RECAPTCHA_AUTHENTICATOR_URN].recaptchaKey}
+                setRecaptchaResponse={this.props.data[RECAPTCHA_AUTHENTICATOR_URN].setRecaptchaResponse}
             />
         );
       default:

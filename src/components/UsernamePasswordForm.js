@@ -5,7 +5,7 @@ class UsernamePasswordForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.data.username,
+      username: this.props.username,
       password: 'password'
     };
     this.setCredentials = this.setCredentials.bind(this);

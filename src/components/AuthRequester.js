@@ -55,6 +55,7 @@ class AuthRequester extends Component {
     this.doGet = this.doGet.bind(this);
     this.doPut = this.doPut.bind(this);
     this.removeIdentityAuthenticator = this.removeIdentityAuthenticator.bind(this);
+    this.getAuthenticatorProps = this.getAuthenticatorProps.bind(this);
     this.setUsernamePassword = this.setUsernamePassword.bind(this);
     this.setTotp = this.setTotp.bind(this);
     this.setSendEmailRequest = this.setSendEmailRequest.bind(this);
@@ -414,12 +415,37 @@ class AuthRequester extends Component {
       });
   }
 
+  getAuthenticatorProps() {
+    let props = {};
+    props[USERNAME_PASSWORD_AUTHENTICATOR_URN] = {
+      username: this.state.username,
+      setUsernamePassword: this.setUsernamePassword
+    };
+    props[TOTP_AUTHENTICATOR_URN] = {
+      setTotp: this.setTotp
+    };
+    props[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN] = {
+      setSendEmailRequest: this.setSendEmailRequest,
+      setEmailVerifyCode: this.setEmailVerifyCode
+    };
+    props[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN] = {
+      setSendTelephonyRequest: this.setSendTelephonyRequest,
+      setTelephonyVerifyCode: this.setTelephonyVerifyCode
+    };
+    props[ACCOUNT_LOOKUP_AUTHENTICATOR_URN] = {
+      lookupParameters: this.state.lookupParameters
+    };
+    props[RECAPTCHA_AUTHENTICATOR_URN] = {
+      recaptchaKey: this.state.recaptchaKey,
+      setRecaptchaResponse: this.setRecaptchaResponse
+    };
+    return props;
+  }
+
   render() {
     const { active } = this.state.loading;
     const bodyIsPresent = !!this.state.body;
-    const authenticatorData = {
-      username: this.state.username
-    };
+    const authenticatorData = this.getAuthenticatorProps();
     return (
         <div className="ui AuthRequester">
           <Container>
@@ -483,16 +509,6 @@ class AuthRequester extends Component {
               authenticators={this.state.authenticators}
               removeAuthenticator={this.removeIdentityAuthenticator}
               data={authenticatorData}
-              setUsernamePassword={this.setUsernamePassword}
-              setTotp={this.setTotp}
-              setSendEmailRequest={this.setSendEmailRequest}
-              setEmailVerifyCode={this.setEmailVerifyCode}
-              setSendTelephonyRequest={this.setSendTelephonyRequest}
-              setTelephonyVerifyCode={this.setTelephonyVerifyCode}
-              lookupParameters={this.state.lookupParameters}
-              setLookupParameters={this.setLookupParameters}
-              recaptchaKey={this.state.recaptchaKey}
-              setRecaptchaResponse={this.setRecaptchaResponse}
           />
           <AuthUrlList
               authUrls={this.state.authUrls}
