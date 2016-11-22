@@ -41,6 +41,8 @@ class IdentityAuthenticatorList extends Component {
                         setTelephonyVerifyCode={this.props.setTelephonyVerifyCode}
                         lookupParameters={this.props.lookupParameters}
                         setLookupParameters={this.props.setLookupParameters}
+                        recaptchaKey={this.props.recaptchaKey}
+                        setRecaptchaResponse={this.props.setRecaptchaResponse}
                     />
                 );
               })}

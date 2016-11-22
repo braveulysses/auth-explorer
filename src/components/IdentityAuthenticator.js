@@ -6,6 +6,7 @@ import TotpForm from './TotpForm';
 import EmailDeliveredCodeForm from './EmailDeliveredCodeForm';
 import TelephonyDeliveredCodeForm from './TelephonyDeliveredCodeForm';
 import AccountLookupForm from './AccountLookupForm';
+import RecaptchaForm from './RecaptchaForm';
 import './IdentityAuthenticator.css';
 
 import {
@@ -123,6 +124,13 @@ class IdentityAuthenticator extends Component {
             <AccountLookupForm
                 lookupParameters={this.props.lookupParameters}
                 setLookupParameters={this.props.setLookupParameters}
+            />
+        );
+      case RECAPTCHA_AUTHENTICATOR_URN:
+        return (
+            <RecaptchaForm
+                recaptchaKey={this.props.recaptchaKey}
+                setRecaptchaResponse={this.props.setRecaptchaResponse}
             />
         );
       default:

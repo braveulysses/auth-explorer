@@ -12,6 +12,7 @@
     "react-ace": "^4.0.0",
     "react-clipboard.js": "^1.0.1",
     "react-dom": "^15.3.2",
+    "react-google-recaptcha": "^0.5.4",
     "semantic-ui-react": "^0.61.1",
     "urijs": "^1.18.3",
     "whatwg-fetch": "^2.0.1"

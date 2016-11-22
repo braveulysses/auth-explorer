@@ -16,6 +16,7 @@ import {
     EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN,
     TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN,
     ACCOUNT_LOOKUP_AUTHENTICATOR_URN,
+    RECAPTCHA_AUTHENTICATOR_URN,
     CONSENT_HANDLER_URN,
     INITIAL_REDIRECT_DESCRIPTION,
     LOGIN_STEP_DESCRIPTION,
@@ -61,6 +62,7 @@ class AuthRequester extends Component {
     this.setSendTelephonyRequest = this.setSendTelephonyRequest.bind(this);
     this.setTelephonyVerifyCode = this.setTelephonyVerifyCode.bind(this);
     this.setLookupParameters = this.setLookupParameters.bind(this);
+    this.setRecaptchaResponse = this.setRecaptchaResponse.bind(this);
     this.setScopesApproved = this.setScopesApproved.bind(this);
     this.setOptionalScope = this.setOptionalScope.bind(this);
   }
@@ -220,6 +222,10 @@ class AuthRequester extends Component {
       if (body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN]) {
         lookupParameters = body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN]['lookupParameters'];
       }
+      let recaptchaKey = '';
+      if (body[RECAPTCHA_AUTHENTICATOR_URN]) {
+        recaptchaKey = body[RECAPTCHA_AUTHENTICATOR_URN]['recaptchaKey'];
+      }
       let authUrls = AuthRequester.extractUrls(body);
 
       // Consent fields
@@ -243,7 +249,8 @@ class AuthRequester extends Component {
         scopes: scopes,
         approved: approved,
         description: description,
-        lookupParameters: lookupParameters
+        lookupParameters: lookupParameters,
+        recaptchaKey: recaptchaKey
       });
     }
   }
@@ -321,6 +328,14 @@ class AuthRequester extends Component {
     if (body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN]) {
       body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN] =
           Object.assign({}, body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN], lookupParameters);
+      this.setBodyFromObject(body);
+    }
+  }
+
+  setRecaptchaResponse(recaptchaResponse) {
+    let body = JSON.parse(this.state.body);
+    if (body[RECAPTCHA_AUTHENTICATOR_URN]) {
+      body[RECAPTCHA_AUTHENTICATOR_URN]['recaptchaResponse'] = recaptchaResponse;
       this.setBodyFromObject(body);
     }
   }
@@ -476,6 +491,8 @@ class AuthRequester extends Component {
               setTelephonyVerifyCode={this.setTelephonyVerifyCode}
               lookupParameters={this.state.lookupParameters}
               setLookupParameters={this.setLookupParameters}
+              recaptchaKey={this.state.recaptchaKey}
+              setRecaptchaResponse={this.setRecaptchaResponse}
           />
           <AuthUrlList
               authUrls={this.state.authUrls}
