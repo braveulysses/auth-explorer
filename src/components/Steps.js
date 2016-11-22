@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Step } from 'semantic-ui-react';
 
-class Top extends Component {
+class Steps extends Component {
   constructor(props) {
     super(props);
     const steps = [
@@ -63,4 +63,4 @@ class Top extends Component {
   }
 }
 
-export default Top;
+export default Steps;

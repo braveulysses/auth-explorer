@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Header, Grid, Message } from 'semantic-ui-react';
-import Top from './Top';
+import Steps from './Steps';
 import AuthRequester from './AuthRequester';
 import OAuthRequester from './OAuthRequester';
 import Done from './Done';
@@ -52,7 +52,7 @@ class Dispatcher extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={5}>
                   <Header as='h1'>Broker Auth Explorer</Header>
-                  <Top step={this.state.step}/>
+                  <Steps step={this.state.step}/>
                 </Grid.Column>
                 <Grid.Column width={11}>
                   <AuthRequester
@@ -70,7 +70,7 @@ class Dispatcher extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={5}>
                   <Header as='h1'>Broker Auth Explorer</Header>
-                  <Top step={this.state.step}/>
+                  <Steps step={this.state.step}/>
                 </Grid.Column>
                 <Grid.Column width={11}>
                   <AuthRequester
@@ -88,7 +88,7 @@ class Dispatcher extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={5}>
                   <Header as='h1'>Broker Auth Explorer</Header>
-                  <Top step={this.state.step}/>
+                  <Steps step={this.state.step}/>
                 </Grid.Column>
                 <Grid.Column width={11}>
                   <AuthRequester
@@ -106,7 +106,7 @@ class Dispatcher extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={5}>
                   <Header as='h1'>Broker Auth Explorer</Header>
-                  <Top step={this.state.step}/>
+                  <Steps step={this.state.step}/>
                 </Grid.Column>
                 <Grid.Column width={11}>
                   <AuthRequester
@@ -124,7 +124,7 @@ class Dispatcher extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={5}>
                   <Header as='h1'>Broker Auth Explorer</Header>
-                  <Top step={this.state.step}/>
+                  <Steps step={this.state.step}/>
                 </Grid.Column>
                 <Grid.Column width={11}>
                   <Done url={window.location.href}/>
@@ -138,7 +138,7 @@ class Dispatcher extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={5}>
                   <Header as='h1'>Broker Auth Explorer</Header>
-                  <Top step={this.state.step}/>
+                  <Steps step={this.state.step}/>
                 </Grid.Column>
                 <Grid.Column width={11}>
                   <OAuthRequester/>
@@ -152,7 +152,7 @@ class Dispatcher extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={5}>
                   <Header as='h1'>Broker Auth Explorer</Header>
-                  <Top step='Done'/>
+                  <Steps step='Done'/>
                 </Grid.Column>
                 <Grid.Column width={11}>
                   <Message negative>
