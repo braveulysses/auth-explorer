@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import Dispatcher from './components/Dispatcher';
+import Top from './components/Top';
 
 class App extends Component {
   render() {
     return (
-      <Dispatcher/>
+      <div>
+        <Top/>
+        <Dispatcher/>
+      </div>
     );
   }
 }

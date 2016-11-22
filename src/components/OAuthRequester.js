@@ -5,37 +5,39 @@ import { Button, Input, Form, Header, Message, Divider } from 'semantic-ui-react
 import './OAuthRequest.css';
 
 import { OAUTH_STEP_DESCRIPTION } from '../Constants';
+import { OAUTH_CLIENT, BROKER } from '../Config';
 
 class OAuthRequester extends Component {
   constructor(props) {
     super(props);
 
-    const clientId = 'auth-explorer-client';
-    const responseType = 'token id_token';
     const state = guid();
     const nonce = guid();
-    const scope = 'openid email phone';
-    const prompt = 'login consent';
-    const redirectUri = 'http://localhost:3000';
 
-    let url = URI('https://example.com/oauth/authorize')
-        .addQuery('client_id', clientId)
-        .addQuery('response_type', responseType)
-        .addQuery('scope', scope)
-        .addQuery('redirect_uri', redirectUri)
+    let url = URI(BROKER.authorizeEndpoint)
+        .addQuery('client_id', OAUTH_CLIENT.clientId)
+        .addQuery('response_type', OAUTH_CLIENT.responseType)
+        .addQuery('scope', OAUTH_CLIENT.scope)
+        .addQuery('redirect_uri', OAUTH_CLIENT.redirectUri)
         .addQuery('state', state)
         .addQuery('nonce', nonce);
-    if (prompt.length > 0) {
-      url.addQuery('prompt', prompt);
+    if (OAUTH_CLIENT.prompt) {
+      url.addQuery('prompt', OAUTH_CLIENT.prompt);
+    }
+    if (OAUTH_CLIENT.acrValues) {
+      url.addQuery('acr_values', OAUTH_CLIENT.acrValues);
+    }
+    if (OAUTH_CLIENT.maxAge) {
+      url.addQuery('max_age', OAUTH_CLIENT.maxAge);
     }
     this.state = {
-      clientId: clientId,
-      responseType: responseType,
-      redirectUri: redirectUri,
-      scope: scope,
-      prompt: prompt,
-      acrValues: '',
-      maxAge: '',
+      clientId: OAUTH_CLIENT.clientId,
+      responseType: OAUTH_CLIENT.responseType,
+      redirectUri: OAUTH_CLIENT.redirectUri,
+      scope: OAUTH_CLIENT.scope,
+      prompt: OAUTH_CLIENT.prompt,
+      acrValues: OAUTH_CLIENT.acrValues,
+      maxAge: OAUTH_CLIENT.maxAge,
       state: state,
       nonce: nonce,
       authorizeUrl: url
