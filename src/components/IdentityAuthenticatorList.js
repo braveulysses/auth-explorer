@@ -39,6 +39,8 @@ class IdentityAuthenticatorList extends Component {
                         setEmailVerifyCode={this.props.setEmailVerifyCode}
                         setSendTelephonyRequest={this.props.setSendTelephonyRequest}
                         setTelephonyVerifyCode={this.props.setTelephonyVerifyCode}
+                        lookupParameters={this.props.lookupParameters}
+                        setLookupParameters={this.props.setLookupParameters}
                     />
                 );
               })}

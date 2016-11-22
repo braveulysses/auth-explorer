@@ -15,6 +15,7 @@ import {
     TOTP_AUTHENTICATOR_URN,
     EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN,
     TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN,
+    ACCOUNT_LOOKUP_AUTHENTICATOR_URN,
     CONSENT_HANDLER_URN,
     INITIAL_REDIRECT_DESCRIPTION,
     LOGIN_STEP_DESCRIPTION,
@@ -59,6 +60,7 @@ class AuthRequester extends Component {
     this.setEmailVerifyCode = this.setEmailVerifyCode.bind(this);
     this.setSendTelephonyRequest = this.setSendTelephonyRequest.bind(this);
     this.setTelephonyVerifyCode = this.setTelephonyVerifyCode.bind(this);
+    this.setLookupParameters = this.setLookupParameters.bind(this);
     this.setScopesApproved = this.setScopesApproved.bind(this);
     this.setOptionalScope = this.setOptionalScope.bind(this);
   }
@@ -212,6 +214,10 @@ class AuthRequester extends Component {
         username = body['sessionIdentityResource']['userName'];
         formattedName = body['sessionIdentityResource']['name.formatted'];
       }
+      let lookupParameters = [];
+      if (body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN]) {
+        lookupParameters = body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN]['lookupParameters'];
+      }
       let authUrls = AuthRequester.extractUrls(body);
 
       // Consent fields
@@ -234,7 +240,8 @@ class AuthRequester extends Component {
         authUrls: authUrls,
         scopes: scopes,
         approved: approved,
-        description: description
+        description: description,
+        lookupParameters: lookupParameters
       });
     }
   }
@@ -303,6 +310,15 @@ class AuthRequester extends Component {
       body[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN] = {
         verifyCode: verifyCode
       };
+      this.setBodyFromObject(body);
+    }
+  }
+
+  setLookupParameters(lookupParameters) {
+    let body = JSON.parse(this.state.body);
+    if (body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN]) {
+      body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN] =
+          Object.assign({}, body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN], lookupParameters);
       this.setBodyFromObject(body);
     }
   }
@@ -456,6 +472,8 @@ class AuthRequester extends Component {
               setEmailVerifyCode={this.setEmailVerifyCode}
               setSendTelephonyRequest={this.setSendTelephonyRequest}
               setTelephonyVerifyCode={this.setTelephonyVerifyCode}
+              lookupParameters={this.state.lookupParameters}
+              setLookupParameters={this.setLookupParameters}
           />
           <AuthUrlList
               authUrls={this.state.authUrls}

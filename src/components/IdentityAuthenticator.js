@@ -5,6 +5,7 @@ import UsernamePasswordForm from './UsernamePasswordForm';
 import TotpForm from './TotpForm';
 import EmailDeliveredCodeForm from './EmailDeliveredCodeForm';
 import TelephonyDeliveredCodeForm from './TelephonyDeliveredCodeForm';
+import AccountLookupForm from './AccountLookupForm';
 import './IdentityAuthenticator.css';
 
 import {
@@ -115,6 +116,13 @@ class IdentityAuthenticator extends Component {
             <TelephonyDeliveredCodeForm
                 setSendTelephonyRequest={this.props.setSendTelephonyRequest}
                 setTelephonyVerifyCode={this.props.setTelephonyVerifyCode}
+            />
+        );
+      case ACCOUNT_LOOKUP_AUTHENTICATOR_URN:
+        return (
+            <AccountLookupForm
+                lookupParameters={this.props.lookupParameters}
+                setLookupParameters={this.props.setLookupParameters}
             />
         );
       default:
