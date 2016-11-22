@@ -115,14 +115,16 @@ class AuthRequester extends Component {
     }
     const urn = USERNAME_PASSWORD_AUTHENTICATOR_URN;
     if (body[urn]) {
-      if (body[urn]['usernameRecovery']['$ref']) {
+      if (body[urn]['usernameRecovery'] &&
+          body[urn]['usernameRecovery']['$ref']) {
         urls.push({
           url: body[urn]['usernameRecovery']['$ref'],
           name: 'Username Recovery',
           description: USERNAME_RECOVERY_URI_DESCRIPTION
         });
       }
-      if (body[urn]['passwordRecovery']['$ref']) {
+      if (body[urn]['passwordRecovery'] &&
+          body[urn]['passwordRecovery']['$ref']) {
         urls.push({
           url: body[urn]['passwordRecovery']['$ref'],
           name: 'Password Recovery',
