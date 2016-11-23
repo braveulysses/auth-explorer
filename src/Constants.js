@@ -15,8 +15,22 @@ export const RECAPTCHA_AUTHENTICATOR_URN =
     'urn:pingidentity:scim:api:messages:2.0:RecaptchaAuthenticationRequest';
 export const REGISTRATION_AUTHENTICATOR_URN =
     'urn:pingidentity:scim:api:messages:2.0:RegistrationAuthenticationRequest';
+
+// Flow URNs
+export const AUTHENTICATION_URN = 'urn:pingidentity:scim:api:messages:2.0:AuthenticationRequest';
+export const USERNAME_RECOVERY_URN = 'urn:pingidentity:scim:api:messages:2.0:AccountFlow:UsernameRecoveryRequest';
+export const PASSWORD_RECOVERY_URN = 'urn:pingidentity:scim:api:messages:2.0:AccountFlow:PasswordRecoveryRequest';
+export const ACCOUNT_VERIFY_URN = 'urn:pingidentity:scim:api:messages:2.0:AccountFlow:VerifyAccountRequest';
 export const CONSENT_HANDLER_URN =
     'urn:pingidentity:scim:api:messages:2.0:ConsentApprovalResponse';
+
+// Resource types
+export const LOGIN_RESOURCE_TYPE = 'login';
+export const SECOND_FACTOR_RESOURCE_TYPE = 'secondFactor';
+export const CONSENT_RESOURCE_TYPE = 'approve';
+export const USERNAME_RECOVERY_RESOURCE_TYPE = 'Username Recovery';
+export const PASSWORD_RECOVERY_RESOURCE_TYPE = 'Password Recovery';
+export const VERIFY_ACCOUNT_RESOURCE_TYPE = 'Verify Account';
 
 // Authenticator descriptions.
 export const ACCOUNT_LOOKUP_AUTHENTICATOR_DESCRIPTION =
@@ -79,3 +93,5 @@ export const USERNAME_RECOVERY_STEP_DESCRIPTION =
     "The username recovery account flow may be used to look up an end user's username.";
 export const PASSWORD_RECOVERY_STEP_DESCRIPTION =
     "The password recovery account flow may be used to reset an end user's password.";
+export const VERIFY_ACCOUNT_STEP_DESCRIPTION =
+    "The verify account flow is used to confirm that the end user has control over some contact method associated with the account, such as an email address.";

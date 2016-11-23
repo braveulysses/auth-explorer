@@ -19,6 +19,11 @@ import {
     RECAPTCHA_AUTHENTICATOR_URN,
     REGISTRATION_AUTHENTICATOR_URN,
     CONSENT_HANDLER_URN,
+    SECOND_FACTOR_RESOURCE_TYPE,
+    CONSENT_RESOURCE_TYPE,
+    USERNAME_RECOVERY_RESOURCE_TYPE,
+    PASSWORD_RECOVERY_RESOURCE_TYPE,
+    VERIFY_ACCOUNT_RESOURCE_TYPE,
     INITIAL_REDIRECT_DESCRIPTION,
     LOGIN_STEP_DESCRIPTION,
     SECOND_FACTOR_STEP_DESCRIPTION,
@@ -27,6 +32,7 @@ import {
     CONTINUE_REDIRECT_URI_STEP_DESCRIPTION,
     USERNAME_RECOVERY_STEP_DESCRIPTION,
     PASSWORD_RECOVERY_STEP_DESCRIPTION,
+    VERIFY_ACCOUNT_STEP_DESCRIPTION,
     META_LOCATION_URI_DESCRIPTION,
     FOLLOWUP_URI_DESCRIPTION,
     USERNAME_RECOVERY_URI_DESCRIPTION,
@@ -164,20 +170,24 @@ class AuthRequester extends Component {
       if (body['meta']) {
         const resourceType = body['meta']['resourceType'];
         switch(resourceType) {
-          case 'secondFactor':
+          case SECOND_FACTOR_RESOURCE_TYPE:
             description = SECOND_FACTOR_STEP_DESCRIPTION;
             this.props.setActiveStep('Second factor');
             break;
-          case 'approve':
+          case CONSENT_RESOURCE_TYPE:
             description = CONSENT_STEP_DESCRIPTION;
             this.props.setActiveStep('Consent');
             break;
-          case 'Username Recovery':
+          case USERNAME_RECOVERY_RESOURCE_TYPE:
             description = USERNAME_RECOVERY_STEP_DESCRIPTION;
             this.props.setActiveStep('Account flow');
             break;
-          case 'Password Recovery':
+          case PASSWORD_RECOVERY_RESOURCE_TYPE:
             description = PASSWORD_RECOVERY_STEP_DESCRIPTION;
+            this.props.setActiveStep('Account flow');
+            break;
+          case VERIFY_ACCOUNT_RESOURCE_TYPE:
+            description = VERIFY_ACCOUNT_STEP_DESCRIPTION;
             this.props.setActiveStep('Account flow');
             break;
           default:
