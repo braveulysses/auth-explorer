@@ -23,3 +23,7 @@ export const BROKER = {
 export const COMPLEX_ATTRIBUTES = {
   name: [ 'givenName', 'familyName', 'formatted' ]
 };
+
+export const ACCOUNT_VERIFY_ATTRIBUTES = {
+  accountVerified: true
+};

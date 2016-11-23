@@ -4,6 +4,7 @@ import AceEditor from 'react-ace';
 import { Dimmer, Loader, Button, Input, Form, Container, Message, Divider } from 'semantic-ui-react';
 import AuthUrlList from './AuthUrlList';
 import IdentityAuthenticatorList from './IdentityAuthenticatorList';
+import AccountVerifyForm from './AccountVerifyForm';
 import ScopeList from './ScopeList';
 import './AuthRequester.css';
 
@@ -47,6 +48,7 @@ class AuthRequester extends Component {
     this.state = {
       url: this.props.url,
       body: '',
+      resourceType: '',
       loading: false,
       authUrls: [],
       authenticators: [],
@@ -72,6 +74,7 @@ class AuthRequester extends Component {
     this.setLookupParameters = this.setLookupParameters.bind(this);
     this.setRecaptchaResponse = this.setRecaptchaResponse.bind(this);
     this.register = this.register.bind(this);
+    this.setAccountVerifyAttributes = this.setAccountVerifyAttributes.bind(this);
     this.setScopesApproved = this.setScopesApproved.bind(this);
     this.setOptionalScope = this.setOptionalScope.bind(this);
   }
@@ -166,9 +169,19 @@ class AuthRequester extends Component {
     if (json) {
       let body = JSON.parse(json);
 
+      // Common fields
+      const schemas = body['schemas'];
+      const meta = body['meta'];
+      const followUp = body['followUp'];
+      let continueRedirectUri = '';
+      if (body['continue_redirect_uri']) {
+        continueRedirectUri = body['continue_redirect_uri'];
+      }
+
       // Set the current step and description
-      if (body['meta']) {
-        const resourceType = body['meta']['resourceType'];
+      let resourceType = '';
+      if (meta) {
+        resourceType = meta['resourceType'];
         switch(resourceType) {
           case SECOND_FACTOR_RESOURCE_TYPE:
             description = SECOND_FACTOR_STEP_DESCRIPTION;
@@ -196,7 +209,7 @@ class AuthRequester extends Component {
         }
         // Set the current URL — this ensures that a PUT results in
         // an updated request URL
-        requestUrl = body['meta']['location'];
+        requestUrl = meta['location'];
       }
       // Special cases for OAuth servlet responses
       if (body['flow_uri']) {
@@ -204,14 +217,6 @@ class AuthRequester extends Component {
       }
       if (body['continue_redirect_uri']) {
         description = CONTINUE_REDIRECT_URI_STEP_DESCRIPTION;
-      }
-
-      // Common fields
-      const meta = body.meta;
-      const followUp = body.followUp;
-      let continueRedirectUri = '';
-      if (body['continue_redirect_uri']) {
-        continueRedirectUri = body['continue_redirect_uri'];
       }
 
       // Login and 2FA fields
@@ -248,7 +253,7 @@ class AuthRequester extends Component {
       // Consent fields
       let scopes = [];
       let approved = false;
-      if (body['schemas'] && body['schemas'].includes(CONSENT_HANDLER_URN)) {
+      if (schemas && schemas.includes(CONSENT_HANDLER_URN)) {
         scopes = body['scopes'];
         approved = body['approved'];
       }
@@ -256,6 +261,7 @@ class AuthRequester extends Component {
       this.setState({
         url: requestUrl,
         meta: meta,
+        resourceType: resourceType,
         followUp: followUp,
         authenticators: authenticators,
         username: username,
@@ -365,6 +371,13 @@ class AuthRequester extends Component {
           Object.assign({}, body[REGISTRATION_AUTHENTICATOR_URN]['registerResourceAttributes'], attributes);
       this.setBodyFromObject(body);
     }
+  }
+
+  setAccountVerifyAttributes(attributes) {
+    let body = JSON.parse(this.state.body);
+    body['accountVerifiedResourceAttributes'] = attributes;
+    this.setState({ accountVerifyAttributes: attributes });
+    this.setBodyFromObject(body);
   }
 
   setScopesApproved(approved) {
@@ -529,21 +542,32 @@ class AuthRequester extends Component {
             </Dimmer.Dimmable>
           </Container>
           <Divider section/>
-          <ScopeList
-              scopes={this.state.scopes}
-              approved={this.state.approved}
-              setScopesApproved={this.setScopesApproved}
-              setOptionalScope={this.setOptionalScope}
-          />
-          <IdentityAuthenticatorList
-              authenticators={this.state.authenticators}
-              removeAuthenticator={this.removeIdentityAuthenticator}
-              data={authenticatorData}
-          />
-          <AuthUrlList
-              authUrls={this.state.authUrls}
-              setAuthUrl={this.setAuthUrl}
-          />
+          {this.state.resourceType === VERIFY_ACCOUNT_RESOURCE_TYPE &&
+            <AccountVerifyForm
+                setAccountVerifyAttributes={this.setAccountVerifyAttributes}
+            />
+          }
+          {this.state.resourceType === CONSENT_RESOURCE_TYPE &&
+            <ScopeList
+                scopes={this.state.scopes}
+                approved={this.state.approved}
+                setScopesApproved={this.setScopesApproved}
+                setOptionalScope={this.setOptionalScope}
+            />
+          }
+          {this.state.authenticators.length > 0 &&
+            <IdentityAuthenticatorList
+                authenticators={this.state.authenticators}
+                removeAuthenticator={this.removeIdentityAuthenticator}
+                data={authenticatorData}
+            />
+          }
+          {this.state.authUrls.length > 0 &&
+            <AuthUrlList
+                authUrls={this.state.authUrls}
+                setAuthUrl={this.setAuthUrl}
+            />
+          }
         </div>
     );
   }
