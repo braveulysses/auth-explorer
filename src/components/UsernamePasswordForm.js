@@ -1,24 +1,24 @@
 import React, {Component} from 'react';
-import { Form, Button, Input } from 'semantic-ui-react';
+import { Container, Header, Form, Button, Input } from 'semantic-ui-react';
+import { USERNAME_PASSWORD_AUTHENTICATOR_URN } from '../Constants';
 
 class UsernamePasswordForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: this.props.username,
-      password: 'password'
+      password: 'password',
+      newPassword: ''
     };
     this.setCredentials = this.setCredentials.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.setNewPassword = this.setNewPassword.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleUsernameChange(event) {
-    this.setState({ username: event.target.value });
-  }
-
-  handlePasswordChange(event) {
-    this.setState({ password: event.target.value });
+  handleInputChange(event) {
+    let state = {};
+    state[event.target.name] = event.target.value;
+    this.setState(state);
   }
 
   setCredentials(event) {
@@ -26,34 +26,63 @@ class UsernamePasswordForm extends Component {
     event.preventDefault();
   }
 
+  setNewPassword(event) {
+    this.props.setNewPassword(USERNAME_PASSWORD_AUTHENTICATOR_URN, this.state.newPassword);
+    event.preventDefault();
+  }
+
   render() {
     return (
-        <Form>
-          <Form.Group>
-            <Form.Field>
-              <Input
+        <Container>
+          <Header size="tiny">Log in</Header>
+          <Form>
+            <Form.Group>
+              <Form.Field>
+                <Input
+                    size="mini"
+                    label="Username"
+                    name="username"
+                    defaultValue={this.state.username}
+                    onChange={this.handleInputChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <Input
+                    size="mini"
+                    label="Password"
+                    name="password"
+                    defaultValue="password"
+                    onChange={this.handleInputChange}
+                />
+              </Form.Field>
+              <Button
+                  compact primary
                   size="mini"
-                  label="Username"
-                  defaultValue={this.state.username}
-                  onChange={this.handleUsernameChange}
-              />
-            </Form.Field>
-            <Form.Field>
-              <Input
+                  onClick={this.setCredentials}>
+                Set
+              </Button>
+            </Form.Group>
+          </Form>
+          <Header size="tiny">Set new password</Header>
+          <Form>
+            <Form.Group>
+              <Form.Field>
+                <Input
+                    size="mini"
+                    label="New password"
+                    name="newPassword"
+                    onChange={this.handleInputChange}
+                />
+              </Form.Field>
+              <Button
+                  compact primary
                   size="mini"
-                  label="Password"
-                  defaultValue="password"
-                  onChange={this.handlePasswordChange}
-              />
-            </Form.Field>
-            <Button
-                compact primary
-                size="mini"
-                onClick={this.setCredentials}>
-              Set
-            </Button>
-          </Form.Group>
-        </Form>
+                  onClick={this.setNewPassword}>
+                Set
+              </Button>
+            </Form.Group>
+          </Form>
+        </Container>
     );
   }
 }

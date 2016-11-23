@@ -98,6 +98,7 @@ class IdentityAuthenticator extends Component {
             <UsernamePasswordForm
                 username={this.props.data[USERNAME_PASSWORD_AUTHENTICATOR_URN].username}
                 setUsernamePassword={this.props.data[USERNAME_PASSWORD_AUTHENTICATOR_URN].setUsernamePassword}
+                setNewPassword={this.props.data[USERNAME_PASSWORD_AUTHENTICATOR_URN].setNewPassword}
             />
         );
       case TOTP_AUTHENTICATOR_URN:

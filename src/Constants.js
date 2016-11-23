@@ -71,7 +71,10 @@ export const URLS_UI_DESCRIPTION =
     'Choose one of the URLs below to modify the authentication API request.';
 export const AUTHENTICATORS_UI_DESCRIPTION =
     'An identity authenticator is a scheme for verifying the identity of an end user. At least one identity authenticator must be satisfied to successfully authenticate an end user.';
-export const ACCOUNT_VERIFY_UI_DESCRIPTION = "After an account has been verified, the Broker will write the user's verification status to one or more attributes provided by the auth UI in the accountVerifiedResourceAttributes field.";
+export const ACCOUNT_VERIFY_UI_DESCRIPTION =
+    "After an account has been verified, the Broker will write the user's verification status to one or more attributes provided by the auth UI in the accountVerifiedResourceAttributes field.";
+export const PASSWORD_RECOVERY_UI_DESCRIPTION =
+    "To recover a user's password, a new password must be provided.";
 export const SCOPES_UI_DESCRIPTION =
     "A scope represents access to particular user data. The end user may choose to approve or deny an application's access request based on a scope consent prompt presented by the auth UI.";
 

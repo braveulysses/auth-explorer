@@ -5,6 +5,7 @@ import { Dimmer, Loader, Button, Input, Form, Container, Message, Divider } from
 import AuthUrlList from './AuthUrlList';
 import IdentityAuthenticatorList from './IdentityAuthenticatorList';
 import AccountVerifyForm from './AccountVerifyForm';
+import PasswordRecoveryForm from './PasswordRecoveryForm';
 import ScopeList from './ScopeList';
 import './AuthRequester.css';
 
@@ -66,6 +67,7 @@ class AuthRequester extends Component {
     this.removeIdentityAuthenticator = this.removeIdentityAuthenticator.bind(this);
     this.getAuthenticatorProps = this.getAuthenticatorProps.bind(this);
     this.setUsernamePassword = this.setUsernamePassword.bind(this);
+    this.setNewPassword = this.setNewPassword.bind(this);
     this.setTotp = this.setTotp.bind(this);
     this.setSendEmailRequest = this.setSendEmailRequest.bind(this);
     this.setEmailVerifyCode = this.setEmailVerifyCode.bind(this);
@@ -294,6 +296,17 @@ class AuthRequester extends Component {
     }
   }
 
+  setNewPassword(urn, newPassword) {
+    let body = JSON.parse(this.state.body);
+    if (body[urn]) {
+      body[urn]['newPassword'] = newPassword;
+      this.setBodyFromObject(body);
+    } else if (body['schemas'] && body['schemas'].includes(urn)) {
+      body['newPassword'] = newPassword;
+      this.setBodyFromObject(body);
+    }
+  }
+
   setTotp(password) {
     let body = JSON.parse(this.state.body);
     if (body[TOTP_AUTHENTICATOR_URN]) {
@@ -458,7 +471,8 @@ class AuthRequester extends Component {
     let props = {};
     props[USERNAME_PASSWORD_AUTHENTICATOR_URN] = {
       username: this.state.username,
-      setUsernamePassword: this.setUsernamePassword
+      setUsernamePassword: this.setUsernamePassword,
+      setNewPassword: this.setNewPassword,
     };
     props[TOTP_AUTHENTICATOR_URN] = {
       setTotp: this.setTotp
@@ -545,6 +559,11 @@ class AuthRequester extends Component {
           {this.state.resourceType === VERIFY_ACCOUNT_RESOURCE_TYPE &&
             <AccountVerifyForm
                 setAccountVerifyAttributes={this.setAccountVerifyAttributes}
+            />
+          }
+          {this.state.resourceType === PASSWORD_RECOVERY_RESOURCE_TYPE &&
+            <PasswordRecoveryForm
+                setNewPassword={this.setNewPassword}
             />
           }
           {this.state.resourceType === CONSENT_RESOURCE_TYPE &&
