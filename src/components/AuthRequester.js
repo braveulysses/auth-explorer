@@ -17,6 +17,7 @@ import {
     TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN,
     ACCOUNT_LOOKUP_AUTHENTICATOR_URN,
     RECAPTCHA_AUTHENTICATOR_URN,
+    REGISTRATION_AUTHENTICATOR_URN,
     CONSENT_HANDLER_URN,
     INITIAL_REDIRECT_DESCRIPTION,
     LOGIN_STEP_DESCRIPTION,
@@ -64,6 +65,7 @@ class AuthRequester extends Component {
     this.setTelephonyVerifyCode = this.setTelephonyVerifyCode.bind(this);
     this.setLookupParameters = this.setLookupParameters.bind(this);
     this.setRecaptchaResponse = this.setRecaptchaResponse.bind(this);
+    this.register = this.register.bind(this);
     this.setScopesApproved = this.setScopesApproved.bind(this);
     this.setOptionalScope = this.setOptionalScope.bind(this);
   }
@@ -227,6 +229,10 @@ class AuthRequester extends Component {
       if (body[RECAPTCHA_AUTHENTICATOR_URN]) {
         recaptchaKey = body[RECAPTCHA_AUTHENTICATOR_URN]['recaptchaKey'];
       }
+      let registrableAttributes = [];
+      if (body[REGISTRATION_AUTHENTICATOR_URN]) {
+        registrableAttributes = body[REGISTRATION_AUTHENTICATOR_URN]['registrableAttributes'];
+      }
       let authUrls = AuthRequester.extractUrls(body);
 
       // Consent fields
@@ -251,7 +257,8 @@ class AuthRequester extends Component {
         approved: approved,
         description: description,
         lookupParameters: lookupParameters,
-        recaptchaKey: recaptchaKey
+        recaptchaKey: recaptchaKey,
+        registrableAttributes: registrableAttributes
       });
     }
   }
@@ -337,6 +344,15 @@ class AuthRequester extends Component {
     let body = JSON.parse(this.state.body);
     if (body[RECAPTCHA_AUTHENTICATOR_URN]) {
       body[RECAPTCHA_AUTHENTICATOR_URN]['recaptchaResponse'] = recaptchaResponse;
+      this.setBodyFromObject(body);
+    }
+  }
+
+  register(attributes) {
+    let body = JSON.parse(this.state.body);
+    if (body[REGISTRATION_AUTHENTICATOR_URN]) {
+      body[REGISTRATION_AUTHENTICATOR_URN]['registerResourceAttributes'] =
+          Object.assign({}, body[REGISTRATION_AUTHENTICATOR_URN]['registerResourceAttributes'], attributes);
       this.setBodyFromObject(body);
     }
   }
@@ -438,6 +454,10 @@ class AuthRequester extends Component {
     props[RECAPTCHA_AUTHENTICATOR_URN] = {
       recaptchaKey: this.state.recaptchaKey,
       setRecaptchaResponse: this.setRecaptchaResponse
+    };
+    props[REGISTRATION_AUTHENTICATOR_URN] = {
+      registrableAttributes: this.state.registrableAttributes,
+      register: this.register
     };
     return props;
   }

@@ -7,6 +7,7 @@ import EmailDeliveredCodeForm from './EmailDeliveredCodeForm';
 import TelephonyDeliveredCodeForm from './TelephonyDeliveredCodeForm';
 import AccountLookupForm from './AccountLookupForm';
 import RecaptchaForm from './RecaptchaForm';
+import RegistrationForm from './RegistrationForm';
 import './IdentityAuthenticator.css';
 
 import {
@@ -131,6 +132,13 @@ class IdentityAuthenticator extends Component {
             <RecaptchaForm
                 recaptchaKey={this.props.data[RECAPTCHA_AUTHENTICATOR_URN].recaptchaKey}
                 setRecaptchaResponse={this.props.data[RECAPTCHA_AUTHENTICATOR_URN].setRecaptchaResponse}
+            />
+        );
+      case REGISTRATION_AUTHENTICATOR_URN:
+        return (
+            <RegistrationForm
+                registrableAttributes={this.props.data[REGISTRATION_AUTHENTICATOR_URN].registrableAttributes}
+                register={this.props.data[REGISTRATION_AUTHENTICATOR_URN].register}
             />
         );
       default:
