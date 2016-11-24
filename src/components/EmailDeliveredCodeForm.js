@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import { Form, Button, Input, Container, Header, Divider } from 'semantic-ui-react';
+import { EMAIL_DELIVERED_CODE_MESSAGES } from '../Config';
 
 class EmailDeliveredCodeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messageSubject: 'Your one-time password code',
-      messageText: 'Your one-time code is: %code%',
+      messageSubject: EMAIL_DELIVERED_CODE_MESSAGES.messageSubject,
+      messageText: EMAIL_DELIVERED_CODE_MESSAGES.messageText,
       verifyCode: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);

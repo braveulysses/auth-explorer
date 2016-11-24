@@ -24,6 +24,18 @@ export const COMPLEX_ATTRIBUTES = {
   name: [ 'givenName', 'familyName', 'formatted' ]
 };
 
+// This is a map of attribute names and values that the Broker will
+// set on an account to mark it as verified.
 export const ACCOUNT_VERIFY_ATTRIBUTES = {
   accountVerified: true
+};
+
+export const EMAIL_DELIVERED_CODE_MESSAGES = {
+  messageSubject: 'Your one-time password code',
+  messageText: 'Your one-time code is: %code%'
+};
+
+export const TELEPHONY_DELIVERED_CODE_MESSAGES = {
+  message: 'Your one-time password code is: %code%',
+  language: 'en-US'
 };

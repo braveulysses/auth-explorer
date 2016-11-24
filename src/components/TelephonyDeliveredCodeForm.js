@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import { Form, Button, Input, Container, Header, Divider } from 'semantic-ui-react';
+import { TELEPHONY_DELIVERED_CODE_MESSAGES } from '../Config';
 
 class TelephonyDeliveredCodeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: 'Your one-time password code is: %code%',
-      language: 'en-US',
+      message: TELEPHONY_DELIVERED_CODE_MESSAGES.message,
+      language: TELEPHONY_DELIVERED_CODE_MESSAGES.language,
       verifyCode: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
