@@ -17,10 +17,16 @@ export const REGISTRATION_AUTHENTICATOR_URN =
     'urn:pingidentity:scim:api:messages:2.0:RegistrationAuthenticationRequest';
 
 // Flow URNs
-export const AUTHENTICATION_URN = 'urn:pingidentity:scim:api:messages:2.0:AuthenticationRequest';
-export const USERNAME_RECOVERY_URN = 'urn:pingidentity:scim:api:messages:2.0:AccountFlow:UsernameRecoveryRequest';
-export const PASSWORD_RECOVERY_URN = 'urn:pingidentity:scim:api:messages:2.0:AccountFlow:PasswordRecoveryRequest';
-export const ACCOUNT_VERIFY_URN = 'urn:pingidentity:scim:api:messages:2.0:AccountFlow:VerifyAccountRequest';
+export const SCIM_ERROR_URN =
+    'urn:ietf:params:scim:api:messages:2.0:Error';
+export const AUTHENTICATION_URN =
+    'urn:pingidentity:scim:api:messages:2.0:AuthenticationRequest';
+export const USERNAME_RECOVERY_URN =
+    'urn:pingidentity:scim:api:messages:2.0:AccountFlow:UsernameRecoveryRequest';
+export const PASSWORD_RECOVERY_URN =
+    'urn:pingidentity:scim:api:messages:2.0:AccountFlow:PasswordRecoveryRequest';
+export const ACCOUNT_VERIFY_URN =
+    'urn:pingidentity:scim:api:messages:2.0:AccountFlow:VerifyAccountRequest';
 export const CONSENT_HANDLER_URN =
     'urn:pingidentity:scim:api:messages:2.0:ConsentApprovalResponse';
 
@@ -79,6 +85,10 @@ export const SCOPES_UI_DESCRIPTION =
     "A scope represents access to particular user data. The end user may choose to approve or deny an application's access request based on a scope consent prompt presented by the auth UI.";
 
 // Descriptions of authentication flow stages
+export const AUTHORIZATION_ERROR_DESCRIPTION =
+    "An error was returned by the authorization service.";
+export const AUTHENTICATION_ERROR_DESCRIPTION =
+    "An error was returned by the authentication service.";
 export const OAUTH_STEP_DESCRIPTION =
     "Authentication is initiated by making an OAuth 2 or OpenID Connect request for an access token or ID token. Before the token is returned to the client, the end user will be expected to authenticate and approve the request.";
 export const INITIAL_REDIRECT_DESCRIPTION =

@@ -21,6 +21,7 @@ import {
     ACCOUNT_LOOKUP_AUTHENTICATOR_URN,
     RECAPTCHA_AUTHENTICATOR_URN,
     REGISTRATION_AUTHENTICATOR_URN,
+    SCIM_ERROR_URN,
     CONSENT_HANDLER_URN,
     LOGIN_RESOURCE_TYPE,
     SECOND_FACTOR_RESOURCE_TYPE,
@@ -29,6 +30,8 @@ import {
     PASSWORD_RECOVERY_RESOURCE_TYPE,
     VERIFY_ACCOUNT_RESOURCE_TYPE,
     INITIAL_REDIRECT_DESCRIPTION,
+    AUTHORIZATION_ERROR_DESCRIPTION,
+    AUTHENTICATION_ERROR_DESCRIPTION,
     LOGIN_STEP_DESCRIPTION,
     SECOND_FACTOR_STEP_DESCRIPTION,
     CONSENT_STEP_DESCRIPTION,
@@ -232,6 +235,13 @@ class AuthRequester extends Component {
       }
       if (body['continue_redirect_uri']) {
         description = CONTINUE_REDIRECT_URI_STEP_DESCRIPTION;
+      }
+      // Errors
+      if (body['error']) {
+        description = AUTHORIZATION_ERROR_DESCRIPTION;
+      }
+      if (schemas && schemas.includes(SCIM_ERROR_URN)) {
+        description = AUTHENTICATION_ERROR_DESCRIPTION;
       }
 
       // Login and 2FA fields
