@@ -19,7 +19,7 @@ class Scope extends Component {
 
   render() {
     return (
-        <Card key={this.props.urn} fluid className="Scope">
+        <Card key={this.props.name} fluid className="Scope">
           <Card.Content>
             <Card.Header>
               {this.props.name} &nbsp;
@@ -33,19 +33,27 @@ class Scope extends Component {
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
-            { this.props.optional ? (
+            { this.props.optional &&
                 <div className="ui buttons">
                   <Checkbox
-                      defaultChecked={this.props.approveOptionalScope}
                       label="Grant optional scope"
                       onChange={this.toggleApproveOptionalScope}
                   />
                 </div>
-            ) : ''}
+            }
           </Card.Content>
         </Card>
     );
   }
 }
+
+Scope.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  consentPromptText: React.PropTypes.string.isRequired,
+  description: React.PropTypes.string,
+  granted: React.PropTypes.bool.isRequired,
+  optional: React.PropTypes.bool.isRequired,
+  setOptionalScope: React.PropTypes.func
+};
 
 export default Scope;

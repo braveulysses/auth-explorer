@@ -56,4 +56,8 @@ class PasswordRecoveryForm extends Component {
   }
 }
 
+PasswordRecoveryForm.propTypes = {
+  setNewPassword: React.PropTypes.func.isRequired
+};
+
 export default PasswordRecoveryForm;

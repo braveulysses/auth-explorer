@@ -47,4 +47,10 @@ class IdentityAuthenticatorList extends Component {
   }
 }
 
+IdentityAuthenticatorList.propTypes = {
+  authenticators: React.PropTypes.array.isRequired,
+  data: React.PropTypes.object.isRequired,
+  removeAuthenticator: React.PropTypes.func.isRequired
+};
+
 export default IdentityAuthenticatorList;

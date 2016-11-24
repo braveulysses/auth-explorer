@@ -92,4 +92,8 @@ class AccountVerifyForm extends Component {
   }
 }
 
+AccountVerifyForm.propTypes = {
+  setAccountVerifyAttributes: React.PropTypes.func.isRequired
+};
+
 export default AccountVerifyForm;

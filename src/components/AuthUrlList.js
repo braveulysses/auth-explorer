@@ -37,4 +37,9 @@ class AuthUrlList extends Component {
   }
 }
 
+AuthUrlList.propTypes = {
+  authUrls: React.PropTypes.array.isRequired,
+  setAuthUrl: React.PropTypes.func.isRequired
+};
+
 export default AuthUrlList;

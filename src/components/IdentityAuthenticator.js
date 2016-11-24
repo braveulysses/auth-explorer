@@ -184,4 +184,10 @@ class IdentityAuthenticator extends Component {
   }
 }
 
+IdentityAuthenticator.propTypes = {
+  authenticator: React.PropTypes.object.isRequired,
+  data: React.PropTypes.object.isRequired,
+  removeAuthenticator: React.PropTypes.func.isRequired
+};
+
 export default IdentityAuthenticator;

@@ -26,4 +26,8 @@ class IdentityAuthenticatorStatus extends Component {
   }
 }
 
+IdentityAuthenticatorStatus.propTypes = {
+  status: React.PropTypes.string.isRequired
+};
+
 export default IdentityAuthenticatorStatus;

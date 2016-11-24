@@ -24,4 +24,8 @@ class CopyableTableCell extends Component {
   }
 }
 
+CopyableTableCell.propTypes = {
+  value: React.PropTypes.string.isRequired
+};
+
 export default CopyableTableCell;

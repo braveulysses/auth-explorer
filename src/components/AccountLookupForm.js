@@ -59,4 +59,9 @@ class AccountLookupForm extends Component {
   }
 }
 
+AccountLookupForm.propTypes = {
+  lookupParameters: React.PropTypes.array.isRequired,
+  setLookupParameters: React.PropTypes.func.isRequired
+};
+
 export default AccountLookupForm;

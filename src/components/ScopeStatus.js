@@ -16,4 +16,8 @@ class ScopeStatus extends Component {
   }
 }
 
+ScopeStatus.propTypes = {
+  granted: React.PropTypes.bool.isRequired
+};
+
 export default ScopeStatus;

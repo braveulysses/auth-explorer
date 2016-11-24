@@ -63,4 +63,8 @@ class Steps extends Component {
   }
 }
 
+Steps.propTypes = {
+  step: React.PropTypes.string.isRequired
+};
+
 export default Steps;

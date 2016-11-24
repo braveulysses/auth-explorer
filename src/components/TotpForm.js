@@ -43,4 +43,8 @@ class TotpForm extends Component {
   }
 }
 
+TotpForm.propTypes = {
+  setTotp: React.PropTypes.func.isRequired
+};
+
 export default TotpForm;

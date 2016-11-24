@@ -47,4 +47,8 @@ class Done extends Component {
   }
 }
 
+Done.propTypes = {
+  url: React.PropTypes.string.isRequired
+};
+
 export default Done;

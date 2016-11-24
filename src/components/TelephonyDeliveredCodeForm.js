@@ -92,4 +92,9 @@ class TelephonyDeliveredCodeForm extends Component {
   }
 }
 
+TelephonyDeliveredCodeForm.propTypes = {
+  setSendTelephonyRequest: React.PropTypes.func.isRequired,
+  setTelephonyVerifyCode: React.PropTypes.func.isRequired
+};
+
 export default TelephonyDeliveredCodeForm;

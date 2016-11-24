@@ -44,4 +44,9 @@ class RecaptchaForm extends Component {
   }
 }
 
+RecaptchaForm.propTypes = {
+  recaptchaKey: React.PropTypes.string.isRequired,
+  setRecaptchaResponse: React.PropTypes.func.isRequired
+};
+
 export default RecaptchaForm;

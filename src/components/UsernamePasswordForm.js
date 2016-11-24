@@ -87,4 +87,9 @@ class UsernamePasswordForm extends Component {
   }
 }
 
+UsernamePasswordForm.propTypes = {
+  setUsernamePassword: React.PropTypes.func.isRequired,
+  setNewPassword: React.PropTypes.func.isRequired
+};
+
 export default UsernamePasswordForm;

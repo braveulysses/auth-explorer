@@ -63,4 +63,9 @@ class ScopeList extends Component {
   }
 }
 
+ScopeList.propTypes = {
+  approved: React.PropTypes.bool.isRequired,
+  setScopesApproved: React.PropTypes.func.isRequired
+};
+
 export default ScopeList;

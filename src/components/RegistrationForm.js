@@ -86,4 +86,8 @@ class RegistrationForm extends Component {
   }
 }
 
+RegistrationForm.propTypes = {
+  registrableAttributes: React.PropTypes.array.isRequired
+};
+
 export default RegistrationForm;

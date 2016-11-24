@@ -92,4 +92,8 @@ class EmailDeliveredCodeForm extends Component {
   }
 }
 
+EmailDeliveredCodeForm.propTypes = {
+  setSendEmailRequest: React.PropTypes.func.isRequired
+};
+
 export default EmailDeliveredCodeForm;

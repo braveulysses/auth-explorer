@@ -47,4 +47,8 @@ class AuthUrl extends Component {
   }
 }
 
+AuthUrl.propTypes = {
+  url: React.PropTypes.object.isRequired
+};
+
 export default AuthUrl;
