@@ -3,6 +3,7 @@ import 'whatwg-fetch';
 import AceEditor from 'react-ace';
 import { Dimmer, Loader, Button, Input, Form, Container, Message, Divider } from 'semantic-ui-react';
 import AuthUrlList from './AuthUrlList';
+import FlowHeader from './FlowHeader';
 import IdentityAuthenticatorList from './IdentityAuthenticatorList';
 import AccountVerifyForm from './AccountVerifyForm';
 import PasswordRecoveryForm from './PasswordRecoveryForm';
@@ -21,6 +22,7 @@ import {
     RECAPTCHA_AUTHENTICATOR_URN,
     REGISTRATION_AUTHENTICATOR_URN,
     CONSENT_HANDLER_URN,
+    LOGIN_RESOURCE_TYPE,
     SECOND_FACTOR_RESOURCE_TYPE,
     CONSENT_RESOURCE_TYPE,
     USERNAME_RECOVERY_RESOURCE_TYPE,
@@ -49,6 +51,8 @@ class AuthRequester extends Component {
     this.state = {
       url: this.props.url,
       body: '',
+      flowSuccess: false,
+      currentFlow: '',
       resourceType: '',
       loading: false,
       authUrls: [],
@@ -167,6 +171,7 @@ class AuthRequester extends Component {
 
   parseBody(json) {
     let requestUrl = this.state.url;
+    let currentFlow = '';
     let description = '';
     if (json) {
       let body = JSON.parse(json);
@@ -186,25 +191,33 @@ class AuthRequester extends Component {
         resourceType = meta['resourceType'];
         switch(resourceType) {
           case SECOND_FACTOR_RESOURCE_TYPE:
+            currentFlow = 'Second factor flow';
             description = SECOND_FACTOR_STEP_DESCRIPTION;
             this.props.setActiveStep('Second factor');
             break;
           case CONSENT_RESOURCE_TYPE:
+            currentFlow = 'Consent flow';
             description = CONSENT_STEP_DESCRIPTION;
             this.props.setActiveStep('Consent');
             break;
           case USERNAME_RECOVERY_RESOURCE_TYPE:
+            currentFlow = 'Username recovery flow';
             description = USERNAME_RECOVERY_STEP_DESCRIPTION;
             this.props.setActiveStep('Account flow');
             break;
           case PASSWORD_RECOVERY_RESOURCE_TYPE:
+            currentFlow = 'Password recovery flow';
             description = PASSWORD_RECOVERY_STEP_DESCRIPTION;
             this.props.setActiveStep('Account flow');
             break;
           case VERIFY_ACCOUNT_RESOURCE_TYPE:
+            currentFlow = 'Verify account flow';
             description = VERIFY_ACCOUNT_STEP_DESCRIPTION;
             this.props.setActiveStep('Account flow');
             break;
+          case LOGIN_RESOURCE_TYPE:
+            currentFlow = 'Login flow';
+            // Fall through to default
           default:
             description = LOGIN_STEP_DESCRIPTION;
             this.props.setActiveStep('Log in');
@@ -260,6 +273,9 @@ class AuthRequester extends Component {
         approved = body['approved'];
       }
 
+      // Most account flows have a top-level 'success' flag.
+      let flowSuccess = body['success'];
+
       this.setState({
         url: requestUrl,
         meta: meta,
@@ -273,6 +289,8 @@ class AuthRequester extends Component {
         authUrls: authUrls,
         scopes: scopes,
         approved: approved,
+        currentFlow: currentFlow,
+        flowSuccess: flowSuccess,
         description: description,
         lookupParameters: lookupParameters,
         recaptchaKey: recaptchaKey,
@@ -486,7 +504,8 @@ class AuthRequester extends Component {
       setTelephonyVerifyCode: this.setTelephonyVerifyCode
     };
     props[ACCOUNT_LOOKUP_AUTHENTICATOR_URN] = {
-      lookupParameters: this.state.lookupParameters
+      lookupParameters: this.state.lookupParameters,
+      setLookupParameters: this.setLookupParameters
     };
     props[RECAPTCHA_AUTHENTICATOR_URN] = {
       recaptchaKey: this.state.recaptchaKey,
@@ -549,6 +568,10 @@ class AuthRequester extends Component {
                 </Form.Group>
               </Form>
               <Divider hidden/>
+              <FlowHeader
+                  flowName={this.state.currentFlow}
+                  success={this.state.flowSuccess}
+              />
               <Message>
                 <p>{this.state.description}</p>
               </Message>
