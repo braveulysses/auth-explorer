@@ -30,12 +30,22 @@ export const ACCOUNT_VERIFY_ATTRIBUTES = {
   accountVerified: true
 };
 
+// Used when sending a verification code via email.
 export const EMAIL_DELIVERED_CODE_MESSAGES = {
   messageSubject: 'Your one-time password code',
   messageText: 'Your one-time code is: %code%'
 };
 
+// Used when sending a verification code via SMS or voice.
 export const TELEPHONY_DELIVERED_CODE_MESSAGES = {
   message: 'Your one-time password code is: %code%',
   language: 'en-US'
+};
+
+// Request/response editor settings.
+export const EDITOR_CONFIG = {
+  width: "100%",
+  wrapEnabled: false,
+  showGutter: true,
+  showPrintMargin: false
 };

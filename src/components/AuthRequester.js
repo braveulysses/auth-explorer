@@ -13,6 +13,7 @@ import './AuthRequester.css';
 import 'brace/mode/json';
 import 'brace/theme/github';
 
+import * as Config from "../Config";
 import {
     USERNAME_PASSWORD_AUTHENTICATOR_URN,
     TOTP_AUTHENTICATOR_URN,
@@ -561,11 +562,13 @@ class AuthRequester extends Component {
                       <AceEditor
                           mode="json"
                           theme="github"
-                          showPrintMargin={false}
+                          showPrintMargin={Config.EDITOR_CONFIG.showPrintMargin}
+                          showGutter={Config.EDITOR_CONFIG.showGutter}
                           onChange={this.updateBody}
                           value={this.state.body}
                           name="AuthExplorerEditor"
-                          width="100%"
+                          width={Config.EDITOR_CONFIG.width}
+                          wrapEnabled={Config.EDITOR_CONFIG.wrapEnabled}
                       />
                     </Form.Field>
                   </Form.Group>
