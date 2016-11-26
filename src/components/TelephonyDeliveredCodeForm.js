@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { Form, Button, Input, Container, Header, Divider } from 'semantic-ui-react';
+import { Form, Button, Input, Container, Divider } from 'semantic-ui-react';
+import NumberedHeader from './NumberedHeader';
 import { TELEPHONY_DELIVERED_CODE_MESSAGES } from '../Config';
 
 class TelephonyDeliveredCodeForm extends Component {
@@ -35,7 +36,7 @@ class TelephonyDeliveredCodeForm extends Component {
   render() {
     return (
         <Container>
-          <Header size="tiny">Deliver code</Header>
+          <NumberedHeader size="tiny" number="1">Deliver code</NumberedHeader>
           <Form>
             <Form.Group>
               <Form.Field width="six">
@@ -67,7 +68,7 @@ class TelephonyDeliveredCodeForm extends Component {
             </Form.Group>
           </Form>
           <Divider/>
-          <Header size="tiny">Submit code</Header>
+          <NumberedHeader size="tiny" number="2">Submit code</NumberedHeader>
           <Form>
             <Form.Group>
               <Form.Field>
