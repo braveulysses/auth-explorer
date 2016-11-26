@@ -9,7 +9,7 @@ class RegistrationForm extends Component {
     this.props.registrableAttributes.forEach(attribute => {
       if (COMPLEX_ATTRIBUTES[attribute]) {
         COMPLEX_ATTRIBUTES[attribute].forEach(subAttribute => {
-          registrableAttributes.push(attribute + '.' + subAttribute);
+          registrableAttributes.push(`${attribute}.${subAttribute}`);
         })
       } else {
         registrableAttributes.push(attribute);

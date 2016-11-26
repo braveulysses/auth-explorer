@@ -5,8 +5,8 @@ import {guid} from '../Helpers';
 
 class CopyableTableCell extends Component {
   render() {
-    const id = 'ctc-' + guid();
-    const selector = '#' + id;
+    const id = `ctc-${guid()}`;
+    const selector = `#${id}`;
     return (
         <Table.Cell className="CopyableTableCell">
           <Input
