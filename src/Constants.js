@@ -92,13 +92,13 @@ export const AUTHENTICATION_ERROR_DESCRIPTION =
 export const OAUTH_STEP_DESCRIPTION =
     "Authentication is initiated by making an OAuth 2 or OpenID Connect request for an access token or ID token. Before the token is returned to the client, the end user will be expected to authenticate and approve the request.";
 export const INITIAL_REDIRECT_DESCRIPTION =
-    "The authorization endpoint begins a new authentication flow by passing a login URI to the auth UI via the 'flow' query parameter. The auth UI is expected to GET this URI to obtain its authentication options.";
+    "The authorization endpoint begins the authentication process by passing a login URI to the auth UI via the 'flow' query parameter. The auth UI is expected to GET this URI to obtain its authentication options.";
 export const LOGIN_STEP_DESCRIPTION = 
-    "The authentication service's login endpoint presents the auth UI with options for login and account handler flows. The auth UI can either make a login request using PUT, continue the login flow using GET and a followup URI, or invoke an account handler using GET.";
+    "The authentication service's login flow presents the auth UI with options for login and account handler flows. The auth UI can either make a login request using PUT, continue the login flow using GET and a followup URI, or invoke an account handler using GET.";
 export const SECOND_FACTOR_STEP_DESCRIPTION = 
-    "The authentication service's second factor endpoint presents the auth UI with options for requesting a second authentication factor from the end user. The auth UI can either make a second factor request using PUT or continue the login flow using GET and a followup URI.";
+    "The authentication service's second factor flow presents the auth UI with options for requesting a second authentication factor from the end user. The auth UI can either make a second factor request using PUT or continue the login flow using GET and a followup URI.";
 export const CONSENT_STEP_DESCRIPTION = 
-    "If the Broker's policies determine that the OAuth 2 request requires user approval, then the auth UI will need to make a PUT request to the consent endpoint, setting the approved flag to true. To continue, the auth UI should GET the followup URI.";
+    "If the Broker's policies determine that the OAuth 2 request requires user approval, then the auth UI will need to make a PUT request to the consent flow, setting the approved flag to true. To continue, the auth UI should GET the followup URI.";
 export const FLOW_URI_STEP_DESCRIPTION =
     "The authorization endpoint presents the auth UI with a flow URI to indicate a transition to a different authentication flow. The auth UI is expected to perform a GET of this URI.";
 export const CONTINUE_REDIRECT_URI_STEP_DESCRIPTION =
