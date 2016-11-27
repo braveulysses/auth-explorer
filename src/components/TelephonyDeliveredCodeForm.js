@@ -39,7 +39,7 @@ class TelephonyDeliveredCodeForm extends Component {
           <NumberedHeader size="tiny" number="1">Deliver code</NumberedHeader>
           <Form>
             <Form.Group>
-              <Form.Field width="six">
+              <Form.Field width="eight">
                 <Input
                     size="mini"
                     label="Message"
@@ -48,7 +48,7 @@ class TelephonyDeliveredCodeForm extends Component {
                     onChange={this.handleInputChange}
                 />
               </Form.Field>
-              <Form.Field width="eight">
+              <Form.Field width="six">
                 <Input
                     size="mini"
                     label="Language"
