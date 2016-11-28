@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import URI from 'urijs';
 import {guid} from '../Helpers';
-import { Button, Input, Form, Header, Divider } from 'semantic-ui-react';
+import { Button, Input, Label, Form, Header, Divider } from 'semantic-ui-react';
 import './OAuthRequest.css';
 import Description from './Description';
 
-import { OAUTH_STEP_DESCRIPTION } from '../Constants';
+import { OAUTH_STEP_DESCRIPTION, AUTH_CODE_WARNING } from '../Constants';
 import { OAUTH_CLIENT, BROKER } from '../Config';
 
 class OAuthRequester extends Component {
@@ -32,13 +32,13 @@ class OAuthRequester extends Component {
       url.addQuery('max_age', OAUTH_CLIENT.maxAge);
     }
     this.state = {
-      clientId: OAUTH_CLIENT.clientId,
-      responseType: OAUTH_CLIENT.responseType,
-      redirectUri: OAUTH_CLIENT.redirectUri,
+      client_id: OAUTH_CLIENT.clientId,
+      response_type: OAUTH_CLIENT.responseType,
+      redirect_uri: OAUTH_CLIENT.redirectUri,
       scope: OAUTH_CLIENT.scope,
       prompt: OAUTH_CLIENT.prompt,
-      acrValues: OAUTH_CLIENT.acrValues,
-      maxAge: OAUTH_CLIENT.maxAge,
+      acr_values: OAUTH_CLIENT.acrValues,
+      max_age: OAUTH_CLIENT.maxAge,
       state: state,
       nonce: nonce,
       authorizeUrl: url
@@ -59,10 +59,20 @@ class OAuthRequester extends Component {
   }
 
   handleOAuthParamUpdate(event) {
-    let state = {};
-    state[event.target.name] = event.target.value;
+    let state = {
+      responseTypeWarning: ''
+    };
+
+    const param = event.target.name;
+    const value = event.target.value;
+    state[param] = value;
+
+    if (param === 'response_type' && value.includes('code')) {
+      state['responseTypeWarning'] = AUTH_CODE_WARNING;
+    }
+
     this.setState(state);
-    this.setAuthUrlParam(event.target.name, event.target.value);
+    this.setAuthUrlParam(param, value);
   }
 
   handleAuthUrlUpdate(event) {
@@ -90,7 +100,7 @@ class OAuthRequester extends Component {
               <Input
                   type="text"
                   name="client_id"
-                  defaultValue={this.state.clientId}
+                  defaultValue={this.state.client_id}
                   onChange={this.handleOAuthParamUpdate}
               />
             </Form.Field>
@@ -99,9 +109,12 @@ class OAuthRequester extends Component {
               <Input
                   type="text"
                   name="response_type"
-                  defaultValue={this.state.responseType}
+                  defaultValue={this.state.response_type}
                   onChange={this.handleOAuthParamUpdate}
               />
+              {this.state.responseTypeWarning &&
+                <Label basic color="yellow" pointing>{AUTH_CODE_WARNING}</Label>
+              }
             </Form.Field>
           </Form.Group>
 
@@ -110,7 +123,7 @@ class OAuthRequester extends Component {
             <Input
                 type="text"
                 name="redirect_uri"
-                defaultValue={this.state.redirectUri}
+                defaultValue={this.state.redirect_uri}
                 onChange={this.handleOAuthParamUpdate}
             />
           </Form.Field>
@@ -141,7 +154,7 @@ class OAuthRequester extends Component {
               <Input
                   type="text"
                   name="acr_values"
-                  defaultValue={this.state.acrValues}
+                  defaultValue={this.state.acr_values}
                   onChange={this.handleOAuthParamUpdate}
               />
             </Form.Field>
@@ -150,7 +163,7 @@ class OAuthRequester extends Component {
               <Input
                   type="text"
                   name="max_age"
-                  defaultValue={this.state.maxAge}
+                  defaultValue={this.state.max_age}
                   onChange={this.handleOAuthParamUpdate}
               />
             </Form.Field>

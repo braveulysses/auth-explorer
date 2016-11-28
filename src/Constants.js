@@ -126,3 +126,7 @@ export const FLOW_URI_STEP_HINT =
 export const CONTINUE_REDIRECT_URI_STEP_HINT =
     "Set the Continue Redirect URI as the request URL and perform a GET.";
 export const REQUEST_TIMED_OUT_HINT = "Make a new OAuth 2 request.";
+
+// Warnings.
+export const AUTH_CODE_WARNING =
+    "The authorization code OAuth 2 flow is not supported by this tool.";
