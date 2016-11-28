@@ -19,8 +19,15 @@ class NumberedHeader extends Component {
   }
 }
 
+
+
 NumberedHeader.propTypes = {
-  number: React.PropTypes.number,
+  number: function(props, propName, componentName) {
+    if (isNaN(parseInt(props[propName], 10))) {
+      return new Error(`Invalid prop '${propName}' with value 
+      '${props[propName]}' supplied to '${componentName}'. Must be an integer.`);
+    }
+  },
   size: React.PropTypes.oneOf([
       'mini', 'tiny', 'small', 'medium', 'large', 'huge'
   ])
