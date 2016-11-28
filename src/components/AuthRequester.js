@@ -16,46 +16,7 @@ import 'brace/mode/json';
 import 'brace/theme/github';
 
 import * as Config from "../Config";
-import {
-    USERNAME_PASSWORD_AUTHENTICATOR_URN,
-    TOTP_AUTHENTICATOR_URN,
-    EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN,
-    TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN,
-    ACCOUNT_LOOKUP_AUTHENTICATOR_URN,
-    RECAPTCHA_AUTHENTICATOR_URN,
-    REGISTRATION_AUTHENTICATOR_URN,
-    SCIM_ERROR_URN,
-    CONSENT_HANDLER_URN,
-    LOGIN_RESOURCE_TYPE,
-    SECOND_FACTOR_RESOURCE_TYPE,
-    CONSENT_RESOURCE_TYPE,
-    USERNAME_RECOVERY_RESOURCE_TYPE,
-    PASSWORD_RECOVERY_RESOURCE_TYPE,
-    VERIFY_ACCOUNT_RESOURCE_TYPE,
-    INITIAL_REDIRECT_DESCRIPTION,
-    AUTHORIZATION_ERROR_DESCRIPTION,
-    AUTHENTICATION_ERROR_DESCRIPTION,
-    LOGIN_STEP_DESCRIPTION,
-    SECOND_FACTOR_STEP_DESCRIPTION,
-    CONSENT_STEP_DESCRIPTION,
-    FLOW_URI_STEP_DESCRIPTION,
-    CONTINUE_REDIRECT_URI_STEP_DESCRIPTION,
-    USERNAME_RECOVERY_STEP_DESCRIPTION,
-    PASSWORD_RECOVERY_STEP_DESCRIPTION,
-    VERIFY_ACCOUNT_STEP_DESCRIPTION,
-    META_LOCATION_URI_DESCRIPTION,
-    FOLLOWUP_URI_DESCRIPTION,
-    USERNAME_RECOVERY_URI_DESCRIPTION,
-    PASSWORD_RECOVERY_URI_DESCRIPTION,
-    CONTINUE_REDIRECT_URI_DESCRIPTION,
-    FLOW_URI_DESCRIPTION,
-    INITIAL_REDIRECT_HINT,
-    INCOMPLETE_FLOW_HINT,
-    SUCCESSFUL_FLOW_HINT,
-    UNSUCCESSFUL_FLOW_HINT,
-    FLOW_URI_STEP_HINT,
-    CONTINUE_REDIRECT_URI_STEP_HINT
-} from '../Constants';
+import * as Constants from '../Constants';
 
 class AuthRequester extends Component {
   constructor(props) {
@@ -71,8 +32,8 @@ class AuthRequester extends Component {
       authenticators: [],
       scopes: [],
       approved: false,
-      description: INITIAL_REDIRECT_DESCRIPTION,
-      hint: INITIAL_REDIRECT_HINT
+      description: Constants.INITIAL_REDIRECT_DESCRIPTION,
+      hint: Constants.INITIAL_REDIRECT_HINT
     };
     this.setAuthUrl = this.setAuthUrl.bind(this);
     this.updateUrl = this.updateUrl.bind(this);
@@ -133,7 +94,7 @@ class AuthRequester extends Component {
         urls.push({
           url: body['meta']['location'],
           name: 'meta.location',
-          description: META_LOCATION_URI_DESCRIPTION
+          description: Constants.META_LOCATION_URI_DESCRIPTION
         });
       }
     }
@@ -142,18 +103,18 @@ class AuthRequester extends Component {
         urls.push({
           url: body['followUp']['$ref'],
           name: 'Followup',
-          description: FOLLOWUP_URI_DESCRIPTION
+          description: Constants.FOLLOWUP_URI_DESCRIPTION
         });
       }
     }
-    const urn = USERNAME_PASSWORD_AUTHENTICATOR_URN;
+    const urn = Constants.USERNAME_PASSWORD_AUTHENTICATOR_URN;
     if (body[urn]) {
       if (body[urn]['usernameRecovery'] &&
           body[urn]['usernameRecovery']['$ref']) {
         urls.push({
           url: body[urn]['usernameRecovery']['$ref'],
           name: 'Username Recovery',
-          description: USERNAME_RECOVERY_URI_DESCRIPTION
+          description: Constants.USERNAME_RECOVERY_URI_DESCRIPTION
         });
       }
       if (body[urn]['passwordRecovery'] &&
@@ -161,7 +122,7 @@ class AuthRequester extends Component {
         urls.push({
           url: body[urn]['passwordRecovery']['$ref'],
           name: 'Password Recovery',
-          description: PASSWORD_RECOVERY_URI_DESCRIPTION
+          description: Constants.PASSWORD_RECOVERY_URI_DESCRIPTION
         });
       }
     }
@@ -169,14 +130,14 @@ class AuthRequester extends Component {
       urls.push({
         url: body['flow_uri'],
         name: 'Flow URI',
-        description: FLOW_URI_DESCRIPTION
+        description: Constants.FLOW_URI_DESCRIPTION
       });
     }
     if (body['continue_redirect_uri']) {
       urls.push({
         url: body['continue_redirect_uri'],
         name: 'Continue Redirect URI',
-        description: CONTINUE_REDIRECT_URI_DESCRIPTION
+        description: Constants.CONTINUE_REDIRECT_URI_DESCRIPTION
       });
     }
     return urls;
@@ -204,36 +165,36 @@ class AuthRequester extends Component {
       if (meta) {
         resourceType = meta['resourceType'];
         switch(resourceType) {
-          case SECOND_FACTOR_RESOURCE_TYPE:
+          case Constants.SECOND_FACTOR_RESOURCE_TYPE:
             currentFlow = 'Second factor flow';
-            description = SECOND_FACTOR_STEP_DESCRIPTION;
+            description = Constants.SECOND_FACTOR_STEP_DESCRIPTION;
             this.props.setActiveStep('Second factor');
             break;
-          case CONSENT_RESOURCE_TYPE:
+          case Constants.CONSENT_RESOURCE_TYPE:
             currentFlow = 'Consent flow';
-            description = CONSENT_STEP_DESCRIPTION;
+            description = Constants.CONSENT_STEP_DESCRIPTION;
             this.props.setActiveStep('Consent');
             break;
-          case USERNAME_RECOVERY_RESOURCE_TYPE:
+          case Constants.USERNAME_RECOVERY_RESOURCE_TYPE:
             currentFlow = 'Username recovery flow';
-            description = USERNAME_RECOVERY_STEP_DESCRIPTION;
+            description = Constants.USERNAME_RECOVERY_STEP_DESCRIPTION;
             this.props.setActiveStep('Account flow');
             break;
-          case PASSWORD_RECOVERY_RESOURCE_TYPE:
+          case Constants.PASSWORD_RECOVERY_RESOURCE_TYPE:
             currentFlow = 'Password recovery flow';
-            description = PASSWORD_RECOVERY_STEP_DESCRIPTION;
+            description = Constants.PASSWORD_RECOVERY_STEP_DESCRIPTION;
             this.props.setActiveStep('Account flow');
             break;
-          case VERIFY_ACCOUNT_RESOURCE_TYPE:
+          case Constants.VERIFY_ACCOUNT_RESOURCE_TYPE:
             currentFlow = 'Verify account flow';
-            description = VERIFY_ACCOUNT_STEP_DESCRIPTION;
+            description = Constants.VERIFY_ACCOUNT_STEP_DESCRIPTION;
             this.props.setActiveStep('Account flow');
             break;
-          case LOGIN_RESOURCE_TYPE:
+          case Constants.LOGIN_RESOURCE_TYPE:
             currentFlow = 'Login flow';
             // Fall through to default
           default:
-            description = LOGIN_STEP_DESCRIPTION;
+            description = Constants.LOGIN_STEP_DESCRIPTION;
             this.props.setActiveStep('Log in');
         }
         // Set the current URL — this ensures that a PUT results in
@@ -242,19 +203,22 @@ class AuthRequester extends Component {
       }
       // Special cases for OAuth servlet responses
       if (body['flow_uri']) {
-        description = FLOW_URI_STEP_DESCRIPTION;
-        hint = FLOW_URI_STEP_HINT;
+        description = Constants.FLOW_URI_STEP_DESCRIPTION;
+        hint = Constants.FLOW_URI_STEP_HINT;
       }
       if (body['continue_redirect_uri']) {
-        description = CONTINUE_REDIRECT_URI_STEP_DESCRIPTION;
-        hint = CONTINUE_REDIRECT_URI_STEP_HINT;
+        description = Constants.CONTINUE_REDIRECT_URI_STEP_DESCRIPTION;
+        hint = Constants.CONTINUE_REDIRECT_URI_STEP_HINT;
       }
       // Errors
       if (body['error']) {
-        description = AUTHORIZATION_ERROR_DESCRIPTION;
+        description = Constants.AUTHORIZATION_ERROR_DESCRIPTION;
       }
-      if (schemas && schemas.includes(SCIM_ERROR_URN)) {
-        description = AUTHENTICATION_ERROR_DESCRIPTION;
+      if (schemas && schemas.includes(Constants.SCIM_ERROR_URN)) {
+        description = Constants.AUTHENTICATION_ERROR_DESCRIPTION;
+        if (body['detail'].includes('timed out')) {
+          hint = Constants.REQUEST_TIMED_OUT_HINT;
+        }
       }
 
       // Login and 2FA fields
@@ -275,23 +239,26 @@ class AuthRequester extends Component {
         formattedName = body['sessionIdentityResource']['name.formatted'];
       }
       let lookupParameters = [];
-      if (body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN]) {
-        lookupParameters = body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN]['lookupParameters'];
+      if (body[Constants.ACCOUNT_LOOKUP_AUTHENTICATOR_URN]) {
+        lookupParameters =
+            body[Constants.ACCOUNT_LOOKUP_AUTHENTICATOR_URN]['lookupParameters'];
       }
       let recaptchaKey = '';
-      if (body[RECAPTCHA_AUTHENTICATOR_URN]) {
-        recaptchaKey = body[RECAPTCHA_AUTHENTICATOR_URN]['recaptchaKey'];
+      if (body[Constants.RECAPTCHA_AUTHENTICATOR_URN]) {
+        recaptchaKey =
+            body[Constants.RECAPTCHA_AUTHENTICATOR_URN]['recaptchaKey'];
       }
       let registrableAttributes = [];
-      if (body[REGISTRATION_AUTHENTICATOR_URN]) {
-        registrableAttributes = body[REGISTRATION_AUTHENTICATOR_URN]['registrableAttributes'];
+      if (body[Constants.REGISTRATION_AUTHENTICATOR_URN]) {
+        registrableAttributes =
+            body[Constants.REGISTRATION_AUTHENTICATOR_URN]['registrableAttributes'];
       }
       let authUrls = AuthRequester.extractUrls(body);
 
       // Consent fields
       let scopes = [];
       let approved = false;
-      if (schemas && schemas.includes(CONSENT_HANDLER_URN)) {
+      if (schemas && schemas.includes(Constants.CONSENT_HANDLER_URN)) {
         scopes = body['scopes'];
         approved = body['approved'];
         // We can't readily distinguish between different
@@ -300,18 +267,29 @@ class AuthRequester extends Component {
       }
 
       // Most account flows have a top-level 'success' flag.
+      // Use this to indicate authenticator status to the user and to
+      // provide a hint.
       let flowSuccess = body['success'];
       if (currentFlow && currentFlow !== 'Consent flow') {
         if (flowSuccess === undefined) {
-          hint = INCOMPLETE_FLOW_HINT;
+          hint = Constants.INCOMPLETE_FLOW_HINT;
         } else {
           if (flowSuccess) {
-            hint = SUCCESSFUL_FLOW_HINT;
+            hint = Constants.SUCCESSFUL_FLOW_HINT;
           } else {
-            hint = UNSUCCESSFUL_FLOW_HINT;
+            hint = Constants.UNSUCCESSFUL_FLOW_HINT;
           }
         }
       }
+
+      // If a verification code has just been sent, adjust the hint
+      // accordingly.
+      [ Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN,
+        Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN ].forEach(urn => {
+        if (body[urn] && body[urn]['codeSent'] && body[urn]['status'] !== 'success') {
+          hint = Constants.CODE_SENT_HINT;
+        }
+      });
 
       this.setState({
         url: requestUrl,
@@ -345,9 +323,9 @@ class AuthRequester extends Component {
 
   setUsernamePassword(username, password) {
     let body = JSON.parse(this.state.body);
-    if (body[USERNAME_PASSWORD_AUTHENTICATOR_URN]) {
-      body[USERNAME_PASSWORD_AUTHENTICATOR_URN]['username'] = username;
-      body[USERNAME_PASSWORD_AUTHENTICATOR_URN]['password'] = password;
+    if (body[Constants.USERNAME_PASSWORD_AUTHENTICATOR_URN]) {
+      body[Constants.USERNAME_PASSWORD_AUTHENTICATOR_URN]['username'] = username;
+      body[Constants.USERNAME_PASSWORD_AUTHENTICATOR_URN]['password'] = password;
       this.setBodyFromObject(body);
     }
   }
@@ -365,33 +343,36 @@ class AuthRequester extends Component {
 
   setTotp(password) {
     let body = JSON.parse(this.state.body);
-    if (body[TOTP_AUTHENTICATOR_URN]) {
-      body[TOTP_AUTHENTICATOR_URN]['password'] = password;
+    if (body[Constants.TOTP_AUTHENTICATOR_URN]) {
+      body[Constants.TOTP_AUTHENTICATOR_URN]['password'] = password;
       this.setBodyFromObject(body);
     }
   }
 
   setSendEmailRequest(messageSubject, messageText) {
     let body = JSON.parse(this.state.body);
-    if (body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]) {
-      body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['messageSubject'] = messageSubject;
-      body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['messageText'] = messageText;
+    if (body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]) {
+      body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['messageSubject'] =
+          messageSubject;
+      body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['messageText'] =
+          messageText;
       this.setBodyFromObject(body);
     }
   }
 
   setEmailVerifyCode(verifyCode) {
     let body = JSON.parse(this.state.body);
-    if (body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]) {
-      body[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['verifyCode'] = verifyCode;
+    if (body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]) {
+      body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['verifyCode'] =
+          verifyCode;
       this.setBodyFromObject(body);
     }
   }
 
   setSendTelephonyRequest(message, language) {
     let body = JSON.parse(this.state.body);
-    if (body[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]) {
-      body[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['deliverCode'] = {
+    if (body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]) {
+      body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['deliverCode'] = {
         message: message,
         language: language
       };
@@ -401,8 +382,8 @@ class AuthRequester extends Component {
 
   setTelephonyVerifyCode(verifyCode) {
     let body = JSON.parse(this.state.body);
-    if (body[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]) {
-      body[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['verifyCode'] = {
+    if (body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]) {
+      body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['verifyCode'] = {
         verifyCode: verifyCode
       };
       this.setBodyFromObject(body);
@@ -411,25 +392,31 @@ class AuthRequester extends Component {
 
   setLookupParameters(lookupParameters) {
     let body = JSON.parse(this.state.body);
-    if (body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN]) {
-      body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN] =
-          Object.assign({}, body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN], lookupParameters);
+    if (body[Constants.ACCOUNT_LOOKUP_AUTHENTICATOR_URN]) {
+      body[Constants.ACCOUNT_LOOKUP_AUTHENTICATOR_URN] =
+          Object.assign(
+              {},
+              body[Constants.ACCOUNT_LOOKUP_AUTHENTICATOR_URN],
+              lookupParameters
+          );
       this.setBodyFromObject(body);
     }
   }
 
   setRecaptchaResponse(recaptchaResponse) {
     let body = JSON.parse(this.state.body);
-    if (body[RECAPTCHA_AUTHENTICATOR_URN]) {
-      body[RECAPTCHA_AUTHENTICATOR_URN]['recaptchaResponse'] = recaptchaResponse;
+    if (body[Constants.RECAPTCHA_AUTHENTICATOR_URN]) {
+      body[Constants.RECAPTCHA_AUTHENTICATOR_URN]['recaptchaResponse'] =
+          recaptchaResponse;
       this.setBodyFromObject(body);
     }
   }
 
   register(attributes) {
     let body = JSON.parse(this.state.body);
-    if (body[REGISTRATION_AUTHENTICATOR_URN]) {
-      body[REGISTRATION_AUTHENTICATOR_URN]['registerResourceAttributes'] = attributes;
+    if (body[Constants.REGISTRATION_AUTHENTICATOR_URN]) {
+      body[Constants.REGISTRATION_AUTHENTICATOR_URN]['registerResourceAttributes'] =
+          attributes;
       this.setBodyFromObject(body);
     }
   }
@@ -517,31 +504,31 @@ class AuthRequester extends Component {
 
   getAuthenticatorProps() {
     let props = {};
-    props[USERNAME_PASSWORD_AUTHENTICATOR_URN] = {
+    props[Constants.USERNAME_PASSWORD_AUTHENTICATOR_URN] = {
       username: this.state.username,
       setUsernamePassword: this.setUsernamePassword,
       setNewPassword: this.setNewPassword,
     };
-    props[TOTP_AUTHENTICATOR_URN] = {
+    props[Constants.TOTP_AUTHENTICATOR_URN] = {
       setTotp: this.setTotp
     };
-    props[EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN] = {
+    props[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN] = {
       setSendEmailRequest: this.setSendEmailRequest,
       setEmailVerifyCode: this.setEmailVerifyCode
     };
-    props[TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN] = {
+    props[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN] = {
       setSendTelephonyRequest: this.setSendTelephonyRequest,
       setTelephonyVerifyCode: this.setTelephonyVerifyCode
     };
-    props[ACCOUNT_LOOKUP_AUTHENTICATOR_URN] = {
+    props[Constants.ACCOUNT_LOOKUP_AUTHENTICATOR_URN] = {
       lookupParameters: this.state.lookupParameters,
       setLookupParameters: this.setLookupParameters
     };
-    props[RECAPTCHA_AUTHENTICATOR_URN] = {
+    props[Constants.RECAPTCHA_AUTHENTICATOR_URN] = {
       recaptchaKey: this.state.recaptchaKey,
       setRecaptchaResponse: this.setRecaptchaResponse
     };
-    props[REGISTRATION_AUTHENTICATOR_URN] = {
+    props[Constants.REGISTRATION_AUTHENTICATOR_URN] = {
       registrableAttributes: this.state.registrableAttributes,
       register: this.register
     };
@@ -612,17 +599,17 @@ class AuthRequester extends Component {
             </Dimmer.Dimmable>
           </Container>
           <Divider section/>
-          {this.state.resourceType === VERIFY_ACCOUNT_RESOURCE_TYPE &&
+          {this.state.resourceType === Constants.VERIFY_ACCOUNT_RESOURCE_TYPE &&
             <AccountVerifyForm
                 setAccountVerifyAttributes={this.setAccountVerifyAttributes}
             />
           }
-          {this.state.resourceType === PASSWORD_RECOVERY_RESOURCE_TYPE &&
+          {this.state.resourceType === Constants.PASSWORD_RECOVERY_RESOURCE_TYPE &&
             <PasswordRecoveryForm
                 setNewPassword={this.setNewPassword}
             />
           }
-          {this.state.resourceType === CONSENT_RESOURCE_TYPE &&
+          {this.state.resourceType === Constants.CONSENT_RESOURCE_TYPE &&
             <ScopeList
                 scopes={this.state.scopes}
                 approved={this.state.approved}

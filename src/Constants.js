@@ -119,7 +119,10 @@ export const SUCCESSFUL_FLOW_HINT =
     "Set the Followup URL as the request URL and perform a GET.";
 export const UNSUCCESSFUL_FLOW_HINT =
     "Correct any Identity Authenticator errors and perform a PUT.";
+export const CODE_SENT_HINT =
+    "Set the verification code and perform a PUT.";
 export const FLOW_URI_STEP_HINT =
     "Set the Flow URI as the request URL and perform a GET.";
 export const CONTINUE_REDIRECT_URI_STEP_HINT =
     "Set the Continue Redirect URI as the request URL and perform a GET.";
+export const REQUEST_TIMED_OUT_HINT = "Make a new OAuth 2 request.";
