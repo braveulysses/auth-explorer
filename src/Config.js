@@ -4,7 +4,7 @@ export const OAUTH_CLIENT = {
   // Unique ID for an OAuth2 Client configured with the Broker
   clientId: 'auth-explorer-client',
   // Space-delimited list of OAuth2 Scopes
-  scope: 'openid email phone',
+  scope: 'openid email profile phone address',
   redirectUri: 'http://localhost:3000',
   responseType: 'token id_token',
   prompt: 'login consent',
