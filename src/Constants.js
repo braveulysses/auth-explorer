@@ -42,7 +42,7 @@ export const VERIFY_ACCOUNT_RESOURCE_TYPE = 'Verify Account';
 export const ACCOUNT_LOOKUP_AUTHENTICATOR_DESCRIPTION =
     'The Account Lookup Identity Authenticator may be used to look up an end user account from one or more request parameter values.';
 export const EXTERNAL_IDENTITY_AUTHENTICATOR_DESCRIPTION =
-    'The External Identity Authenticator may be used to authenticate an end user with an external identity provider.';
+    'The External Identity Authenticator may be used to authenticate an end user with an external identity provider. Authentication through an external identity provider is not supported by this tool.';
 export const RECAPTCHA_AUTHENTICATOR_DESCRIPTION =
     "The reCAPTCHA Identity Authenticator may be used to verify a user's response to a Google reCAPTCHA challenge.";
 export const REGISTRATION_AUTHENTICATOR_DESCRIPTION =
