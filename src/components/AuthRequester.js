@@ -412,10 +412,8 @@ class AuthRequester extends Component {
   setLookupParameters(lookupParameters) {
     let body = JSON.parse(this.state.body);
     if (body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN]) {
-      body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN] = {
-        ...body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN],
-        lookupParameters
-      };
+      body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN] =
+          Object.assign({}, body[ACCOUNT_LOOKUP_AUTHENTICATOR_URN], lookupParameters);
       this.setBodyFromObject(body);
     }
   }
@@ -431,10 +429,7 @@ class AuthRequester extends Component {
   register(attributes) {
     let body = JSON.parse(this.state.body);
     if (body[REGISTRATION_AUTHENTICATOR_URN]) {
-      body[REGISTRATION_AUTHENTICATOR_URN] = {
-        ...body[REGISTRATION_AUTHENTICATOR_URN],
-        attributes
-      };
+      body[REGISTRATION_AUTHENTICATOR_URN]['registerResourceAttributes'] = attributes;
       this.setBodyFromObject(body);
     }
   }
