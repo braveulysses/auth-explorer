@@ -109,3 +109,17 @@ export const PASSWORD_RECOVERY_STEP_DESCRIPTION =
     "The password recovery account flow may be used to reset an end user's password.";
 export const VERIFY_ACCOUNT_STEP_DESCRIPTION =
     "The verify account flow is used to confirm that the end user has control over some contact method associated with the account, such as an email address.";
+
+// Hints. These tell the user how to best proceed.
+export const INITIAL_REDIRECT_HINT =
+    "Perform a GET.";
+export const INCOMPLETE_FLOW_HINT =
+    "Set the fields of one or more Identity Authenticators and perform a PUT.";
+export const SUCCESSFUL_FLOW_HINT =
+    "Set the Followup URL as the request URL and perform a GET.";
+export const UNSUCCESSFUL_FLOW_HINT =
+    "Correct any Identity Authenticator errors and perform a PUT.";
+export const FLOW_URI_STEP_HINT =
+    "Set the Flow URI as the request URL and perform a GET.";
+export const CONTINUE_REDIRECT_URI_STEP_HINT =
+    "Set the Continue Redirect URI as the request URL and perform a GET.";

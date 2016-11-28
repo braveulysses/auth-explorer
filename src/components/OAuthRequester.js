@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import URI from 'urijs';
 import {guid} from '../Helpers';
-import { Button, Input, Form, Header, Message, Divider } from 'semantic-ui-react';
+import { Button, Input, Form, Header, Divider } from 'semantic-ui-react';
 import './OAuthRequest.css';
+import Description from './Description';
 
 import { OAUTH_STEP_DESCRIPTION } from '../Constants';
 import { OAUTH_CLIENT, BROKER } from '../Config';
@@ -199,7 +200,7 @@ class OAuthRequester extends Component {
           </Form.Field>
         </Form>
         <Divider hidden/>
-        <Message><p>{OAUTH_STEP_DESCRIPTION}</p></Message>
+        <Description>{OAUTH_STEP_DESCRIPTION}</Description>
       </div>
     );
   }

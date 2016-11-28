@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import 'whatwg-fetch';
 import AceEditor from 'react-ace';
-import { Dimmer, Loader, Button, Input, Form, Container, Message, Divider } from 'semantic-ui-react';
+import { Dimmer, Loader, Button, Input, Form, Container, Divider } from 'semantic-ui-react';
+import Description from './Description';
+import Hint from './Hint';
 import AuthUrlList from './AuthUrlList';
 import FlowHeader from './FlowHeader';
 import IdentityAuthenticatorList from './IdentityAuthenticatorList';
@@ -46,7 +48,13 @@ import {
     USERNAME_RECOVERY_URI_DESCRIPTION,
     PASSWORD_RECOVERY_URI_DESCRIPTION,
     CONTINUE_REDIRECT_URI_DESCRIPTION,
-    FLOW_URI_DESCRIPTION
+    FLOW_URI_DESCRIPTION,
+    INITIAL_REDIRECT_HINT,
+    INCOMPLETE_FLOW_HINT,
+    SUCCESSFUL_FLOW_HINT,
+    UNSUCCESSFUL_FLOW_HINT,
+    FLOW_URI_STEP_HINT,
+    CONTINUE_REDIRECT_URI_STEP_HINT
 } from '../Constants';
 
 class AuthRequester extends Component {
@@ -63,7 +71,8 @@ class AuthRequester extends Component {
       authenticators: [],
       scopes: [],
       approved: false,
-      description: INITIAL_REDIRECT_DESCRIPTION
+      description: INITIAL_REDIRECT_DESCRIPTION,
+      hint: INITIAL_REDIRECT_HINT
     };
     this.setAuthUrl = this.setAuthUrl.bind(this);
     this.updateUrl = this.updateUrl.bind(this);
@@ -177,6 +186,7 @@ class AuthRequester extends Component {
     let requestUrl = this.state.url;
     let currentFlow = '';
     let description = '';
+    let hint = '';
     if (json) {
       let body = JSON.parse(json);
 
@@ -233,9 +243,11 @@ class AuthRequester extends Component {
       // Special cases for OAuth servlet responses
       if (body['flow_uri']) {
         description = FLOW_URI_STEP_DESCRIPTION;
+        hint = FLOW_URI_STEP_HINT;
       }
       if (body['continue_redirect_uri']) {
         description = CONTINUE_REDIRECT_URI_STEP_DESCRIPTION;
+        hint = CONTINUE_REDIRECT_URI_STEP_HINT;
       }
       // Errors
       if (body['error']) {
@@ -282,10 +294,24 @@ class AuthRequester extends Component {
       if (schemas && schemas.includes(CONSENT_HANDLER_URN)) {
         scopes = body['scopes'];
         approved = body['approved'];
+        // We can't readily distinguish between different
+        // consent states, so don't provide a hint.
+        hint = '';
       }
 
       // Most account flows have a top-level 'success' flag.
       let flowSuccess = body['success'];
+      if (currentFlow && currentFlow !== 'Consent flow') {
+        if (flowSuccess === undefined) {
+          hint = INCOMPLETE_FLOW_HINT;
+        } else {
+          if (flowSuccess) {
+            hint = SUCCESSFUL_FLOW_HINT;
+          } else {
+            hint = UNSUCCESSFUL_FLOW_HINT;
+          }
+        }
+      }
 
       this.setState({
         url: requestUrl,
@@ -303,6 +329,7 @@ class AuthRequester extends Component {
         currentFlow: currentFlow,
         flowSuccess: flowSuccess,
         description: description,
+        hint: hint,
         lookupParameters: lookupParameters,
         recaptchaKey: recaptchaKey,
         registrableAttributes: registrableAttributes
@@ -589,9 +616,10 @@ class AuthRequester extends Component {
                   flowName={this.state.currentFlow}
                   success={this.state.flowSuccess}
               />
-              <Message>
-                <p>{this.state.description}</p>
-              </Message>
+              <Description>{this.state.description}</Description>
+              {this.state.hint &&
+                  <Hint>{this.state.hint}</Hint>
+              }
               <Divider hidden/>
             </Dimmer.Dimmable>
           </Container>
