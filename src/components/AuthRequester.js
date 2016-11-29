@@ -572,6 +572,7 @@ class AuthRequester extends Component {
                           name="AuthExplorerEditor"
                           width={Config.EDITOR_CONFIG.width}
                           wrapEnabled={Config.EDITOR_CONFIG.wrapEnabled}
+                          editorProps={{$blockScrolling: true}}
                       />
                     </Form.Field>
                   </Form.Group>
