@@ -261,9 +261,11 @@ class AuthRequester extends Component {
       if (schemas && schemas.includes(Constants.CONSENT_HANDLER_URN)) {
         scopes = body['scopes'];
         approved = body['approved'];
-        // We can't readily distinguish between different
-        // consent states, so don't provide a hint.
-        hint = '';
+        if (approved && this.state.lastRequest === 'PUT') {
+          hint = Constants.FLOW_URI_STEP_HINT;
+        } else {
+          hint = Constants.APPROVE_SCOPES_HINT;
+        }
       }
 
       // Most account flows have a top-level 'success' flag.
@@ -470,7 +472,10 @@ class AuthRequester extends Component {
           'Accept': 'application/json'
         }
       }).then(response => {
-        this.setState({ loading: false });
+        this.setState({
+          loading: false,
+          lastRequest: 'GET'
+        });
         return response.json();
       }).then(json => {
         this.setBodyFromObject(json);
@@ -492,7 +497,10 @@ class AuthRequester extends Component {
         },
         body: this.state.body
       }).then(response => {
-        this.setState({ loading: false });
+        this.setState({
+          loading: false,
+          lastRequest: 'PUT'
+        });
         return response.json();
       }).then(json => {
         this.setBodyFromObject(json);

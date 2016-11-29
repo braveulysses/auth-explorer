@@ -121,6 +121,8 @@ export const UNSUCCESSFUL_FLOW_HINT =
     "Correct any Identity Authenticator errors and perform a PUT.";
 export const CODE_SENT_HINT =
     "Set the verification code and perform a PUT.";
+export const APPROVE_SCOPES_HINT =
+    "Approve the requested scopes and perform a PUT.";
 export const FLOW_URI_STEP_HINT =
     "Set the Flow URI as the request URL and perform a GET.";
 export const CONTINUE_REDIRECT_URI_STEP_HINT =
