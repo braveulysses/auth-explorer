@@ -543,8 +543,8 @@ class AuthRequester extends Component {
         <div className="ui AuthRequester">
           <Container>
             <Dimmer.Dimmable as={Container} dimmed={active}>
-              <Dimmer active={active} inverted indeterminate>
-                <Loader active={active}/>
+              <Dimmer active={active} inverted>
+                <Loader active={active} indeterminate/>
               </Dimmer>
               <Form onSubmit={AuthRequester.doSubmit}>
                 <Form.Group inline>
