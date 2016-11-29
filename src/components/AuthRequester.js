@@ -536,15 +536,16 @@ class AuthRequester extends Component {
   }
 
   render() {
-    const { active } = this.state.loading;
+    const active = this.state.loading;
     const bodyIsPresent = !!this.state.body;
     const authenticatorData = this.getAuthenticatorProps();
     return (
         <div className="ui AuthRequester">
           <Container>
-            <Dimmer.Dimmable dimmed={active}>
-              <Dimmer active={active}/>
-              <Loader active={active}/>
+            <Dimmer.Dimmable as={Container} dimmed={active}>
+              <Dimmer active={active} inverted indeterminate>
+                <Loader active={active}/>
+              </Dimmer>
               <Form onSubmit={AuthRequester.doSubmit}>
                 <Form.Group inline>
                   <Form.Field width="sixteen">
