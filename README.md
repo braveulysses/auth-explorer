@@ -2,7 +2,20 @@
 
 With the Data Governance Broker's Authentication API, you can build custom user interfaces supporting a wide range of authentication scenarios, from basic username/password logins to multifactor authentication flows requiring time-based one-time passwords.
 
-Use this tool to understand how an authentication UI communicates with the Data Governance Broker's Authentication API by interactively sending requests and responses from a simple web interface. 
+Use this tool to understand how an authentication UI communicates with the Data Governance Broker's Authentication API by interactively sending requests and responses from a simple web interface.
+ 
+## Table of contents
+
+* [Features](#features)
+* [How to use the Auth Explorer](#how-to-use-the-auth-explorer)
+  * [Configuring the Broker](#configuring-the-broker)
+  * [Running the Broker Auth Explorer](#running-the-broker-auth-explorer)
+  * [Interacting with the Auth API](#interacting-with-the-auth-api)
+  * [Example usage](#example-usage)
+* [Customizing the Auth Explorer](#customizing-the-auth-explorer)
+* [Known limitations](#known-limitations)
+* [Support and reporting bugs](#support-and-reporting-bugs)
+* [License](#license)
 
 ## Features
 
@@ -80,6 +93,20 @@ Step by step:
 7. The Auth UI performs a GET of the continue redirect URI. This redirects the browser to the redirecct URI of the client application from step 1. The client receives either a set of tokens or an error.
 
 The Auth Explorer does its best to guide you to the next step based on the last response received from the Auth API.
+
+### Example usage
+
+This example walks through the process of authentication using a single factor, username/password. Assume that the user has not logged in before and has not provided consent for the scopes to be requested.
+
+1. From the Auth Explorer's OAuth request screen, leave the OAuth 2/OpenID Connect request parameters at their defaults, and click **Request access token**.
+2. The Broker's authorization endpoint will redirect the browser back to the Auth Explorer. The next URL to request will be provided as the `flow` parameter, which will be prepopulated in the Auth Explorer's _URL_ field. Click **GET** to request it.
+3. The Auth Explorer's main interface will now display, with an editor containing the response just received from the Broker, which is a _login_ resource. You will chiefly interact with the Broker by modifying these responses and submitting them. Scroll down to find the Username Password authenticator form and fill in the _Username_ and _Password_ fields. Click **Set**. If you scroll back up to the request/response editor, you'll see that the username and password that you just entered were added to the `urn:pingidentity:scim:api:messages:2.0:UsernamePasswordAuthenticationRequest` object in the request. Click `PUT` to send the request. 
+4. A success response will be returned. Scroll down to the _Followup URL_ and click **Set request URL**. This will set the URL to be requested next by the Auth Explorer. Now click **GET**.
+5. An authorization endpoint response will be returned with a `flow_uri` field. Notice that the endpoint in the URL is `/authentication/approve`. This tells you that the next flow will be the consent/approval flow. Click **Set request URL**, then click **GET**.
+6. An _approve_ resource will be returned. Click **Approve scopes**. Note how the request body changes. Find one of the optional scopes and click **Grant optional scope**. Again, note how the request body changes. Click **PUT** to submit the approval.
+7. The response should show that the optional scope was granted. Scroll down to the _Followup URL_ and click **Set request URL**, then click **GET**.
+8. An authorization endpoint response will be returned with a `continue_redirect_uri` field. Scroll down to the _Continue Redirect URI_ and click **Set request URL**. Click **GET**.
+9. The browser will be redirected back to the OAuth 2 redirect URI specified in the first step. The redirect response should include an access token and an ID token. 
 
 ## Customizing the Auth Explorer
 
