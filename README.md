@@ -83,7 +83,7 @@ The Auth Explorer does its best to guide you to the next step based on the last 
 
 ## Customizing the Auth Explorer
 
-Some aspects of the Auth Explorer may be customized by modifying `src/Config.js`.
+Some aspects of the Auth Explorer may be customized by modifying `src/Config.js`. You should compare this configuration to the configuration of your Data Governance Broker, and change the values accordingly. For example, the Broker's OAuth authorize and logout endpoint URIs should be set here.
 
 If you wish to add support for a custom identity authenticator, have a look at `src/components/AuthRequester.js` and `src/components/IdentityAuthenticator.js`. In a future refactoring, we may attempt to reduce the number of touchpoints required to support an identity authenticator. In the meantime, please note that you can always use the request editor to manually set your identity authenticator's request fields.
 
