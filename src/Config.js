@@ -41,6 +41,10 @@ export const TELEPHONY_DELIVERED_CODE_MESSAGES = {
   message: 'Your one-time password code is: %code%',
   language: 'en-US'
 };
+export const TELEPHONY_MESSAGING_PROVIDERS = [
+    "Twilio SMS Provider",
+    "Twilio Voice Provider"
+];
 
 // Request/response editor settings.
 export const EDITOR_CONFIG = {

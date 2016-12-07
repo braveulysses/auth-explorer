@@ -371,9 +371,10 @@ class AuthRequester extends Component {
     }
   }
 
-  setSendTelephonyRequest(message, language) {
+  setSendTelephonyRequest(message, language, messagingProvider) {
     let body = JSON.parse(this.state.body);
     if (body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]) {
+      body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['messagingProvider'] = messagingProvider;
       body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['deliverCode'] = {
         message: message,
         language: language
@@ -385,9 +386,7 @@ class AuthRequester extends Component {
   setTelephonyVerifyCode(verifyCode) {
     let body = JSON.parse(this.state.body);
     if (body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]) {
-      body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['verifyCode'] = {
-        verifyCode: verifyCode
-      };
+      body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['verifyCode'] = verifyCode;
       this.setBodyFromObject(body);
     }
   }

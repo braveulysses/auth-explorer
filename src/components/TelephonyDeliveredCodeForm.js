@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
-import { Form, Button, Input, Container, Divider } from 'semantic-ui-react';
+import { Form, Button, Input, Label, Dropdown, Container, Divider } from 'semantic-ui-react';
 import NumberedHeader from './NumberedHeader';
-import { TELEPHONY_DELIVERED_CODE_MESSAGES } from '../Config';
+import {
+  TELEPHONY_DELIVERED_CODE_MESSAGES,
+  TELEPHONY_MESSAGING_PROVIDERS
+} from '../Config';
 
 class TelephonyDeliveredCodeForm extends Component {
   constructor(props) {
@@ -9,11 +12,22 @@ class TelephonyDeliveredCodeForm extends Component {
     this.state = {
       message: TELEPHONY_DELIVERED_CODE_MESSAGES.message,
       language: TELEPHONY_DELIVERED_CODE_MESSAGES.language,
+      messagingProvider: TELEPHONY_MESSAGING_PROVIDERS[0],
       verifyCode: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleMessagingProviderChange = this.handleMessagingProviderChange.bind(this);
     this.setSendTelephonyRequest = this.setSendTelephonyRequest.bind(this);
     this.setTelephonyVerifyCode = this.setTelephonyVerifyCode.bind(this);
+  }
+
+  static toDropdownOptions(optionNames) {
+    return optionNames.map(optionName => {
+      return {
+        value: optionName,
+        text: optionName
+      };
+    });
   }
 
   handleInputChange(event) {
@@ -22,9 +36,15 @@ class TelephonyDeliveredCodeForm extends Component {
     this.setState(state);
   }
 
+  handleMessagingProviderChange(event) {
+    this.setState({
+      messagingProvider: event.target.textContent
+    });
+  }
+
   setSendTelephonyRequest(event) {
     this.props.setSendTelephonyRequest(this.state.message,
-        this.state.language);
+        this.state.language, this.state.messagingProvider);
     event.preventDefault();
   }
 
@@ -34,6 +54,8 @@ class TelephonyDeliveredCodeForm extends Component {
   }
 
   render() {
+    const messagingProviderOptions =
+        TelephonyDeliveredCodeForm.toDropdownOptions(TELEPHONY_MESSAGING_PROVIDERS);
     return (
         <Container>
           <NumberedHeader size="tiny" number="1">Deliver code</NumberedHeader>
@@ -52,9 +74,22 @@ class TelephonyDeliveredCodeForm extends Component {
                 <Input
                     size="mini"
                     label="Language"
-                    name="Language"
+                    name="language"
                     defaultValue={this.state.language}
                     onChange={this.handleInputChange}
+                />
+              </Form.Field>
+            </Form.Group>
+            <Form.Group>
+              <Form.Field inline>
+                <Label>Messaging provider</Label>
+                <Dropdown
+                    size="mini"
+                    name="messagingProvider"
+                    selection
+                    options={messagingProviderOptions}
+                    defaultValue={this.state.messagingProvider}
+                    onChange={this.handleMessagingProviderChange}
                 />
               </Form.Field>
               <Form.Field>
