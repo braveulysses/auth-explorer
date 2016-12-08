@@ -143,9 +143,14 @@ class AuthRequester extends Component {
     return urls;
   }
 
+  static docUrl(slug) {
+    return `https://developer.unboundid.com/${Config.BROKER.currentVersion}/broker/api/auth/${slug}/`;
+  }
+
   parseBody(json) {
     let requestUrl = this.state.url;
     let currentFlow = '';
+    let flowDocUrl = '';
     let description = '';
     let hint = '';
     if (json) {
@@ -168,30 +173,36 @@ class AuthRequester extends Component {
           case Constants.SECOND_FACTOR_RESOURCE_TYPE:
             currentFlow = 'Second factor flow';
             description = Constants.SECOND_FACTOR_STEP_DESCRIPTION;
+            flowDocUrl = AuthRequester.docUrl('second-factor');
             this.props.setActiveStep('Second factor');
             break;
           case Constants.CONSENT_RESOURCE_TYPE:
             currentFlow = 'Consent flow';
             description = Constants.CONSENT_STEP_DESCRIPTION;
+            flowDocUrl = AuthRequester.docUrl('consent');
             this.props.setActiveStep('Consent');
             break;
           case Constants.USERNAME_RECOVERY_RESOURCE_TYPE:
             currentFlow = 'Username recovery flow';
             description = Constants.USERNAME_RECOVERY_STEP_DESCRIPTION;
+            flowDocUrl = AuthRequester.docUrl('username-recovery');
             this.props.setActiveStep('Account flow');
             break;
           case Constants.PASSWORD_RECOVERY_RESOURCE_TYPE:
             currentFlow = 'Password recovery flow';
             description = Constants.PASSWORD_RECOVERY_STEP_DESCRIPTION;
+            flowDocUrl = AuthRequester.docUrl('password-recovery');
             this.props.setActiveStep('Account flow');
             break;
           case Constants.VERIFY_ACCOUNT_RESOURCE_TYPE:
             currentFlow = 'Verify account flow';
             description = Constants.VERIFY_ACCOUNT_STEP_DESCRIPTION;
+            flowDocUrl = AuthRequester.docUrl('verify-account');
             this.props.setActiveStep('Account flow');
             break;
           case Constants.LOGIN_RESOURCE_TYPE:
             currentFlow = 'Login flow';
+            flowDocUrl = AuthRequester.docUrl('login');
             // Fall through to default
           default:
             description = Constants.LOGIN_STEP_DESCRIPTION;
@@ -307,6 +318,7 @@ class AuthRequester extends Component {
         scopes: scopes,
         approved: approved,
         currentFlow: currentFlow,
+        flowDocUrl: flowDocUrl,
         flowSuccess: flowSuccess,
         description: description,
         hint: hint,
@@ -598,6 +610,7 @@ class AuthRequester extends Component {
               <Divider hidden/>
               <FlowHeader
                   flowName={this.state.currentFlow}
+                  docUrl={this.state.flowDocUrl}
                   success={this.state.flowSuccess}
               />
               <Description>{this.state.description}</Description>

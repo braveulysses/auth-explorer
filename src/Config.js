@@ -14,6 +14,7 @@ export const OAUTH_CLIENT = {
 
 // Data Governance Broker service URLs.
 export const BROKER = {
+  currentVersion: '6.0.0.1',
   authorizeEndpoint: 'https://example.com/oauth/authorize',
   logoutEndpoint: 'https://example.com/oauth/logout'
 };

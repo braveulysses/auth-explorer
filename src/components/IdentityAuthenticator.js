@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import IdentityAuthenticatorStatus from './IdentityAuthenticatorStatus';
+import DocumentationLink from './DocumentationLink';
 import UsernamePasswordForm from './UsernamePasswordForm';
 import TotpForm from './TotpForm';
 import EmailDeliveredCodeForm from './EmailDeliveredCodeForm';
@@ -10,6 +11,7 @@ import RecaptchaForm from './RecaptchaForm';
 import RegistrationForm from './RegistrationForm';
 import './IdentityAuthenticator.css';
 
+import { BROKER } from '../Config';
 import {
     USERNAME_PASSWORD_AUTHENTICATOR_URN,
     USERNAME_PASSWORD_AUTHENTICATOR_DESCRIPTION,
@@ -37,47 +39,59 @@ class IdentityAuthenticator extends Component {
     this.remove = this.remove.bind(this);
   }
 
+  static docUrl(slug) {
+    return `https://developer.unboundid.com/${BROKER.currentVersion}/broker/api/auth/${slug}/`;
+  }
+
   static attrsFromUrn(urn) {
     switch(urn) {
       case ACCOUNT_LOOKUP_AUTHENTICATOR_URN:
         return {
           name: 'Account Lookup',
-          description: ACCOUNT_LOOKUP_AUTHENTICATOR_DESCRIPTION
+          description: ACCOUNT_LOOKUP_AUTHENTICATOR_DESCRIPTION,
+          docUrl: IdentityAuthenticator.docUrl('account-lookup')
         };
       case EXTERNAL_IDENTITY_AUTHENTICATOR_URN:
         return {
           name: 'External Identity',
-          description: EXTERNAL_IDENTITY_AUTHENTICATOR_DESCRIPTION
+          description: EXTERNAL_IDENTITY_AUTHENTICATOR_DESCRIPTION,
+          docUrl: IdentityAuthenticator.docUrl('external-identity')
         };
       case RECAPTCHA_AUTHENTICATOR_URN:
         return {
           name: 'reCAPTCHA',
-          description: RECAPTCHA_AUTHENTICATOR_DESCRIPTION
+          description: RECAPTCHA_AUTHENTICATOR_DESCRIPTION,
+          docUrl: IdentityAuthenticator.docUrl('recaptcha')
         };
       case REGISTRATION_AUTHENTICATOR_URN:
         return {
           name: 'Registration',
-          description: REGISTRATION_AUTHENTICATOR_DESCRIPTION
+          description: REGISTRATION_AUTHENTICATOR_DESCRIPTION,
+          docUrl: IdentityAuthenticator.docUrl('registration')
         };
       case TOTP_AUTHENTICATOR_URN:
         return {
           name: 'TOTP',
-          description: TOTP_AUTHENTICATOR_DESCRIPTION
+          description: TOTP_AUTHENTICATOR_DESCRIPTION,
+          docUrl: IdentityAuthenticator.docUrl('totp')
         };
       case EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN:
         return {
           name: 'Email Delivered Code',
-          description: EMAIL_DELIVERED_CODE_AUTHENTICATOR_DESCRIPTION
+          description: EMAIL_DELIVERED_CODE_AUTHENTICATOR_DESCRIPTION,
+          docUrl: IdentityAuthenticator.docUrl('email-code')
         };
       case TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN:
         return {
           name: 'Telephony Delivered Code',
-          description: TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_DESCRIPTION
+          description: TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_DESCRIPTION,
+          docUrl: IdentityAuthenticator.docUrl('telephony-code')
         };
       case USERNAME_PASSWORD_AUTHENTICATOR_URN:
         return {
           name: 'Username Password',
-          description: USERNAME_PASSWORD_AUTHENTICATOR_DESCRIPTION
+          description: USERNAME_PASSWORD_AUTHENTICATOR_DESCRIPTION,
+          docUrl: IdentityAuthenticator.docUrl('username-password')
         };
       default:
         return {
@@ -157,6 +171,7 @@ class IdentityAuthenticator extends Component {
         <Card.Content>
           <Card.Header>
             {this.state.name} &nbsp;
+            <DocumentationLink url={this.state.docUrl}/>
             <IdentityAuthenticatorStatus status={this.props.authenticator.status}/>
           </Card.Header>
           <Card.Meta>
