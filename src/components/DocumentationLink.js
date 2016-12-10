@@ -16,7 +16,7 @@ class DocumentationLink extends Component {
       return (
           <Label
               horizontal
-              color="teal"
+              color="blue"
               size="tiny"
               as="a"
               onClick={this.handleClick}>
