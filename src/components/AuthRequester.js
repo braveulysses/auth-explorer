@@ -273,7 +273,7 @@ class AuthRequester extends Component {
         scopes = body['scopes'];
         approved = body['approved'];
         if (approved && this.state.lastRequest === 'PUT') {
-          hint = Constants.FLOW_URI_STEP_HINT;
+          hint = Constants.SUCCESSFUL_FLOW_HINT;
         } else {
           hint = Constants.APPROVE_SCOPES_HINT;
         }
