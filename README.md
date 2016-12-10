@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/UnboundID/auth-explorer.svg?branch=master)](https://travis-ci.org/UnboundID/auth-explorer)
+
 # Broker Auth Explorer
 
 With the Data Governance Broker's Authentication API, you can build custom user interfaces supporting a wide range of authentication scenarios, from basic username/password logins to multifactor authentication flows requiring time-based one-time passwords.
