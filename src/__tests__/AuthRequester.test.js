@@ -21,8 +21,8 @@ function actualBody(wrapper) {
   return JSON.parse(wrapper.state('body'));
 }
 
-describe('The AuthRequester component', function() {
-  it('can remove an identity authenticator', function() {
+describe('The AuthRequester component', () => {
+  it('can remove an identity authenticator', () => {
     const body = {};
     body[Constants.USERNAME_PASSWORD_AUTHENTICATOR_URN] = {
       status: "ready",
@@ -42,7 +42,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.TOTP_AUTHENTICATOR_URN]).not.toBeDefined();
   });
 
-  it('can set a username and password', function() {
+  it('can set a username and password', () => {
     const body = {};
     body[Constants.USERNAME_PASSWORD_AUTHENTICATOR_URN] = {
       status: "ready"
@@ -56,7 +56,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.USERNAME_PASSWORD_AUTHENTICATOR_URN]['password']).toBe('password');
   });
 
-  it('can set the newPassword field for the Username Password authenticator', function() {
+  it('can set the newPassword field for the Username Password authenticator', () => {
     const body = {};
     body[Constants.USERNAME_PASSWORD_AUTHENTICATOR_URN] = {
       status: "ready"
@@ -69,7 +69,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.USERNAME_PASSWORD_AUTHENTICATOR_URN]['newPassword']).toBe('new-password');
   });
 
-  it('can set the newPassword field for the Password Recovery flow', function() {
+  it('can set the newPassword field for the Password Recovery flow', () => {
     const body = {};
     body['schemas'] = [
         Constants.PASSWORD_RECOVERY_URN
@@ -85,7 +85,7 @@ describe('The AuthRequester component', function() {
     expect(actual['newPassword']).toBe('new-password');
   });
 
-  it('can set a TOTP authenticator password', function() {
+  it('can set a TOTP authenticator password', () => {
     const body = {};
     body[Constants.TOTP_AUTHENTICATOR_URN] = {};
     const wrapper = authRequester(body);
@@ -96,7 +96,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.TOTP_AUTHENTICATOR_URN]['password']).toBe('12345')
   });
 
-  it('can set an email delivery request', function() {
+  it('can set an email delivery request', () => {
     const body = {};
     body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN] = {};
     const wrapper = authRequester(body);
@@ -108,7 +108,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['messageText']).toBe('text');
   });
 
-  it('can set an email verify code', function() {
+  it('can set an email verify code', () => {
     const body = {};
     body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN] = {};
     const wrapper = authRequester(body);
@@ -119,7 +119,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['verifyCode']).toBe('12345');
   });
 
-  it('can set a telephony delivery request', function() {
+  it('can set a telephony delivery request', () => {
     const body = {};
     body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN] = {};
     const wrapper = authRequester(body);
@@ -132,7 +132,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['deliverCode']['language']).toBe('language');
   });
 
-  it('can set a telephony verify code', function() {
+  it('can set a telephony verify code', () => {
     const body = {};
     body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN] = {};
     const wrapper = authRequester(body);
@@ -143,7 +143,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['verifyCode']).toBe('12345');
   });
 
-  it('can set lookup parameters', function() {
+  it('can set lookup parameters', () => {
     const body = {};
     body[Constants.ACCOUNT_LOOKUP_AUTHENTICATOR_URN] = {};
     const wrapper = authRequester(body);
@@ -159,7 +159,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.ACCOUNT_LOOKUP_AUTHENTICATOR_URN]['a']).toBe('a');
   });
 
-  it('can set a reCAPTCHA response', function() {
+  it('can set a reCAPTCHA response', () => {
     const body = {};
     body[Constants.RECAPTCHA_AUTHENTICATOR_URN] = {};
     const wrapper = authRequester(body);
@@ -170,7 +170,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.RECAPTCHA_AUTHENTICATOR_URN]['recaptchaResponse']).toBe('12345');
   });
 
-  it('can set registration attributes for a new user', function() {
+  it('can set registration attributes for a new user', () => {
     const body = {};
     body[Constants.REGISTRATION_AUTHENTICATOR_URN] = {};
     const wrapper = authRequester(body);
@@ -186,7 +186,7 @@ describe('The AuthRequester component', function() {
     expect(actual[Constants.REGISTRATION_AUTHENTICATOR_URN]['registerResourceAttributes']['password']).toBe('password');
   });
 
-  it('can set verification attributes for a user', function() {
+  it('can set verification attributes for a user', () => {
     const body = {};
     body['schemas'] = [
       Constants.ACCOUNT_VERIFY_URN
@@ -209,7 +209,7 @@ describe('The AuthRequester component', function() {
     expect(actual['accountVerifiedResourceAttributes']['number']).toBe(1);
   });
 
-  it('can set scopes as approved', function() {
+  it('can set scopes as approved', () => {
     const body = {
       approved: false
     };
@@ -227,7 +227,7 @@ describe('The AuthRequester component', function() {
     expect(actual['approved']).toBe(true);
   });
 
-  it('can set scopes as approved', function() {
+  it('can set scopes as approved', () => {
     const body = {
       approved: false
     };
