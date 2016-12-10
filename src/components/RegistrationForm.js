@@ -79,9 +79,7 @@ class RegistrationForm extends Component {
           </Form>
       );
     } else {
-      return (
-          <span/>
-      );
+      return null;
     }
   }
 }

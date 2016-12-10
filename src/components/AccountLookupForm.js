@@ -52,9 +52,7 @@ class AccountLookupForm extends Component {
           </Form>
       );
     } else {
-      return (
-          <span/>
-      );
+      return null;
     }
   }
 }

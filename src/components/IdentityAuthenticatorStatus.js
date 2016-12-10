@@ -19,9 +19,7 @@ class IdentityAuthenticatorStatus extends Component {
           );
       }
     } else {
-      return (
-          <span/>
-      );
+      return null;
     }
   }
 }

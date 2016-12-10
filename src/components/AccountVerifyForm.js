@@ -85,9 +85,7 @@ class AccountVerifyForm extends Component {
           </Container>
       );
     } else {
-      return (
-          <div/>
-      );
+      return null;
     }
   }
 }

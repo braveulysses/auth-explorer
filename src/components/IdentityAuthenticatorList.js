@@ -40,9 +40,7 @@ class IdentityAuthenticatorList extends Component {
           </Container>
       );
     } else {
-      return (
-          <div/>
-      );
+      return null;
     }
   }
 }
