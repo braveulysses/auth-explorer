@@ -5,15 +5,18 @@
   "author": "Jacob Childress <jacobchildress@pingidentity.com>",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.7.0"
+    "enzyme": "^2.6.0",
+    "react-addons-test-utils": "^15.4.1",
+    "react-scripts": "0.8.3",
+    "react-test-renderer": "15.4.1"
   },
   "dependencies": {
-    "react": "^15.3.2",
+    "react": "15.4.1",
     "react-ace": "^4.0.0",
     "react-clipboard.js": "^1.0.1",
-    "react-dom": "^15.3.2",
+    "react-dom": "15.4.1",
     "react-google-recaptcha": "^0.5.4",
-    "semantic-ui-react": "^0.61.1",
+    "semantic-ui-react": "0.62.0",
     "urijs": "^1.18.3",
     "whatwg-fetch": "^2.0.1"
   },
