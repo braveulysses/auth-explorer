@@ -9,6 +9,7 @@ function authRequester(body, setDispatcherUrlMock, setActiveStepMock) {
   let setActiveStep = setActiveStepMock || jest.fn();
   const wrapper = shallow(
       <AuthRequester
+          url=""
           setDispatcherUrl={setDispatcherUrl}
           setActiveStep={setActiveStep}
       />

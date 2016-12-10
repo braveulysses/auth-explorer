@@ -657,4 +657,10 @@ class AuthRequester extends Component {
   }
 }
 
+AuthRequester.propTypes = {
+  url: React.PropTypes.string.isRequired,
+  setDispatcherUrl: React.PropTypes.func.isRequired,
+  setActiveStep: React.PropTypes.func.isRequired
+};
+
 export default AuthRequester;
