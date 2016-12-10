@@ -11,7 +11,7 @@ class Dispatcher extends Component {
     super(props);
     this.state = {
       step: '',
-      url: window.location.href,
+      url: this.props.url,
       flowUrl: ''
     };
     this.setActiveStep = this.setActiveStep.bind(this);
@@ -166,5 +166,9 @@ class Dispatcher extends Component {
     }
   }
 }
+
+Dispatcher.defaultProps = {
+  url: window.location.href
+};
 
 export default Dispatcher;

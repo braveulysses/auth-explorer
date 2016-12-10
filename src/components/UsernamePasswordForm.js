@@ -56,6 +56,7 @@ class UsernamePasswordForm extends Component {
                 />
               </Form.Field>
               <Button
+                  id="buttonSetUsernamePassword"
                   compact primary
                   size="mini"
                   onClick={this.setCredentials}>
@@ -75,6 +76,7 @@ class UsernamePasswordForm extends Component {
                 />
               </Form.Field>
               <Button
+                  id="buttonSetNewPassword"
                   compact primary
                   size="mini"
                   onClick={this.setNewPassword}>

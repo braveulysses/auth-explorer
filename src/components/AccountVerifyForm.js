@@ -7,7 +7,7 @@ class AccountVerifyForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      accountVerifyAttributes: ACCOUNT_VERIFY_ATTRIBUTES
+      accountVerifyAttributes: this.props.accountVerifyAttributes
     };
     this.setAccountVerifyAttributes = this.setAccountVerifyAttributes.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
@@ -48,7 +48,8 @@ class AccountVerifyForm extends Component {
   }
 
   render() {
-    if (Object.keys(ACCOUNT_VERIFY_ATTRIBUTES).length > 0) {
+    const accountVerifyAttributes = this.props.accountVerifyAttributes;
+    if (Object.keys(accountVerifyAttributes).length > 0) {
       return (
           <Container className="AccountVerify">
             <Header as="h2">
@@ -60,7 +61,7 @@ class AccountVerifyForm extends Component {
             <Divider hidden/>
             <Form>
               <Form.Group>
-                {Object.keys(ACCOUNT_VERIFY_ATTRIBUTES).map(attributeKey => {
+                {Object.keys(accountVerifyAttributes).map(attributeKey => {
                   return (
                       <Form.Field key={attributeKey}>
                         <Input
@@ -68,7 +69,7 @@ class AccountVerifyForm extends Component {
                             key={attributeKey}
                             name={attributeKey}
                             label={attributeKey}
-                            defaultValue={ACCOUNT_VERIFY_ATTRIBUTES[attributeKey]}
+                            defaultValue={accountVerifyAttributes[attributeKey]}
                             onChange={this.handleAttributeChange}
                         />
                       </Form.Field>
@@ -91,7 +92,12 @@ class AccountVerifyForm extends Component {
 }
 
 AccountVerifyForm.propTypes = {
+  accountVerifyAttributes: React.PropTypes.object,
   setAccountVerifyAttributes: React.PropTypes.func.isRequired
+};
+
+AccountVerifyForm.defaultProps = {
+  accountVerifyAttributes: ACCOUNT_VERIFY_ATTRIBUTES
 };
 
 export default AccountVerifyForm;

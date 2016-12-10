@@ -32,3 +32,14 @@ function parseParams(raw_params) {
   }
   return params;
 }
+
+// Stubs an event object. Used by tests.
+export function event(name, value) {
+  return {
+    target: {
+      name: name,
+      value: value,
+    },
+    preventDefault: jest.fn()
+  };
+}
