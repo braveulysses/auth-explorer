@@ -253,4 +253,81 @@ describe('The AuthRequester component', () => {
     expect(actual['optionalScopes']).not.toContain('approvedScope1');
     expect(actual['optionalScopes']).toContain('approvedScope2');
   });
+
+  it('correctly sets the Log In step', () => {
+    const body = {};
+    body['schemas'] = [
+      Constants.AUTHENTICATION_URN
+    ];
+    body['meta'] = {
+      resourceType: Constants.LOGIN_RESOURCE_TYPE
+    };
+    const setDispatcherUrl = jest.fn();
+    const setActiveStep = jest.fn();
+    authRequester(body, setDispatcherUrl, setActiveStep);
+
+    expect(setActiveStep.mock.calls[0]).toContain('Log in');
+  });
+
+  it('correctly sets the Second Factor step', () => {
+    const body = {};
+    body['schemas'] = [
+      Constants.AUTHENTICATION_URN
+    ];
+    body['meta'] = {
+      resourceType: Constants.SECOND_FACTOR_RESOURCE_TYPE
+    };
+    const setDispatcherUrl = jest.fn();
+    const setActiveStep = jest.fn();
+    authRequester(body, setDispatcherUrl, setActiveStep);
+
+    expect(setActiveStep.mock.calls[0]).toContain('Second factor');
+  });
+
+  it('correctly sets the Consent step', () => {
+    const body = {
+      approved: false
+    };
+    body['schemas'] = [
+      Constants.CONSENT_HANDLER_URN
+    ];
+    body['meta'] = {
+      resourceType: Constants.CONSENT_RESOURCE_TYPE
+    };
+    const setDispatcherUrl = jest.fn();
+    const setActiveStep = jest.fn();
+    authRequester(body, setDispatcherUrl, setActiveStep);
+
+    expect(setActiveStep.mock.calls[0]).toContain('Consent');
+  });
+
+  it('correctly sets the Account Flow step for a Username Recovery flow', () => {
+    const body = {};
+    body['schemas'] = [
+      Constants.USERNAME_RECOVERY_URN
+    ];
+    body['meta'] = {
+      resourceType: Constants.USERNAME_RECOVERY_RESOURCE_TYPE
+    };
+    const setDispatcherUrl = jest.fn();
+    const setActiveStep = jest.fn();
+    authRequester(body, setDispatcherUrl, setActiveStep);
+
+    expect(setActiveStep.mock.calls[0]).toContain('Account flow');
+  });
+
+  it('correctly sets the Account Flow step for a Password Recovery flow', () => {
+    const body = {};
+    body['schemas'] = [
+      Constants.PASSWORD_RECOVERY_URN
+    ];
+    body['meta'] = {
+      resourceType: Constants.PASSWORD_RECOVERY_RESOURCE_TYPE
+    };
+    const setDispatcherUrl = jest.fn();
+    const setActiveStep = jest.fn();
+    authRequester(body, setDispatcherUrl, setActiveStep);
+
+    expect(setActiveStep.mock.calls[0]).toContain('Account flow');
+  });
 });
