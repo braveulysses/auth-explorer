@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Form, Button, Input, Label, Dropdown, Container, Divider } from 'semantic-ui-react';
+import { Form, Button, Input, Label, Dropdown, Checkbox, Container, Divider } from 'semantic-ui-react';
 import NumberedHeader from './NumberedHeader';
 import {
   TELEPHONY_DELIVERED_CODE_MESSAGES,
@@ -10,12 +10,12 @@ class TelephonyDeliveredCodeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: TELEPHONY_DELIVERED_CODE_MESSAGES.message,
+      codeRequested: false,
       language: TELEPHONY_DELIVERED_CODE_MESSAGES.language,
-      messagingProvider: TELEPHONY_MESSAGING_PROVIDERS[0],
       verifyCode: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.toggleCodeRequested = this.toggleCodeRequested.bind(this);
     this.handleMessagingProviderChange = this.handleMessagingProviderChange.bind(this);
     this.setSendTelephonyRequest = this.setSendTelephonyRequest.bind(this);
     this.setTelephonyVerifyCode = this.setTelephonyVerifyCode.bind(this);
@@ -36,6 +36,11 @@ class TelephonyDeliveredCodeForm extends Component {
     this.setState(state);
   }
 
+  toggleCodeRequested(event) {
+    const codeRequested = !this.state.codeRequested;
+    this.setState({ codeRequested: codeRequested });
+  }
+
   handleMessagingProviderChange(event) {
     this.setState({
       messagingProvider: event.target.textContent
@@ -43,7 +48,7 @@ class TelephonyDeliveredCodeForm extends Component {
   }
 
   setSendTelephonyRequest(event) {
-    this.props.setSendTelephonyRequest(this.state.message,
+    this.props.setSendTelephonyRequest(this.state.codeRequested,
         this.state.language, this.state.messagingProvider);
     event.preventDefault();
   }
@@ -61,16 +66,18 @@ class TelephonyDeliveredCodeForm extends Component {
           <NumberedHeader size="tiny" number="1">Deliver code</NumberedHeader>
           <Form>
             <Form.Group>
-              <Form.Field width="eight">
-                <Input
+              <Form.Field inline>
+                <Checkbox
                     size="mini"
-                    label="Message"
-                    name="message"
-                    defaultValue={this.state.message}
-                    onChange={this.handleInputChange}
+                    label="Code requested"
+                    name="codeRequested"
+                    defaultChecked={this.state.codeRequested}
+                    onChange={this.toggleCodeRequested}
                 />
               </Form.Field>
-              <Form.Field width="six">
+            </Form.Group>
+            <Form.Group>
+              <Form.Field inline>
                 <Input
                     size="mini"
                     label="Language"
@@ -79,8 +86,6 @@ class TelephonyDeliveredCodeForm extends Component {
                     onChange={this.handleInputChange}
                 />
               </Form.Field>
-            </Form.Group>
-            <Form.Group>
               <Form.Field inline>
                 <Label>Messaging provider</Label>
                 <Dropdown
