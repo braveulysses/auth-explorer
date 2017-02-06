@@ -1,17 +1,16 @@
 import React, {Component} from 'react';
-import { Form, Button, Input, Container, Divider } from 'semantic-ui-react';
+import { Form, Button, Input, Checkbox, Container, Divider } from 'semantic-ui-react';
 import NumberedHeader from './NumberedHeader';
-import { EMAIL_DELIVERED_CODE_MESSAGES } from '../Config';
 
 class EmailDeliveredCodeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messageSubject: EMAIL_DELIVERED_CODE_MESSAGES.messageSubject,
-      messageText: EMAIL_DELIVERED_CODE_MESSAGES.messageText,
+      codeRequested: false,
       verifyCode: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.toggleCodeRequested = this.toggleCodeRequested.bind(this);
     this.setSendEmailRequest = this.setSendEmailRequest.bind(this);
     this.setEmailVerifyCode = this.setEmailVerifyCode.bind(this);
   }
@@ -22,9 +21,13 @@ class EmailDeliveredCodeForm extends Component {
     this.setState(state);
   }
 
+  toggleCodeRequested(event) {
+    const codeRequested = !this.state.codeRequested;
+    this.setState({ codeRequested: codeRequested });
+  }
+
   setSendEmailRequest(event) {
-    this.props.setSendEmailRequest(this.state.messageSubject,
-        this.state.messageText);
+    this.props.setSendEmailRequest(this.state.codeRequested);
     event.preventDefault();
   }
 
@@ -39,22 +42,13 @@ class EmailDeliveredCodeForm extends Component {
           <NumberedHeader size="tiny" number="1">Deliver code</NumberedHeader>
           <Form>
             <Form.Group>
-              <Form.Field width="six">
-                <Input
+              <Form.Field inline>
+                <Checkbox
                     size="mini"
-                    label="Subject"
-                    name="messageSubject"
-                    defaultValue={this.state.messageSubject}
-                    onChange={this.handleInputChange}
-                />
-              </Form.Field>
-              <Form.Field width="eight">
-                <Input
-                    size="mini"
-                    label="Text"
-                    name="messageText"
-                    defaultValue={this.state.messageText}
-                    onChange={this.handleInputChange}
+                    label="Code requested"
+                    name="codeRequested"
+                    checked={this.state.codeRequested}
+                    onChange={this.toggleCodeRequested}
                 />
               </Form.Field>
               <Form.Field>

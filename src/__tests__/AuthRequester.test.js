@@ -102,11 +102,10 @@ describe('The AuthRequester component', () => {
     body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN] = {};
     const wrapper = authRequester(body);
 
-    wrapper.instance().setSendEmailRequest('subject', 'text');
+    wrapper.instance().setSendEmailRequest(true);
 
     const actual = actualBody(wrapper);
-    expect(actual[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['messageSubject']).toBe('subject');
-    expect(actual[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['messageText']).toBe('text');
+    expect(actual[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['codeRequested']).toBe(true);
   });
 
   it('can set an email verify code', () => {
@@ -125,12 +124,12 @@ describe('The AuthRequester component', () => {
     body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN] = {};
     const wrapper = authRequester(body);
 
-    wrapper.instance().setSendTelephonyRequest('message', 'language', 'provider');
+    wrapper.instance().setSendTelephonyRequest(true, 'language', 'provider');
 
     const actual = actualBody(wrapper);
+    expect(actual[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['codeRequested']).toBe(true);
+    expect(actual[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['language']).toBe('language');
     expect(actual[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['messagingProvider']).toBe('provider');
-    expect(actual[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['deliverCode']['message']).toBe('message');
-    expect(actual[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['deliverCode']['language']).toBe('language');
   });
 
   it('can set a telephony verify code', () => {

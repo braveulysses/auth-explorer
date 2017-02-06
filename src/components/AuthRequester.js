@@ -363,13 +363,10 @@ class AuthRequester extends Component {
     }
   }
 
-  setSendEmailRequest(messageSubject, messageText) {
+  setSendEmailRequest(codeRequested) {
     let body = JSON.parse(this.state.body);
     if (body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]) {
-      body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['messageSubject'] =
-          messageSubject;
-      body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['messageText'] =
-          messageText;
+      body[Constants.EMAIL_DELIVERED_CODE_AUTHENTICATOR_URN]['codeRequested'] = codeRequested;
       this.setBodyFromObject(body);
     }
   }
@@ -383,14 +380,12 @@ class AuthRequester extends Component {
     }
   }
 
-  setSendTelephonyRequest(message, language, messagingProvider) {
+  setSendTelephonyRequest(codeRequested, language, messagingProvider) {
     let body = JSON.parse(this.state.body);
     if (body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]) {
+      body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['codeRequested'] = codeRequested;
+      body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['language'] = language;
       body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['messagingProvider'] = messagingProvider;
-      body[Constants.TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_URN]['deliverCode'] = {
-        message: message,
-        language: language
-      };
       this.setBodyFromObject(body);
     }
   }

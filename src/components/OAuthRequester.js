@@ -201,7 +201,7 @@ class OAuthRequester extends Component {
                 type="text"
                 className="AuthorizeUrl"
                 onChange={this.handleAuthUrlUpdate}
-                value={this.state.authorizeUrl}
+                value={this.state.authorizeUrl.toString()}
             />
           </Form.Field>
           <Form.Field>
