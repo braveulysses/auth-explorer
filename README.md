@@ -78,6 +78,31 @@ npm run start
 
 This will automatically open the tool in a browser window. By default, it runs from a local HTTP server at `http://localhost:3000`.
 
+#### Running the Broker Auth Explorer with Yarn
+
+_You can skip this section if you aren't a [Yarn](https://yarnpkg.com/) user._
+
+Clone this repository:
+
+```
+git clone https://github.com/UnboundID/auth-explorer.git
+```
+
+Install the Auth Explorer's dependencies:
+
+```
+cd auth-explorer
+yarn install
+```
+
+Start the Auth Explorer:
+
+```
+yarn start
+```
+
+This will automatically open the tool in a browser window. By default, it runs from a local HTTP server at `http://localhost:3000`.
+
 ### Interacting with the Auth API
 
 An authentication request is initiated when a client aplication makes an OAuth 2 request. If interaction with the end user is required — e.g., to authenticate the user or to approve scopes — then control passes to the Auth UI, which acts as a client to the Auth API. 
