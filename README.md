@@ -2,7 +2,7 @@
 
 # Broker Auth Explorer
 
-With the Data Governance Broker's Authentication API, you can build custom user interfaces supporting a wide range of authentication scenarios, from basic username/password logins to multifactor authentication flows requiring time-based one-time passwords.
+With the Data Governance Broker's [Authentication API](https://developer.unboundid.com/6.0.0.1/broker/api/auth/), you can build custom user interfaces supporting a wide range of authentication scenarios, from basic username/password logins to multifactor authentication flows requiring time-based one-time passwords.
 
 Use this tool to understand how an authentication UI communicates with the Data Governance Broker's Authentication API by interactively sending requests and responses from a simple web interface.
  
@@ -38,6 +38,8 @@ And more.
 ## How to use the Auth Explorer
 
 ### Configuring the Broker
+
+The Auth Explorer requires Data Governance Broker 6.0.1.0 or later.
 
 To use the Auth Explorer, you will need to prepare your copy of the Data Governance Broker by:
 
