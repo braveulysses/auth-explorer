@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/UnboundID/auth-explorer.svg?branch=master)](https://travis-ci.org/UnboundID/auth-explorer)
+[![Build Status](https://travis-ci.org/pingidentity/auth-explorer.svg?branch=master)](https://travis-ci.org/pingidentity/auth-explorer)
 
 # Broker Auth Explorer
 
@@ -39,7 +39,7 @@ And more.
 
 ### Configuring the Broker
 
-The Auth Explorer requires Data Governance Broker 6.0.1.0 or later. (If you are running Data Governance Broker 6.0.0.x, you can use [an older version of the Auth Explorer](https://github.com/UnboundID/auth-explorer/releases/tag/v1.0.2).)
+The Auth Explorer requires Data Governance Broker 6.0.1.0 or later. (If you are running Data Governance Broker 6.0.0.x, you can use [an older version of the Auth Explorer](https://github.com/pingidentity/auth-explorer/releases/tag/v1.0.2).)
 
 To use the Auth Explorer, you will need to prepare your copy of the Data Governance Broker by:
 
@@ -60,7 +60,7 @@ You can find a copy of this configuration in `setup.dsconfig`. Load this configu
 Clone this repository:
 
 ```
-git clone https://github.com/UnboundID/auth-explorer.git
+git clone https://github.com/pingidentity/auth-explorer.git
 ```
 
 Install the Auth Explorer's dependencies:
@@ -85,7 +85,7 @@ _You can skip this section if you aren't a [Yarn](https://yarnpkg.com/) user._
 Clone this repository:
 
 ```
-git clone https://github.com/UnboundID/auth-explorer.git
+git clone https://github.com/pingidentity/auth-explorer.git
 ```
 
 Install the Auth Explorer's dependencies:
@@ -151,7 +151,7 @@ The Auth Explorer does not currently support authentication through an external 
 
 This tool is not officially supported, but support will be provided on a best-effort basis through GitHub.
 
-Please report issues using the project's [issue tracker](https://github.com/UnboundID/auth-explorer/issues).
+Please report issues using the project's [issue tracker](https://github.com/pingidentity/auth-explorer/issues).
 
 ## License
 
