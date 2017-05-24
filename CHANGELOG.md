@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased [1.1.1] - 2017-??-??
+This release includes minor bug fixes.
+* Update Data Governance Broker version to 6.0.2.0.
+* Fix a warning emitted by the Semantic UI library from the OAuth 2 request component.
+
 ## Compatibility release for Broker 6.0.1.0 [1.1.0] - 2017-02-06
 This release updates the Auth Explorer for compatibility with Auth API changes in Data Governance Broker 6.0.1.0.
 
