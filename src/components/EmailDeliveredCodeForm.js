@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button, Input, Checkbox, Container, Divider } from 'semantic-ui-react';
 import NumberedHeader from './NumberedHeader';
 
@@ -89,7 +90,7 @@ class EmailDeliveredCodeForm extends Component {
 }
 
 EmailDeliveredCodeForm.propTypes = {
-  setSendEmailRequest: React.PropTypes.func.isRequired
+  setSendEmailRequest: PropTypes.func.isRequired
 };
 
 export default EmailDeliveredCodeForm;

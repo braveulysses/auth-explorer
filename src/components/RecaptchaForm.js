@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button } from 'semantic-ui-react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -45,8 +46,8 @@ class RecaptchaForm extends Component {
 }
 
 RecaptchaForm.propTypes = {
-  recaptchaKey: React.PropTypes.string.isRequired,
-  setRecaptchaResponse: React.PropTypes.func.isRequired
+  recaptchaKey: PropTypes.string.isRequired,
+  setRecaptchaResponse: PropTypes.func.isRequired
 };
 
 export default RecaptchaForm;

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Table, Input, Icon } from 'semantic-ui-react';
 import ClipboardButton from 'react-clipboard.js';
 import {guid} from '../Helpers';
@@ -25,7 +26,7 @@ class CopyableTableCell extends Component {
 }
 
 CopyableTableCell.propTypes = {
-  value: React.PropTypes.string.isRequired
+  value: PropTypes.string.isRequired
 };
 
 export default CopyableTableCell;

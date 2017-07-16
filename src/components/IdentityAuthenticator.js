@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Card, Button } from 'semantic-ui-react';
 import IdentityAuthenticatorStatus from './IdentityAuthenticatorStatus';
 import DocumentationLink from './DocumentationLink';
@@ -200,9 +201,9 @@ class IdentityAuthenticator extends Component {
 }
 
 IdentityAuthenticator.propTypes = {
-  authenticator: React.PropTypes.object.isRequired,
-  data: React.PropTypes.object.isRequired,
-  removeAuthenticator: React.PropTypes.func.isRequired
+  authenticator: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+  removeAuthenticator: PropTypes.func.isRequired
 };
 
 export default IdentityAuthenticator;

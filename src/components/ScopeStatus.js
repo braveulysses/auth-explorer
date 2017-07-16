@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Label } from 'semantic-ui-react';
 
 class ScopeStatus extends Component {
@@ -17,7 +18,7 @@ class ScopeStatus extends Component {
 }
 
 ScopeStatus.propTypes = {
-  granted: React.PropTypes.bool.isRequired
+  granted: PropTypes.bool.isRequired
 };
 
 export default ScopeStatus;

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Container, Header, Form, Button, Input } from 'semantic-ui-react';
 import { USERNAME_PASSWORD_AUTHENTICATOR_URN } from '../Constants';
 
@@ -90,8 +91,8 @@ class UsernamePasswordForm extends Component {
 }
 
 UsernamePasswordForm.propTypes = {
-  setUsernamePassword: React.PropTypes.func.isRequired,
-  setNewPassword: React.PropTypes.func.isRequired
+  setUsernamePassword: PropTypes.func.isRequired,
+  setNewPassword: PropTypes.func.isRequired
 };
 
 export default UsernamePasswordForm;

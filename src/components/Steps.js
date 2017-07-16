@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Step } from 'semantic-ui-react';
 
 class Steps extends Component {
@@ -64,7 +65,7 @@ class Steps extends Component {
 }
 
 Steps.propTypes = {
-  step: React.PropTypes.string.isRequired
+  step: PropTypes.string.isRequired
 };
 
 export default Steps;

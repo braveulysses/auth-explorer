@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import 'whatwg-fetch';
 import AceEditor from 'react-ace';
 import { Dimmer, Loader, Button, Input, Form, Container, Divider } from 'semantic-ui-react';
@@ -653,9 +654,9 @@ class AuthRequester extends Component {
 }
 
 AuthRequester.propTypes = {
-  url: React.PropTypes.string.isRequired,
-  setDispatcherUrl: React.PropTypes.func.isRequired,
-  setActiveStep: React.PropTypes.func.isRequired
+  url: PropTypes.string.isRequired,
+  setDispatcherUrl: PropTypes.func.isRequired,
+  setActiveStep: PropTypes.func.isRequired
 };
 
 export default AuthRequester;

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Container, Divider, Header, Form, Button, Input } from 'semantic-ui-react';
 import { PASSWORD_RECOVERY_URN, PASSWORD_RECOVERY_UI_DESCRIPTION } from '../Constants';
 
@@ -57,7 +58,7 @@ class PasswordRecoveryForm extends Component {
 }
 
 PasswordRecoveryForm.propTypes = {
-  setNewPassword: React.PropTypes.func.isRequired
+  setNewPassword: PropTypes.func.isRequired
 };
 
 export default PasswordRecoveryForm;

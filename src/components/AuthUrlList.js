@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Container, Divider, Header, Card } from 'semantic-ui-react';
 import AuthUrl from './AuthUrl';
 import './AuthUrlList.css';
@@ -36,8 +37,8 @@ class AuthUrlList extends Component {
 }
 
 AuthUrlList.propTypes = {
-  authUrls: React.PropTypes.array.isRequired,
-  setAuthUrl: React.PropTypes.func.isRequired
+  authUrls: PropTypes.array.isRequired,
+  setAuthUrl: PropTypes.func.isRequired
 };
 
 export default AuthUrlList;

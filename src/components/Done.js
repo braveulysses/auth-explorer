@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Header, Table } from 'semantic-ui-react';
 import CopyableTableCell from './CopyableTableCell';
 import {parseParamsFromUrl} from '../Helpers';
@@ -48,7 +49,7 @@ class Done extends Component {
 }
 
 Done.propTypes = {
-  url: React.PropTypes.string.isRequired
+  url: PropTypes.string.isRequired
 };
 
 export default Done;

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import IdentityAuthenticator from './IdentityAuthenticator';
 import { Container, Divider, Header, Card } from 'semantic-ui-react';
 import './IdentityAuthenticatorList.css';
@@ -46,9 +47,9 @@ class IdentityAuthenticatorList extends Component {
 }
 
 IdentityAuthenticatorList.propTypes = {
-  authenticators: React.PropTypes.array.isRequired,
-  data: React.PropTypes.object.isRequired,
-  removeAuthenticator: React.PropTypes.func.isRequired
+  authenticators: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
+  removeAuthenticator: PropTypes.func.isRequired
 };
 
 export default IdentityAuthenticatorList;
