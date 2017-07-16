@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button, Input, Label, Dropdown, Checkbox, Container, Divider } from 'semantic-ui-react';
 import NumberedHeader from './NumberedHeader';
 import {
@@ -135,8 +136,8 @@ class TelephonyDeliveredCodeForm extends Component {
 }
 
 TelephonyDeliveredCodeForm.propTypes = {
-  setSendTelephonyRequest: React.PropTypes.func.isRequired,
-  setTelephonyVerifyCode: React.PropTypes.func.isRequired
+  setSendTelephonyRequest: PropTypes.func.isRequired,
+  setTelephonyVerifyCode: PropTypes.func.isRequired
 };
 
 export default TelephonyDeliveredCodeForm;

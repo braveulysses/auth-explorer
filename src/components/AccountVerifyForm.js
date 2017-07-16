@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Container, Form, Divider, Header, Input, Button } from 'semantic-ui-react';
 import { ACCOUNT_VERIFY_UI_DESCRIPTION} from '../Constants';
 import { ACCOUNT_VERIFY_ATTRIBUTES } from '../Config';
@@ -92,8 +93,8 @@ class AccountVerifyForm extends Component {
 }
 
 AccountVerifyForm.propTypes = {
-  accountVerifyAttributes: React.PropTypes.object,
-  setAccountVerifyAttributes: React.PropTypes.func.isRequired
+  accountVerifyAttributes: PropTypes.object,
+  setAccountVerifyAttributes: PropTypes.func.isRequired
 };
 
 AccountVerifyForm.defaultProps = {

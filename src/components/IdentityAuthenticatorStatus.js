@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Label } from 'semantic-ui-react';
 
 class IdentityAuthenticatorStatus extends Component {
@@ -25,7 +26,7 @@ class IdentityAuthenticatorStatus extends Component {
 }
 
 IdentityAuthenticatorStatus.propTypes = {
-  status: React.PropTypes.string.isRequired
+  status: PropTypes.string.isRequired
 };
 
 export default IdentityAuthenticatorStatus;

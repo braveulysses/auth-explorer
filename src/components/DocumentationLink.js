@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Label, Icon } from 'semantic-ui-react';
 
 class DocumentationLink extends Component {
@@ -31,7 +32,7 @@ class DocumentationLink extends Component {
 }
 
 DocumentationLink.propTypes = {
-  url: React.PropTypes.string
+  url: PropTypes.string
 };
 
 export default DocumentationLink;

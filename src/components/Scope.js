@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Card, Checkbox } from 'semantic-ui-react';
 import ScopeStatus from './ScopeStatus';
 
@@ -48,12 +49,12 @@ class Scope extends Component {
 }
 
 Scope.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  consentPromptText: React.PropTypes.string.isRequired,
-  description: React.PropTypes.string,
-  granted: React.PropTypes.bool.isRequired,
-  optional: React.PropTypes.bool.isRequired,
-  setOptionalScope: React.PropTypes.func
+  name: PropTypes.string.isRequired,
+  consentPromptText: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  granted: PropTypes.bool.isRequired,
+  optional: PropTypes.bool.isRequired,
+  setOptionalScope: PropTypes.func
 };
 
 export default Scope;

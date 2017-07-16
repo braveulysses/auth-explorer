@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button, Input } from 'semantic-ui-react';
 
 class TotpForm extends Component {
@@ -44,7 +45,7 @@ class TotpForm extends Component {
 }
 
 TotpForm.propTypes = {
-  setTotp: React.PropTypes.func.isRequired
+  setTotp: PropTypes.func.isRequired
 };
 
 export default TotpForm;

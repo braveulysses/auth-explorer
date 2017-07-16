@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Scope from './Scope';
 import { Container, Divider, Header, Card, Checkbox } from 'semantic-ui-react';
 import './ScopeList.css';
@@ -62,8 +63,8 @@ class ScopeList extends Component {
 }
 
 ScopeList.propTypes = {
-  approved: React.PropTypes.bool.isRequired,
-  setScopesApproved: React.PropTypes.func.isRequired
+  approved: PropTypes.bool.isRequired,
+  setScopesApproved: PropTypes.func.isRequired
 };
 
 export default ScopeList;

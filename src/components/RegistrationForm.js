@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button, Input, Divider } from 'semantic-ui-react';
 import { COMPLEX_ATTRIBUTES } from '../Config';
 
@@ -85,7 +86,7 @@ class RegistrationForm extends Component {
 }
 
 RegistrationForm.propTypes = {
-  registrableAttributes: React.PropTypes.array.isRequired
+  registrableAttributes: PropTypes.array.isRequired
 };
 
 export default RegistrationForm;

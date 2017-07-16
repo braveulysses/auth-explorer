@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Container, Header, Label } from 'semantic-ui-react';
 import DocumentationLink from './DocumentationLink';
 
@@ -33,9 +34,9 @@ class FlowHeader extends Component {
 }
 
 FlowHeader.propTypes = {
-  flowName: React.PropTypes.string.isRequired,
-  docUrl: React.PropTypes.string,
-  success: React.PropTypes.bool
+  flowName: PropTypes.string.isRequired,
+  docUrl: PropTypes.string,
+  success: PropTypes.bool
 };
 
 FlowHeader.defaultProps = {

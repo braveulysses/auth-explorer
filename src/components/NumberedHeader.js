@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Header, Label } from 'semantic-ui-react';
 
 class NumberedHeader extends Component {
@@ -28,7 +29,7 @@ NumberedHeader.propTypes = {
       '${props[propName]}' supplied to '${componentName}'. Must be an integer.`);
     }
   },
-  size: React.PropTypes.oneOf([
+  size: PropTypes.oneOf([
       'mini', 'tiny', 'small', 'medium', 'large', 'huge'
   ])
 };

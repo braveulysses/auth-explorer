@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button, Input } from 'semantic-ui-react';
 
 class AccountLookupForm extends Component {
@@ -58,8 +59,8 @@ class AccountLookupForm extends Component {
 }
 
 AccountLookupForm.propTypes = {
-  lookupParameters: React.PropTypes.array.isRequired,
-  setLookupParameters: React.PropTypes.func.isRequired
+  lookupParameters: PropTypes.array.isRequired,
+  setLookupParameters: PropTypes.func.isRequired
 };
 
 export default AccountLookupForm;

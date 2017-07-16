@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { Card, Input, Button } from 'semantic-ui-react';
 import './AuthUrl.css';
 
@@ -48,7 +49,7 @@ class AuthUrl extends Component {
 }
 
 AuthUrl.propTypes = {
-  url: React.PropTypes.object.isRequired
+  url: PropTypes.object.isRequired
 };
 
 export default AuthUrl;
