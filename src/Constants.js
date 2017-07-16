@@ -56,7 +56,7 @@ export const TELEPHONY_DELIVERED_CODE_AUTHENTICATOR_DESCRIPTION =
 export const USERNAME_PASSWORD_AUTHENTICATOR_DESCRIPTION =
     'The Username Password Identity Authenticator may be used to authenticate an end user with a username and password using an LDAP BIND operation.';
 export const THIRD_PARTY_AUTHENTICATOR_DESCRIPTION =
-    'This is an unrecognized third-party identity authenticator';
+    'This is an unrecognized third-party identity authenticator.';
 
 // URI descriptions
 export const META_LOCATION_URI_DESCRIPTION =
