@@ -175,7 +175,7 @@ class IdentityAuthenticator extends Component {
             <IdentityAuthenticatorStatus status={this.props.authenticator.status}/>
           </Card.Header>
           <Card.Meta>
-            {this.props.urn}
+            {this.props.authenticator.urn}
           </Card.Meta>
           <Card.Description>
             {this.state.description}
