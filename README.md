@@ -39,7 +39,7 @@ And more.
 
 ### Configuring the Broker
 
-The Auth Explorer requires Data Governance Broker 6.0.1.0 or later. (If you are running Data Governance Broker 6.0.0.x, you can use [an older version of the Auth Explorer](https://github.com/pingidentity/auth-explorer/releases/tag/v1.0.2).)
+The Auth Explorer requires Data Governance Broker and is compatible with any version from 6.0.1.0 and up but prior to 6.1.0.0. (If you are running Data Governance Broker 6.0.0.x, you can use [an older version of the Auth Explorer](https://github.com/pingidentity/auth-explorer/releases/tag/v1.0.2).)
 
 To use the Auth Explorer, you will need to prepare your copy of the Data Governance Broker by:
 
